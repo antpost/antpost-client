@@ -1,0 +1,138 @@
+<div class="mainWrap">
+    <header class="mainHeader clearfix posR ng-scope" ng-controller="HeaderCtrl">
+        <section class="container">
+            <a href="javascript:;" class="mobileMenu"><span></span></a>
+            <a href="#" class="dpib customlogo ovh ng-hide" tabindex="-1" ng-show="CustomLogo"
+               style="background-image:url()">naunau</a>
+            <a href="#" class="dpib ovh logo" ng-hide="CustomLogo" tabindex="-1">
+                <img src="/assets/img/logo.png" alt="KiotViet" title="KiotViet">
+            </a>
+            <section class="user uln posR flr">
+                <a href="javascript:void(0)" class="dpib userName"><span>naunau</span> <i class="fa fa-caret-down"></i></a>
+                <ul>
+                    <li><a ng-click="EditProfile()"><i class="fa fa-unlock-alt"></i> Tài khoản</a></li>
+                    <li><a ng-click="logout()"><i class="fa fa-external-link"></i> Đăng xuất</a></li>
+                </ul>
+            </section>
+            <section class="settingNav topNav posR uln flr">
+                <ul>
+                    <li class="setting" ng-show="showSetting">
+                        <a href="javascript:void(0)"><span class="hide-mobile">Thiết lập</span><span
+                            class="show-mobile account-name"><b>naunau</b><i class="fa fa-user"></i></span><i
+                            class="hide-mobile fa fa-caret-down"></i></a>
+                        <ul>
+                            <li class="show-mobile title-menu"><a><b><i class="fa fa-user"></i> naunau</b></a></li>
+                            <li class="show-mobile"><a ng-click="EditProfile()"><i class="fa fa-unlock-alt"></i> Tài
+                                khoản</a></li>
+                            <!-- ngRepeat: m in settingMenu -->
+                            <li ng-repeat="m in settingMenu" class="ng-scope"><a ng-click="showSupport(m)"
+                                                                                 ng-href="/#/PosParameter/"
+                                                                                 class="ng-binding"
+                                                                                 href="/#/PosParameter/"><i
+                                class="fa fa-wrench"></i> Thiết lập cửa hàng</a></li>
+                            <!-- end ngRepeat: m in settingMenu -->
+                            <li ng-repeat="m in settingMenu" class="ng-scope"><a ng-click="showSupport(m)"
+                                                                                 ng-href="/#/PrintTemplates/"
+                                                                                 class="ng-binding"
+                                                                                 href="/#/PrintTemplates/"><i
+                                class="fa fa-file-text"></i> Quản lý mẫu in</a></li>
+                            <!-- end ngRepeat: m in settingMenu -->
+                            <li ng-repeat="m in settingMenu" class="ng-scope"><a ng-click="showSupport(m)"
+                                                                                 ng-href="/#/Users/" class="ng-binding"
+                                                                                 href="/#/Users/"><i
+                                class="fa fa-male"></i> Quản lý người dùng</a></li>
+                            <!-- end ngRepeat: m in settingMenu -->
+                            <li ng-repeat="m in settingMenu" class="ng-scope"><a ng-click="showSupport(m)"
+                                                                                 ng-href="/#/Branches/"
+                                                                                 class="ng-binding" href="/#/Branches/"><i
+                                class="fa fa-puzzle-piece"></i> Quản lý chi nhánh</a></li>
+                            <!-- end ngRepeat: m in settingMenu -->
+                            <li ng-repeat="m in settingMenu" class="ng-scope"><a ng-click="showSupport(m)"
+                                                                                 ng-href="/#/Surcharge/"
+                                                                                 class="ng-binding"
+                                                                                 href="/#/Surcharge/"><i
+                                class="fa fa-cart-plus"></i> Quản lý thu khác</a></li>
+                            <!-- end ngRepeat: m in settingMenu -->
+                            <li ng-repeat="m in settingMenu" class="ng-scope"><a ng-click="showSupport(m)"
+                                                                                 ng-href="/#/SmsEmail/"
+                                                                                 class="ng-binding" href="/#/SmsEmail/"><i
+                                class="fa fa-envelope"></i> Quản lý SMS - Email</a></li>
+                            <!-- end ngRepeat: m in settingMenu -->
+                            <li ng-repeat="m in settingMenu" class="ng-scope"><a ng-click="showSupport(m)"
+                                                                                 ng-href="/#/AuditTrail/"
+                                                                                 class="ng-binding"
+                                                                                 href="/#/AuditTrail/"><i
+                                class="fa fa-history"></i> Lịch sử thao tác</a></li>
+                            <!-- end ngRepeat: m in settingMenu -->
+                            <li ng-repeat="m in settingMenu" class="ng-scope"><a ng-click="showSupport(m)"
+                                                                                 ng-href="javascript:void(0)"
+                                                                                 class="ng-binding"
+                                                                                 href="unsafe:javascript:void(0)"><i
+                                class="fa fa-trash"></i> Xóa dữ liệu hệ thống</a></li>
+                            <!-- end ngRepeat: m in settingMenu -->
+                            <li class="show-mobile"><a ng-click="logout()"><i class="fa fa-external-link"></i> Đăng xuất</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </section>
+            <section class="topNav posR flr uln hide">
+                <ul>
+                    <li class="txt-cd">
+                        <a href="#"><i class="fa fa-paint-brush"></i> Chủ đề </a>
+                        <div class="box-cd">
+                            <ul>
+                                <li><a href="" class="box-cd-cl box-cd-color-df active-ic-cd" color="color-df"
+                                       ng-click="changeTheme('color-df')"></a></li>
+                                <li><a href="" class="box-cd-cl box-cd-color1" color="color1"
+                                       ng-click="changeTheme('color1')"></a></li>
+                                <li><a href="" class="box-cd-cl box-cd-color2" color="color2"
+                                       ng-click="changeTheme('color2')"></a></li>
+                                <li><a href="" class="box-cd-cl box-cd-color3" color="color3"
+                                       ng-click="changeTheme('color3')"></a></li>
+                                <li><a href="" class="box-cd-cl box-cd-color4" color="color4"
+                                       ng-click="changeTheme('color4')"></a></li>
+                                <li><a href="" class="box-cd-cl box-cd-color5" color="color5"
+                                       ng-click="changeTheme('color5')"></a></li>
+                                <li><a href="" class="box-cd-cl box-cd-color6" color="color6"
+                                       ng-click="changeTheme('color6')"></a></li>
+                                <li><a href="" class="box-cd-cl box-cd-color7" color="color7"
+                                       ng-click="changeTheme('color7')"></a></li>
+                                <li><a href="" class="box-cd-cl box-cd-color8" color="color8"
+                                       ng-click="changeTheme('color8')"></a></li>
+                            </ul>
+                        </div><!--End-box-cd-->
+                    </li>
+                    <li><a href="http://www.kiotviet.com/ho-tro" target="_blank"><i
+                        class="fa fa-exclamation-circle"></i> Hỗ trợ</a></li>
+                    <li><a href="https://get.teamviewer.com/kiotviet18006162" target="_blank"
+                           title="Công cụ hỗ trợ từ xa"><i class="fa fa-cloud-download"></i> Tải TeamViewer</a></li>
+
+                </ul>
+            </section>
+        </section>
+
+        <nav class="mainNav w100 fll uln off-menu">
+            <section class="container">
+                <ul class="menu">
+                    <li class="active">
+                        <a class="active" href="/#/DashBoard/"><i class="fa fa-eye"></i>Tổng quan</a>
+                    </li>
+                    <li>
+                        <a><i class="fa fa-bullhorn"></i>Đăng nhóm</a>
+                    </li>
+                    <li>
+                        <a><i class="fa fa-group"></i>Gia nhập nhóm</a>
+                    </li>
+                    <li>
+                        <a><i class="fa fa-file-text-o"></i>Bài viết</a>
+                    </li>
+                    <li>
+                        <a><i class="fa fa-bar-chart"></i>Báo cáo</a>
+                    </li>
+
+                </ul>
+            </section>
+        </nav>
+    </header>
+</div>

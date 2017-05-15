@@ -1,0 +1,54 @@
+<div class="login">
+	<!-- BEGIN LOGO -->
+	<div class="logo">
+
+	</div>
+	<!-- END LOGO -->
+	<!-- BEGIN LOGIN -->
+	<div class="content">
+		<!-- BEGIN LOGIN FORM -->
+
+		<form class="login-form">
+			<h3 class="form-title font-green">ĐĂNG NHẬP</h3>
+			<div class="alert alert-danger display-hide">
+				<button class="close" data-close="alert"></button>
+				<span> Hãy nhập tên email và mật khẩu của tài khoản facebook. </span>
+			</div>
+			<div class="form-group">
+				<!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
+				<label class="control-label visible-ie8 visible-ie9">Email</label>
+				<input class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off"
+					   placeholder="Tên đăng nhập" name="username" [(ngModel)]="model.username"/></div>
+			<div class="form-group">
+				<label class="control-label visible-ie8 visible-ie9">Mật khẩu</label>
+				<input class="form-control form-control-solid placeholder-no-fix" type="password" autocomplete="off"
+					   placeholder="Mật khẩu" name="password" [(ngModel)]="model.password"/></div>
+			<div class="form-actions">
+				<!--<button type="submit" class="btn green uppercase" (click)="login()">Đăng nhập</button>-->
+				<div class="socialLogin row">
+					<div class="socialLogin-div">
+						<a class="btn btn-link btn-block facebookLogin" (click)="loginFb()">
+							<i class="fa fa-facebook"></i> ĐĂNG NHẬP FACEBOOK
+						</a>
+					</div>
+				</div>
+				<!--<a href="javascript:;" id="forget-password" class="forget-password">Quên mật khẩu?</a>-->
+			</div>
+			<!--<div class="login-options">
+				<h4>Hoặc đăng nhập với</h4>
+				<ul class="social-icons">
+					<li>
+						<a class="social-icon-color facebook" data-original-title="facebook" href="javascript:;"></a>
+					</li>
+				</ul>
+			</div>
+			<div class="create-account">
+				<p>
+					<a href="javascript:;" id="register-btn" class="uppercase">Đăng ký tài khoản</a>
+				</p>
+			</div>-->
+		</form>
+		<!-- END LOGIN FORM -->
+	</div>
+	<div class="copyright"> 2017 © AntPost.</div>
+</div>
