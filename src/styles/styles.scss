@@ -1,8 +1,16 @@
 /* this file will be extracted to main dist folder and is imported in index.html */
 /* This file is for setting global styles  */
 @import 'variables';
-//@import "../assets/plugins/uniform/css/uniform.default.css";
-//@import "../assets/css/components.css";
 
-.login {
-    background-color: #364150 !important; }
+// override fonts path to prevent build errors (or use resolve-url loader)
+$roboto-font-path: "../../node_modules/materialize-css/fonts/roboto/";
+
+@import "~materialize-css/sass/materialize";
+
+.ant.darken-1 {
+    background-color: #1c93e4!important;
+}
+
+.white-text {
+    color: #fff!important;
+}

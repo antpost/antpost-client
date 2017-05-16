@@ -1,0 +1,14 @@
+
+body {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+html, body {
+    height: 100%;
+}
+
+.login-form .profile-image-login {
+    max-width: 200px;
+    max-height: 200px;
+}

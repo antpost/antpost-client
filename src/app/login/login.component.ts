@@ -5,8 +5,9 @@ import {AuthService} from "../services/auth.service";
 
 @Component({
     selector: 'login',
-    templateUrl: 'login.component.html',
-    styleUrls: ['login.component.css']
+    templateUrl: 'login.html',
+    //styleUrls: ['login.component.css']
+    styleUrls: ['login.css']
 })
 export class LoginComponent implements OnInit, OnDestroy {
     model: User = new User();
@@ -14,7 +15,9 @@ export class LoginComponent implements OnInit, OnDestroy {
     error: string = '';
 
     constructor(private renderer: Renderer, private router: Router, private authService: AuthService) {
-        this.renderer.setElementClass(document.body, 'login', true);
+        this.renderer.setElementClass(document.body, 'ant', true);
+        this.renderer.setElementClass(document.body, 'darken-1', true);
+        this.renderer.setElementClass(document.body, 'white-text', true);
     }
 
     ngOnInit() {
@@ -23,7 +26,9 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
-        this.renderer.setElementClass(document.body, 'login', false);
+        this.renderer.setElementClass(document.body, 'ant', false);
+        this.renderer.setElementClass(document.body, 'darken-1', false);
+        this.renderer.setElementClass(document.body, 'white-text', false);
     }
 
     login() {
