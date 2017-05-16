@@ -10,7 +10,7 @@
 git clone https://github.com/antpost/antpost-client.git
 
 # change directory to our repo
-cd ads8
+cd antpost-client
 
 # install the repo with npm
 npm install
