@@ -1,11 +1,11 @@
 
-body {
-    display: table-cell;
-    vertical-align: middle;
-}
 
 html, body {
     height: 100%;
+}
+
+.login-form {
+    margin: auto;
 }
 
 .login-form .profile-image-login {

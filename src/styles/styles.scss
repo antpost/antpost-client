@@ -8,12 +8,17 @@ $roboto-font-path: "../../node_modules/materialize-css/fonts/roboto/";
 @import "~materialize-css/sass/materialize";
 
 .ant.darken-1 {
-    background-color: #1c93e4!important;
+    background-color: #3b5998 !important;
 }
 
 html {
     display: table;
     margin: auto;
+}
+
+body {
+  display: table-cell;
+  vertical-align: middle;
 }
 
 .container {
