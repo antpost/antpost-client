@@ -4,9 +4,9 @@
  */
 
 export class User {
-    id: number;
-    fullName: string;
-    username: string;
-    password: string;
-    status: number;
+    public id: number;
+    public fullName: string;
+    public username: string;
+    public password: string;
+    public status: number;
 }

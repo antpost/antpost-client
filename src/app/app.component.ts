@@ -6,7 +6,7 @@ import {
     OnInit,
     ViewEncapsulation
 } from '@angular/core';
-import {AppState} from './app.service';
+import {LocationStrategy, PlatformLocation, Location} from '@angular/common';
 
 /*
  * App Component
@@ -19,18 +19,33 @@ import {AppState} from './app.service';
         './app.component.css'
     ],
     template: `
-        <main>
-          <router-outlet></router-outlet>
-        </main>
+        <div [ngClass]="{'wrapper' : isLogin()}">
+            <div class="sidebar" data-active-color="rose" data-background-color="black" data-image="">
+                <sidebar *ngIf="isLogin()"></sidebar>
+                <div *ngIf="isLogin()" class="sidebar-background" style="background-image: url(../assets/img/sidebar.jpg)"></div>
+            </div>
+            <div [ngClass]="{'main-panel' : isLogin()}">
+                <navbar *ngIf="isLogin()"></navbar>
+                <antpost></antpost>
+            </div>
+        </div>
       `
 })
 export class AppComponent implements OnInit {
 
-    constructor(public appState: AppState) {
+    constructor(private location: Location) {
     }
 
     public ngOnInit() {
-        console.log('Initial App State', this.appState.state);
     }
 
+    public isLogin() {
+        let titlee = this.location.prepareExternalUrl(this.location.path());
+        titlee = titlee.slice(1);
+        if ('/login' == titlee) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 }

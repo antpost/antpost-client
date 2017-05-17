@@ -1,0 +1,51 @@
+<div id="page">
+	<section id="content">
+		<div class="container">
+
+
+			<div id="login-page" class="row">
+				<div class="col s12">
+					<form class="login-form" method="POST">
+						<div class="row no-margin-bottom">
+							<div class="input-field col s12 center">
+								<a>
+									<img id="login-logo" src="assets/img/ant.png"/>
+								</a>
+							</div>
+						</div>
+						<div class="row no-margin-bottom">
+							<div class="input-field col s12">
+								<i class="material-icons prefix">person_outline</i>
+								<input id="username" name="username" type="text" placeholder="Email đăng nhập Facebook" [(ngModel)]="model.username">
+								<label for="username" class="active">Email</label>
+							</div>
+						</div>
+						<div class="row no-margin-bottom">
+							<div class="input-field col s12">
+								<i class="material-icons prefix">lock_outline</i>
+								<input id="password" name="password" type="password" placeholder="Mật khẩu Facebook" [(ngModel)]="model.password">
+								<label for="password" class="active">Mật khẩu</label>
+							</div>
+						</div>
+						<div class="row no-margin-bottom">
+							<div class="input-field col s12 m12 l12  login-text">
+								<input type="checkbox" id="isPersistent" name="isPersistent">
+								<label for="isPersistent">Lưu lại thông tin đăng nhập</label>
+							</div>
+						</div>
+						<div class="row no-margin-bottom">
+							<div class="input-field col s12">
+								<button type="submit" class="btn waves-effect waves-light col s12" (click)="loginFb()">
+									<i class="mdi mdi-facebook-box"></i> Đăng nhập Facebook
+								</button>
+
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+
+
+		</div>
+	</section>
+</div>

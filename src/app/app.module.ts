@@ -24,16 +24,19 @@ import {ROUTES} from './app.routes';
 import {AppComponent} from './app.component';
 import {APP_RESOLVER_PROVIDERS} from './app.resolver';
 import {AppState, InternalStateType} from './app.service';
-import {HomeComponent} from './home';
-import {AboutComponent} from './about';
-import {NoContentComponent} from './no-content';
-import {XLargeDirective} from './home/x-large';
-import {LoginComponent} from './login';
+import {HomeComponent} from './components/home';
+import {NoContentComponent} from './components/no-content';
+import {LoginComponent} from './components/login';
 
 import {AuthService} from './services/auth.service';
 
 import '../styles/styles.scss';
 import '../styles/headings.css';
+import {AntPostModule} from './components/antpost.module';
+import {AntPostComponent} from './components/antpost.component';
+import {SidebarModule} from './shared/sidebar/sidebar.module';
+import {HashLocationStrategy, LocationStrategy} from '@angular/common';
+import {NavbarModule} from './shared/navbar/navbar.module';
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -54,22 +57,20 @@ type StoreType = {
     bootstrap: [AppComponent],
     declarations: [
         AppComponent,
-        AboutComponent,
-        HomeComponent,
-        NoContentComponent,
-        XLargeDirective,
-        LoginComponent,
+        AntPostComponent
     ],
     imports: [ // import Angular's modules
         BrowserModule,
-        FormsModule,
-        HttpModule,
-        RouterModule.forRoot(ROUTES, {useHash: true, preloadingStrategy: PreloadAllModules})
+        AntPostModule,
+        SidebarModule,
+        NavbarModule,
+        RouterModule.forRoot([])
     ],
     providers: [ // expose our Services and Providers into Angular's dependency injection
         ENV_PROVIDERS,
         APP_PROVIDERS,
         AuthService,
+        {provide: LocationStrategy, useClass: HashLocationStrategy}
     ]
 })
 export class AppModule {
