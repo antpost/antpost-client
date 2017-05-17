@@ -20,7 +20,7 @@ import {LocationStrategy, PlatformLocation, Location} from '@angular/common';
     ],
     template: `
         <div [ngClass]="{'wrapper' : isLogin()}">
-            <div class="sidebar" data-active-color="rose" data-background-color="black" data-image="">
+            <div class="sidebar" data-active-color="purple" data-background-color="black" data-image="">
                 <sidebar *ngIf="isLogin()"></sidebar>
                 <div *ngIf="isLogin()" class="sidebar-background" style="background-image: url(../assets/img/sidebar.jpg)"></div>
             </div>
