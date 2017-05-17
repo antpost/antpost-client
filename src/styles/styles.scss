@@ -11,6 +11,33 @@ $roboto-font-path: "../../node_modules/materialize-css/fonts/roboto/";
     background-color: #1c93e4!important;
 }
 
-.white-text {
-    color: #fff!important;
+html {
+    display: table;
+    margin: auto;
+}
+
+.container {
+    padding: 0 .5rem;
+    margin: 0 auto;
+    max-width: 100%!important;
+    min-width: 280px!important;
+}
+
+.no-margin-bottom {
+  margin-bottom: 0!important;
+}
+
+.input-field {
+  margin-bottom: 8px;
+}
+
+[type="checkbox"]+label::before {
+  border: 2px solid rgba(255,255,255,.87);
+}
+
+[type="checkbox"]:checked+label::before {
+  border-top: 2px solid transparent;
+  border-left: 2px solid transparent;
+  border-right: 2px solid #fff;
+  border-bottom: 2px solid #fff;
 }
