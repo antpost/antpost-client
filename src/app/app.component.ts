@@ -8,7 +8,6 @@ import {
 } from '@angular/core';
 import {LocationStrategy, PlatformLocation, Location} from '@angular/common';
 import * as $ from 'jquery';
-import * as Ps from 'perfect-scrollbar';
 
 /*
  * App Component
@@ -22,9 +21,8 @@ import * as Ps from 'perfect-scrollbar';
     ],
     template: `
         <div [ngClass]="{'wrapper' : isLogin()}">
-            <div class="sidebar" data-active-color="purple" data-background-color="black" data-image="">
-                <sidebar *ngIf="isLogin()"></sidebar>
-                <div *ngIf="isLogin()" class="sidebar-background" style="background-image: url(../assets/img/sidebar.jpg)"></div>
+            <div class="sidebar" data-active-color="purple" data-background-color="black" data-image="../assets/img/sidebar.jpg" *ngIf="isLogin()">
+                <sidebar ></sidebar>
             </div>
             <div [ngClass]="{'main-panel ps-container ps-theme-default ps-active-y' : isLogin()}">
                 <navbar *ngIf="isLogin()"></navbar>
@@ -41,16 +39,7 @@ export class AppComponent implements OnInit {
     }
 
     public ngOnInit() {
-        let isWindows = navigator.platform.indexOf('Win') > -1 ? true : false;
-
-        if (isWindows && !$('body').hasClass('sidebar-mini')){
-            // if we are on windows OS we activate the perfectScrollbar function
-            $('.sidebar .sidebar-wrapper, .main-panel').perfectScrollbar();
-
-            $('html').addClass('perfect-scrollbar-on');
-        } else {
-            $('html').addClass('perfect-scrollbar-off');
-        }
+        $.getScript('assets/js/material-dashboard.js');
     }
 
     public isLogin() {
