@@ -24,9 +24,11 @@ import {LocationStrategy, PlatformLocation, Location} from '@angular/common';
                 <sidebar *ngIf="isLogin()"></sidebar>
                 <div *ngIf="isLogin()" class="sidebar-background" style="background-image: url(../assets/img/sidebar.jpg)"></div>
             </div>
-            <div [ngClass]="{'main-panel' : isLogin()}">
+            <div [ngClass]="{'main-panel ps-container ps-theme-default ps-active-y' : isLogin()}">
                 <navbar *ngIf="isLogin()"></navbar>
-                <antpost></antpost>
+                <div class="content">
+                    <antpost></antpost>
+                </div>
             </div>
         </div>
       `

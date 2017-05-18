@@ -8,11 +8,10 @@
 //@import "~materialize-css/sass/materialize";
 
 html {
-  display: table;
   margin: auto;
 }
 
-body {
+body.login {
   display: table-cell;
   vertical-align: middle;
 }
