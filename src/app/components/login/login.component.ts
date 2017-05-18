@@ -2,6 +2,7 @@ import {Component, OnInit, OnDestroy, Renderer} from '@angular/core';
 import {Router} from "@angular/router";
 import {User} from '../../models/user.model';
 import {AuthService} from '../../services/auth.service';
+import $ from 'jquery';
 
 @Component({
     selector: 'login',
@@ -17,6 +18,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.renderer.setElementClass(document.body, 'login', true);
         this.renderer.setElementClass(document.body, 'darken-1', true);
         this.renderer.setElementClass(document.body, 'white-text', true);
+        $('html').addClass('login');
     }
 
     ngOnInit() {
@@ -28,6 +30,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.renderer.setElementClass(document.body, 'login', false);
         this.renderer.setElementClass(document.body, 'darken-1', false);
         this.renderer.setElementClass(document.body, 'white-text', false);
+        $('html').removeClass('login');
     }
 
     login() {

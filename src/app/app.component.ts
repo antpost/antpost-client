@@ -39,7 +39,7 @@ export class AppComponent implements OnInit {
     }
 
     public ngOnInit() {
-        $.getScript('assets/js/material-dashboard.js');
+
     }
 
     public isLogin() {
