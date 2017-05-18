@@ -7,6 +7,8 @@ import {
     ViewEncapsulation
 } from '@angular/core';
 import {LocationStrategy, PlatformLocation, Location} from '@angular/common';
+import * as $ from 'jquery';
+import * as Ps from 'perfect-scrollbar';
 
 /*
  * App Component
@@ -39,6 +41,16 @@ export class AppComponent implements OnInit {
     }
 
     public ngOnInit() {
+        let isWindows = navigator.platform.indexOf('Win') > -1 ? true : false;
+
+        if (isWindows && !$('body').hasClass('sidebar-mini')){
+            // if we are on windows OS we activate the perfectScrollbar function
+            $('.sidebar .sidebar-wrapper, .main-panel').perfectScrollbar();
+
+            $('html').addClass('perfect-scrollbar-on');
+        } else {
+            $('html').addClass('perfect-scrollbar-off');
+        }
     }
 
     public isLogin() {
