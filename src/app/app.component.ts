@@ -21,7 +21,7 @@ import * as $ from 'jquery';
     ],
     template: `
         <div [ngClass]="{'wrapper' : isLogin()}">
-            <div class="sidebar" data-active-color="purple" data-background-color="black" data-image="../assets/img/sidebar.jpg" *ngIf="isLogin()">
+            <div class="sidebar" data-active-color="rose" data-background-color="black" data-image="../assets/img/sidebar.jpg" *ngIf="isLogin()">
                 <sidebar ></sidebar>
             </div>
             <div [ngClass]="{'main-panel ps-container ps-theme-default ps-active-y' : isLogin()}">
