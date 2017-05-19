@@ -11,8 +11,7 @@ import {
     createInputTransfer
 } from '@angularclass/hmr';
 import {
-    RouterModule,
-    PreloadAllModules
+    RouterModule
 } from '@angular/router';
 
 /*
@@ -24,9 +23,6 @@ import {ROUTES} from './app.routes';
 import {AppComponent} from './app.component';
 import {APP_RESOLVER_PROVIDERS} from './app.resolver';
 import {AppState, InternalStateType} from './app.service';
-import {HomeComponent} from './components/home';
-import {NoContentComponent} from './components/no-content';
-import {LoginComponent} from './components/login';
 
 import {AuthService} from './services/auth.service';
 

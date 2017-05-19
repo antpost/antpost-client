@@ -3,6 +3,6 @@
  * @since 12/2/2016
  */
 
-export var AppConfig = {
+export let AppConfig = {
     basePath: "http://localhost/"
-}
+};
