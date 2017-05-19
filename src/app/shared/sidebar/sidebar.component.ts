@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { ROUTES } from './sidebar-routes.config';
+import {Component, OnInit} from '@angular/core';
+import {ROUTES} from './sidebar-routes.config';
 import $ from 'jquery';
 
 @Component({
@@ -9,8 +9,9 @@ import $ from 'jquery';
 
 export class SidebarComponent implements OnInit {
     public menuItems: any[];
-    ngOnInit() {
+
+    public ngOnInit() {
         $.getScript('assets/js/material-dashboard.js');
-        this.menuItems = ROUTES.filter(menuItem => menuItem);
+        this.menuItems = ROUTES.filter((menuItem) => menuItem);
     }
 }

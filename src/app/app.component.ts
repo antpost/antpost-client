@@ -45,7 +45,7 @@ export class AppComponent implements OnInit {
     public isLogin() {
         let titlee = this.location.prepareExternalUrl(this.location.path());
         titlee = titlee.slice(1);
-        if ('/login' == titlee) {
+        if ('/login' === titlee) {
             return false;
         } else {
             return true;

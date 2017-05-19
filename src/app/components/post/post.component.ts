@@ -18,11 +18,11 @@ import {
 })
 export class PostComponent implements OnInit {
 
-    @ViewChild('myTable') table: any;
+    @ViewChild('myTable') public table: any;
 
-    rows: any[] = [];
-    expanded: any = {};
-    timeout: any;
+    public rows: any[] = [];
+    public expanded: any = {};
+    public timeout: any;
 
     constructor() {
         this.fetch((data) => {
@@ -34,14 +34,23 @@ export class PostComponent implements OnInit {
 
     }
 
-    onPage(event) {
+    public onPage(event) {
         clearTimeout(this.timeout);
         this.timeout = setTimeout(() => {
             console.log('paged!', event);
         }, 100);
     }
 
-    fetch(cb) {
+    public toggleExpandRow(row) {
+        console.log('Toggled Expand Row!', row);
+        this.table.rowDetail.toggleExpandRow(row);
+    }
+
+    public onDetailToggle(event) {
+        console.log('Detail Toggled', event);
+    }
+
+    private fetch(cb) {
         const req = new XMLHttpRequest();
         req.open('GET', `assets/mock-data/100k.json`);
 
@@ -50,14 +59,5 @@ export class PostComponent implements OnInit {
         };
 
         req.send();
-    }
-
-    toggleExpandRow(row) {
-        console.log('Toggled Expand Row!', row);
-        this.table.rowDetail.toggleExpandRow(row);
-    }
-
-    onDetailToggle(event) {
-        console.log('Detail Toggled', event);
     }
 }

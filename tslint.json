@@ -54,6 +54,10 @@
       "allow-pascal-case",
       "ban-keywords",
       "check-format"
-    ]
+    ],
+    "prefer-for-of": false,
+    "object-shorthand": false,
+    "eqeqeq": false,
+    "forin": false
   }
 }

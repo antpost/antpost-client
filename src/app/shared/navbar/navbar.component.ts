@@ -9,22 +9,22 @@ import {Location, LocationStrategy, PathLocationStrategy} from '@angular/common'
 
 export class NavbarComponent implements OnInit {
     private listTitles: any[];
-    location: Location;
+    private location: Location;
 
     constructor(location: Location) {
         this.location = location;
     }
 
-    ngOnInit() {
-        this.listTitles = ROUTES.filter(listTitle => listTitle);
+    public ngOnInit() {
+        this.listTitles = ROUTES.filter((listTitle) => listTitle);
     }
 
-    getTitle() {
-        var titlee = this.location.prepareExternalUrl(this.location.path());
+    public getTitle() {
+        let titlee = this.location.prepareExternalUrl(this.location.path());
         if (titlee.charAt(0) === '#') {
             titlee = titlee.slice(2);
         }
-        for (var item = 0; item < this.listTitles.length; item++) {
+        for (let item = 0; item < this.listTitles.length; item++) {
             if (this.listTitles[item].path === titlee) {
                 return this.listTitles[item].title;
             }

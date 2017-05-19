@@ -10,9 +10,9 @@ import $ from 'jquery';
     styleUrls: ['login.component.css']
 })
 export class LoginComponent implements OnInit, OnDestroy {
-    model: User = new User();
-    loading: boolean = false;
-    error: string = '';
+    public model: User = new User();
+    public loading: boolean = false;
+    public error: string = '';
 
     constructor(private renderer: Renderer, private router: Router, private authService: AuthService) {
         this.renderer.setElementClass(document.body, 'login', true);
@@ -21,19 +21,19 @@ export class LoginComponent implements OnInit, OnDestroy {
         $('html').addClass('login');
     }
 
-    ngOnInit() {
+    public ngOnInit() {
         // reset login status
         this.authService.logout();
     }
 
-    ngOnDestroy() {
+    public ngOnDestroy() {
         this.renderer.setElementClass(document.body, 'login', false);
         this.renderer.setElementClass(document.body, 'darken-1', false);
         this.renderer.setElementClass(document.body, 'white-text', false);
         $('html').removeClass('login');
     }
 
-    login() {
+    public login() {
         this.loading = true;
         localStorage.setItem('currentUser', JSON.stringify(this.model));
         this.router.navigate(['/']);
@@ -48,9 +48,9 @@ export class LoginComponent implements OnInit, OnDestroy {
         //     });
     }
 
-    loginFb() {
+    public loginFb() {
         this.authService.loginfb(this.model.username, this.model.password)
-            .subscribe(result => {
+            .subscribe((result) => {
                 if (result === true) {
                     this.router.navigate(['/']);
                 } else {
