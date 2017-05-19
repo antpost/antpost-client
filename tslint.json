@@ -44,7 +44,7 @@
     "object-literal-sort-keys": false,
     "ordered-imports": 1,
     "quotemark": [
-      true,
+      false,
       "single",
       "avoid-escape"
     ],

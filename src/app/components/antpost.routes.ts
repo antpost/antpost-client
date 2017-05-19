@@ -7,10 +7,10 @@ export const MODULE_ROUTES: Route[] = [
     {path: 'login', component: LoginComponent},
     {path: '', component: HomeComponent},
     {path: 'post', component: PostComponent}
-]
+];
 
 export const MODULE_COMPONENTS = [
     HomeComponent,
     LoginComponent,
     PostComponent
-]
+];
