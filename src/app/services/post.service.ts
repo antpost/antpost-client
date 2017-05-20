@@ -6,6 +6,6 @@ import {DbService} from '../core/database';
 @Injectable()
 export class PostService extends BaseService<Post> {
     constructor(db: DbService) {
-        super(db, 'post');
+        super(db, 'posts');
     }
 }

@@ -1,60 +1,68 @@
-<div>Post</div>
-
-<ngx-datatable
-	#myTable
-	class='material expandable'
-	[columnMode]="'force'"
-	[headerHeight]="50"
-	[footerHeight]="50"
-	[rowHeight]="50"
-	[scrollbarV]="50"
-	[rows]='rows'
-	(page)="onPage($event)">
-	<!-- Row Detail Template -->
-	<ngx-datatable-row-detail [rowHeight]="100" #myDetailRow (toggle)="onDetailToggle($event)">
-		<ng-template let-row="row" ngx-datatable-row-detail-template>
-			<div style="padding-left:35px;">
-				<div><strong>Address</strong></div>
-				<div>{{row.address.city}}, {{row.address.state}}</div>
+<div class="row">
+	<div class="col-md-12">
+		<div class="card">
+			<div class="card-header card-header-icon" data-background-color="rose">
+				<i class="material-icons">assignment</i>
 			</div>
-		</ng-template>
-	</ngx-datatable-row-detail>
-	<!-- Column Templates -->
-	<ngx-datatable-column
-		[width]="50"
-		[resizeable]="false"
-		[sortable]="false"
-		[draggable]="false"
-		[canAutoResize]="false">
-		<ng-template let-row="row" ngx-datatable-cell-template>
-			<a
-				href="#"
-				[class.datatable-icon-right]="!row.$$expanded"
-				[class.datatable-icon-down]="row.$$expanded"
-				title="Expand/Collapse Row"
-				(click)="toggleExpandRow(row)">
-			</a>
-		</ng-template>
-	</ngx-datatable-column>
-	<ngx-datatable-column name="Index" width="80">
-		<ng-template let-row="row" ngx-datatable-cell-template>
-			<strong>{{row.$$index}}</strong>
-		</ng-template>
-	</ngx-datatable-column>
-	<ngx-datatable-column name="Expanded" width="80">
-		<ng-template let-row="row" ngx-datatable-cell-template>
-			<strong>{{row.$$expanded === 1}}</strong>
-		</ng-template>
-	</ngx-datatable-column>
-	<ngx-datatable-column name="Name" width="200">
-		<ng-template let-value="value" ngx-datatable-cell-template>
-			<strong>{{value}}</strong>
-		</ng-template>
-	</ngx-datatable-column>
-	<ngx-datatable-column name="Gender" width="300">
-		<ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-			<i [innerHTML]="row['name']"></i> and <i>{{value}}</i>
-		</ng-template>
-	</ngx-datatable-column>
-	<ngx-datatable-column name="Age" ></ngx-datatable-column>
-</ngx-datatable>
+			<div class="card-content">
+				<div class="card-title">
+					<span>Danh sách bài viết</span>
+					<span class="toolbar">
+						<button class="btn btn-primary">Thêm mới</button>
+					</span>
+				</div>
+				<div class="card-data">
+					<div class="table-responsive">
+						<table class="table">
+							<thead class="text-primary">
+							<tr><th>Name</th>
+								<th>Country</th>
+								<th>City</th>
+								<th>Salary</th>
+							</tr></thead>
+							<tbody>
+							<tr>
+								<td>Dakota Rice</td>
+								<td>Niger</td>
+								<td>Oud-Turnhout</td>
+								<td class="text-primary">$36,738</td>
+							</tr>
+							<tr>
+								<td>Minerva Hooper</td>
+								<td>Curaçao</td>
+								<td>Sinaai-Waas</td>
+								<td class="text-primary">$23,789</td>
+							</tr>
+							<tr>
+								<td>Sage Rodriguez</td>
+								<td>Netherlands</td>
+								<td>Baileux</td>
+								<td class="text-primary">$56,142</td>
+							</tr>
+							<tr>
+								<td>Philip Chaney</td>
+								<td>Korea, South</td>
+								<td>Overland Park</td>
+								<td class="text-primary">$38,735</td>
+							</tr>
+							<tr>
+								<td>Doris Greene</td>
+								<td>Malawi</td>
+								<td>Feldkirchen in Kärnten</td>
+								<td class="text-primary">$63,542</td>
+							</tr>
+							<tr>
+								<td>Mason Porter</td>
+								<td>Chile</td>
+								<td>Gloucester</td>
+								<td class="text-primary">$78,615</td>
+							</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</div>

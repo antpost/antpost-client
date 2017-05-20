@@ -11,4 +11,8 @@ export class BaseService<T> {
     constructor(private db: DbService, tableName: string) {
         this.table = this.db.table(tableName);
     }
+
+    add(data) {
+        return this.table.add(data);
+    }
 }

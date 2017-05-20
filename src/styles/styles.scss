@@ -6,6 +6,9 @@
 //$roboto-font-path: "../../node_modules/materialize-css/fonts/roboto/";
 //
 //@import "~materialize-css/sass/materialize";
+html {
+  font-size: 13px;
+}
 
 html.login{
   display: table;
@@ -90,4 +93,31 @@ nav {
 .off-canvas-sidebar[data-background-color="black"] .sidebar-background:after {
   background: #3b5998;
   opacity: .8;
+}
+
+.btn, .btn-large, .btn-flat {
+  line-height: 18px;
+  padding: 10px 15px;
+}
+
+.main-panel > .content {
+  padding: 10px 15px;
+}
+
+.card .card-title {
+  font-size: 18px;
+}
+.card .card-content .card-title {
+  line-height: 20px;
+  margin-bottom: 5px;
+}
+
+.card .card-content .card-title .toolbar {
+  float: right;
+  margin-top: -15px;
+}
+
+.card .card-content .card-data {
+  width: 100%;
+  clear: both;
 }
