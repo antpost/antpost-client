@@ -2,6 +2,7 @@ import {Route} from '@angular/router';
 import {HomeComponent} from './home/home.component';
 import {LoginComponent} from './login/login.component';
 import {PostComponent} from "./post/post.component";
+import {PostFormComponent} from './post/postForm.component';
 
 export const MODULE_ROUTES: Route[] = [
     {path: 'login', component: LoginComponent},
@@ -12,5 +13,6 @@ export const MODULE_ROUTES: Route[] = [
 export const MODULE_COMPONENTS = [
     HomeComponent,
     LoginComponent,
-    PostComponent
+    PostComponent,
+    PostFormComponent
 ];

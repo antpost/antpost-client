@@ -33,7 +33,6 @@ import {AntPostComponent} from './components/antpost.component';
 import {SidebarModule} from './shared/sidebar/sidebar.module';
 import {HashLocationStrategy, LocationStrategy} from '@angular/common';
 import {NavbarModule} from './shared/navbar/navbar.module';
-import {CoreModule} from './core/core.module';
 
 // Application wide providers
 const APP_PROVIDERS = [

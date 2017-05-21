@@ -6,8 +6,8 @@ import $ from 'jquery';
 
 @Component({
     selector: 'login',
-    templateUrl: 'login.component.html',
-    styleUrls: ['login.component.css']
+    templateUrl: 'login.html',
+    styleUrls: []
 })
 export class LoginComponent implements OnInit, OnDestroy {
     public model: User = new User();
