@@ -20,6 +20,7 @@ import * as $ from 'jquery';
         './app.component.css'
     ],
     template: `
+        <span defaultOverlayTarget></span>
         <div [ngClass]="{'wrapper' : isLogin()}">
             <div class="sidebar" data-active-color="rose" data-background-color="black" data-image="../assets/img/sidebar.jpg" *ngIf="isLogin()">
                 <sidebar ></sidebar>

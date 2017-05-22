@@ -33,6 +33,8 @@ import {AntPostComponent} from './components/antpost.component';
 import {SidebarModule} from './shared/sidebar/sidebar.module';
 import {HashLocationStrategy, LocationStrategy} from '@angular/common';
 import {NavbarModule} from './shared/navbar/navbar.module';
+import {BootstrapModalModule} from 'angular2-modal/plugins/bootstrap';
+import {ModalModule} from 'angular2-modal';
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -60,6 +62,8 @@ type StoreType = {
         AntPostModule,
         SidebarModule,
         NavbarModule,
+        ModalModule.forRoot(),
+        BootstrapModalModule,
         RouterModule.forRoot([])
     ],
     providers: [ // expose our Services and Providers into Angular's dependency injection
