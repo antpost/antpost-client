@@ -1,13 +1,12 @@
 import {NgModule, Optional, SkipSelf} from '@angular/core';
 
-import {DexieService} from './dexie.service';
 import {DbService} from './database';
-import DynamicComponent from './dynamic.component';
 import {BootstrapModalModule} from 'angular2-modal/plugins/bootstrap';
 import {ModalModule} from 'angular2-modal';
 import {ModalService} from './modal/modal.service';
 import ModalWrapperComponent from './modal/modalWrapper.component';
 import {CommonModule} from '@angular/common';
+import {DynamicComponent} from "./dynamic.component";
 
 @NgModule({
     declarations: [DynamicComponent, ModalWrapperComponent],
@@ -31,5 +30,3 @@ export class CoreModule {
         }
     }
 }
-
-

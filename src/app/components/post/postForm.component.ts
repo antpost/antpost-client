@@ -22,5 +22,8 @@ export class PostFormComponent implements OnInit {
 
     }
 
+    public save() {
+        console.log('save');
+    }
 
 }

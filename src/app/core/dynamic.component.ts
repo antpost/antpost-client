@@ -1,4 +1,11 @@
-import {Component, Input, ViewContainerRef, ViewChild, ReflectiveInjector, ComponentFactoryResolver} from '@angular/core';
+import {
+    Component,
+    Input,
+    ViewContainerRef,
+    ViewChild,
+    ReflectiveInjector,
+    ComponentFactoryResolver
+} from '@angular/core';
 
 @Component({
     selector: 'dynamic-component',
@@ -6,10 +13,10 @@ import {Component, Input, ViewContainerRef, ViewChild, ReflectiveInjector, Compo
     <div #dynamicComponentContainer></div>
   `,
 })
-export default class DynamicComponent {
-    currentComponent = null;
+export class DynamicComponent {
+    private currentComponent = null;
 
-    @ViewChild('dynamicComponentContainer', { read: ViewContainerRef }) dynamicComponentContainer: ViewContainerRef;
+    @ViewChild('dynamicComponentContainer', {read: ViewContainerRef}) private dynamicComponentContainer: ViewContainerRef;
 
     // component: Class for the component you want to create
     // inputs: An object with key/value pairs mapped to input name/input value
@@ -19,7 +26,9 @@ export default class DynamicComponent {
         }
 
         // Inputs need to be in the following format to be resolved properly
-        let inputProviders = Object.keys(data.inputs).map((inputName) => {return {provide: inputName, useValue: data.inputs[inputName]};});
+        let inputProviders = Object.keys(data.inputs).map((inputName) => {
+            return {provide: inputName, useValue: data.inputs[inputName]};
+        });
         let resolvedInputs = ReflectiveInjector.resolve(inputProviders);
 
         // We create an injector out of the data we want to pass down and this components injector
@@ -44,5 +53,9 @@ export default class DynamicComponent {
 
     constructor(private resolver: ComponentFactoryResolver) {
 
+    }
+
+    public getComponentInstance(): any {
+        return this.currentComponent.instance;
     }
 }

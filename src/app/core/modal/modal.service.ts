@@ -4,9 +4,8 @@ import {BSModalContext, Modal} from 'angular2-modal/plugins/bootstrap';
 import {default as ModalWrapperComponent, IModalOptions, CustomModalContext} from './modalWrapper.component';
 
 @Injectable()
-export class ModalService{
+export class ModalService {
     constructor(private modal: Modal) {
-
     }
 
     public open(options: IModalOptions): Promise<DialogRef<any>> {

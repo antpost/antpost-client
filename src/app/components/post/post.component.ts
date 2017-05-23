@@ -7,7 +7,6 @@ import {PostFormComponent} from './postForm.component';
 import {ModalService} from '../../core/modal/modal.service';
 import {IModalOptions} from '../../core/modal/modalWrapper.component';
 
-
 @Component({
     selector: 'post',
     providers: [],
@@ -17,8 +16,6 @@ import {IModalOptions} from '../../core/modal/modalWrapper.component';
 })
 export class PostComponent implements OnInit {
 
-    title = '';
-
     constructor(private postService: PostService, private modal: ModalService) {
 
     }
@@ -27,7 +24,7 @@ export class PostComponent implements OnInit {
 
     }
 
-    addPost(title: string) {
+    public addPost(title: string) {
         /*const post: Post = {
          title: this.title
          };

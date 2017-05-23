@@ -1,28 +1,29 @@
-import {Component, OnInit, ElementRef} from '@angular/core';
+import {Component, OnInit, ElementRef, ViewChild} from '@angular/core';
 import {ModalComponent, CloseGuard, DialogRef} from 'angular2-modal';
 import {BSModalContext} from 'angular2-modal/plugins/bootstrap';
+import {DynamicComponent} from "../dynamic.component";
 
 export interface IComponentData {
-    component: any,
-    inputs?: any
+    component: any;
+    inputs?: any;
 }
 
 export interface IModalAction {
-    text: string,
-    action: Function
+    text: string;
+    action: Function;
 }
 
-export interface IModalOptions{
-    component?: any,
-    inputs?: any,
-    title?: string,
-    body?: string,
-    showClose?: boolean,
-    size?: string,
-    actions?: Array<IModalAction>
+export interface IModalOptions {
+    component?: any;
+    inputs?: any;
+    title?: string;
+    body?: string;
+    showClose?: boolean;
+    size?: string;
+    actions?: IModalAction[];
 }
 
-export class CustomModalContext extends BSModalContext implements IModalOptions{
+export class CustomModalContext extends BSModalContext implements IModalOptions {
     constructor(public options: IModalOptions) {
         super();
     }
@@ -44,7 +45,7 @@ export class CustomModalContext extends BSModalContext implements IModalOptions{
         <dynamic-component [componentData]="componentData"></dynamic-component>
     </div>
     <div class="modal-footer">
-        <button class="btn btn-primary">OK</button>
+        <button class="btn btn-primary" (click)="save()">OK</button>
     </div>
         
       `,
@@ -53,6 +54,8 @@ export default class ModalWrapperComponent implements OnInit, CloseGuard, ModalC
     public componentData: IComponentData;
     public context: CustomModalContext;
 
+    @ViewChild(DynamicComponent)
+    private dynamicComponent: DynamicComponent;
 
     constructor(public dialog: DialogRef<CustomModalContext>) {
         this.componentData = {
@@ -69,19 +72,23 @@ export default class ModalWrapperComponent implements OnInit, CloseGuard, ModalC
 
     }
 
-    onKeyUp(value) {
+    public onKeyUp(value) {
         this.dialog.close();
     }
 
-    cancel() {
+    public save() {
+        this.dynamicComponent.getComponentInstance().save();
+    }
+
+    public cancel() {
         this.dialog.close();
     }
 
-    beforeDismiss(): boolean {
+    public beforeDismiss(): boolean {
         return false;
     }
 
-    beforeClose(): boolean {
+    public beforeClose(): boolean {
         return false;
     }
 }

@@ -12,7 +12,7 @@ export class BaseService<T> {
         this.table = this.db.table(tableName);
     }
 
-    add(data) {
+    public add(data) {
         return this.table.add(data);
     }
 }
