@@ -64,6 +64,7 @@ export default class ModalWrapperComponent implements OnInit, CloseGuard, ModalC
         } as IComponentData;
 
         this.context = dialog.context;
+        this.context.dialogClass += ' modal-' + this.context.options.size;
 
         dialog.setCloseGuard(this);
     }

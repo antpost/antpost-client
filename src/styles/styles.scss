@@ -10,7 +10,7 @@ html {
   font-size: 13px;
 }
 
-html.login{
+html.login {
   display: table;
   margin: auto;
 }
@@ -62,11 +62,11 @@ nav i, nav [class^="mdi-"], nav [class*="mdi-"], nav i.material-icons {
 }
 
 nav {
-   line-height: inherit;
+  line-height: inherit;
 }
 
 .row {
-   margin-bottom: 0px;
+  margin-bottom: 0px;
 }
 
 .sidebar .logo-img,
@@ -77,6 +77,7 @@ nav {
   margin-left: 10px;
   margin-right: 15px;
 }
+
 .sidebar .logo-img img,
 .off-canvas-sidebar .logo-img img {
   width: 35px;
@@ -87,7 +88,6 @@ nav {
 .sidebar[data-background-color="black"], .off-canvas-sidebar[data-background-color="black"] {
   background-color: #191919;
 }
-
 
 .sidebar[data-background-color="black"] .sidebar-background:after,
 .off-canvas-sidebar[data-background-color="black"] .sidebar-background:after {
@@ -107,6 +107,7 @@ nav {
 .card .card-title {
   font-size: 18px;
 }
+
 .card .card-content .card-title {
   line-height: 20px;
   margin-bottom: 5px;
@@ -122,12 +123,195 @@ nav {
   clear: both;
 }
 
+.modal .modal-dialog {
+  margin-top: 30px;
+}
+
+.modal-lg {
+  width: 1000px;
+}
 
 .modal-content .modal-header {
   padding-top: 10px;
-  padding-right: 10px;
+  padding-right: 15px;
+}
+
+.modal-title {
+  font-size: 20px;
 }
 
 .modal-backdrop {
   background: rgba(0, 0, 0, 0.7);
+}
+
+.close {
+  font-size: 21px;
+}
+
+/* POST */
+.post {
+  overflow: hidden;
+  background-color: white;
+  margin: auto;
+}
+
+.PreviewPoster {
+  margin: 10px 0px;
+}
+
+.PreviewPoster img {
+  float: left;
+  margin: 0px 5px 5px 0px;
+  width: 40px;
+  height: 40px;
+}
+
+.previewPoster .userFullName {
+  clear: right;
+  display: block;
+  color: #3b5998;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 14px;
+  font-family: helvetica, arial, sans-serif;
+  font-weight: bold;
+}
+
+.postPreviewDetails {
+  margin: 5px 0px;
+  display: block;
+  color: #9197a3;
+  font-size: 12px;
+}
+
+.post .message {
+  margin: 15px 0px;
+  font-family: 'lucida grande', tahoma, verdana, arial, sans-serif;
+}
+
+.post .name {
+  font-size: 19px;
+  padding: 10px 15px;
+  margin: 0px;
+}
+
+.post .description {
+  padding: 5px 15px;
+  margin: 0px;
+}
+
+.post .caption {
+  float: left;
+  padding: 10px 15px;
+  font-size: 11px;
+  line-height: 11px;
+  text-transform: uppercase;
+  color: #9197a3;
+  font-family: helvetica, arial, sans-serif;
+  margin: 0px;
+}
+
+.defaultName {
+  background-color: #ededed;
+  height: 20px;
+  width: 82%;
+  display: block;
+  margin-top: 10px;
+}
+
+.defaultMessage {
+  background-color: #eee;
+  height: 25px;
+  width: 60%;
+  display: block;
+  float: left;
+  margin-bottom: 5px;
+}
+
+.previewPostLink {
+  color: #141823;
+  text-decoration: none !important;
+}
+
+.previewLink {
+  width: 100%;
+  height: 200px;
+  background: #eeeeee;
+  clear: both;
+  border: 1px solid #ededed;
+  max-height: 300px;
+  overflow: hidden;
+}
+
+.postDetails {
+  overflow: hidden;
+  border: solid 1px #ededed;
+  border-top: none;
+}
+
+.defaultDescription {
+  background-color: #eee;
+  height: 3px;
+  width: 100%;
+  display: block;
+  float: left;
+  margin: 2px 0px;
+}
+
+.defaultCaption {
+  background-color: #eee;
+  height: 5px;
+  width: 70px;
+  display: block;
+  float: left;
+  margin: 2px 5px;
+}
+
+.nav-pills > li > a {
+  line-height: 15px;
+  min-width: inherit;
+}
+
+input:not([type]),
+input[type=text],
+input[type=password],
+input[type=email],
+input[type=url],
+input[type=time],
+input[type=date],
+input[type=datetime],
+input[type=datetime-local],
+input[type=tel],
+input[type=number],
+input[type=search],
+textarea.materialize-textarea {
+  background-color: transparent;
+border-bottom: none;
+  border-radius: 0;
+  outline: none;
+  height: 3rem;
+  width: 100%;
+  font-size: 1rem;
+  margin: 0 0 15px 0;
+  padding: 0;
+  box-shadow: none;
+  box-sizing: content-box;
+  transition: all 0.3s;
+}
+
+input:not([type]):focus:not([readonly]),
+input[type=text]:focus:not([readonly]),
+input[type=password]:focus:not([readonly]),
+input[type=email]:focus:not([readonly]),
+input[type=url]:focus:not([readonly]),
+input[type=time]:focus:not([readonly]),
+input[type=date]:focus:not([readonly]),
+input[type=datetime]:focus:not([readonly]),
+input[type=datetime-local]:focus:not([readonly]),
+input[type=tel]:focus:not([readonly]),
+input[type=number]:focus:not([readonly]),
+input[type=search]:focus:not([readonly]),
+textarea.materialize-textarea:focus:not([readonly]) {
+border-bottom: none;
+  box-shadow: none;
 }
