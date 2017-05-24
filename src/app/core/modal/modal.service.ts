@@ -16,8 +16,17 @@ export class ModalService {
 
         let context = new CustomModalContext(options);
 
-        return this.modal
-            .open(ModalWrapperComponent, overlayConfigFactory(context, BSModalContext));
+        return new Promise((resolve, reject) => {
+            this.modal
+                .open(ModalWrapperComponent, overlayConfigFactory(context, BSModalContext))
+                .then(resultPromise => {
+                    return resultPromise.result
+                        .then(
+                            result => resolve(result),
+                            () => {}
+                        );
+                });
+        });
 
     }
 }

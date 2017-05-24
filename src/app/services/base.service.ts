@@ -15,4 +15,12 @@ export class BaseService<T> {
     public add(data) {
         return this.table.add(data);
     }
+
+    public all() {
+        return this.table.toArray();
+    }
+
+    public delete(key: any) {
+        return this.table.delete(key);
+    }
 }

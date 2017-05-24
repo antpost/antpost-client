@@ -45,7 +45,8 @@ export class CustomModalContext extends BSModalContext implements IModalOptions 
         <dynamic-component [componentData]="componentData"></dynamic-component>
     </div>
     <div class="modal-footer">
-        <button class="btn btn-primary" (click)="save()">OK</button>
+        <button class="btn btn-primary" (click)="save()">Lưu</button>
+        <button class="btn" (click)="cancel()">Hủy bỏ</button>
     </div>
         
       `,
@@ -62,6 +63,8 @@ export default class ModalWrapperComponent implements OnInit, CloseGuard, ModalC
             component: dialog.context.options.component,
             inputs: dialog.context.options.inputs
         } as IComponentData;
+
+        this.extendInput();
 
         this.context = dialog.context;
         this.context.dialogClass += ' modal-' + this.context.options.size;
@@ -82,7 +85,7 @@ export default class ModalWrapperComponent implements OnInit, CloseGuard, ModalC
     }
 
     public cancel() {
-        this.dialog.close();
+        this.dialog.dismiss();
     }
 
     public beforeDismiss(): boolean {
@@ -91,5 +94,16 @@ export default class ModalWrapperComponent implements OnInit, CloseGuard, ModalC
 
     public beforeClose(): boolean {
         return false;
+    }
+
+    private extendInput() {
+        this.componentData.inputs.onClose = (data: any) => {
+            this.dialog.close(data);
+        };
+
+        this.componentData.inputs.onDismiss = (data: any) => {
+            this.dialog.dismiss();
+        }
+
     }
 }

@@ -6,6 +6,9 @@ import {PostService} from '../../services/post.service';
 import {PostFormComponent} from './postForm.component';
 import {ModalService} from '../../core/modal/modal.service';
 import {IModalOptions} from '../../core/modal/modalWrapper.component';
+import {Post} from '../../models/post.model';
+import {PostType} from '../../models/enums';
+import {Toastr} from '../../core/helpers/toastr';
 
 @Component({
     selector: 'post',
@@ -16,29 +19,46 @@ import {IModalOptions} from '../../core/modal/modalWrapper.component';
 })
 export class PostComponent implements OnInit {
 
+    public posts: Post[];
+
     constructor(private postService: PostService, private modal: ModalService) {
 
     }
 
     public ngOnInit() {
-
+        this.read();
     }
 
-    public addPost(title: string) {
-        /*const post: Post = {
-         title: this.title
-         };
-         this.postService
-         .add(post)
-         .then((id) => {
-         console.log(id);
-         });*/
+    public async read() {
+        this.posts = await this.postService.all();
+    }
 
-        this.modal.open({
+    public add() {
+        let post = new Post();
+        post.type = PostType.Message;
+
+        this.openForm(post);
+    }
+
+    public edit(post: Post) {
+        this.openForm(post);
+    }
+
+    public async remove(post: Post) {
+        await this.postService.delete(post.id);
+        Toastr.success("Xóa bài viết thành công!");
+        this.read();
+    }
+
+    private openForm(post: Post) {
+        let dialog = this.modal.open({
             component: PostFormComponent,
-            inputs: {},
-            title: 'Thêm mới bài viết'
+            inputs: post,
+            title: post.title
         } as IModalOptions);
 
+        dialog.then((result) => {
+            this.read();
+        });
     }
 }

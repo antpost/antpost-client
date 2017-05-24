@@ -1,8 +1,12 @@
 import {
     Component,
-    OnInit, ViewChild, ViewEncapsulation, ElementRef
+    OnInit, ViewChild, ViewEncapsulation, ElementRef, Input, Injector
 } from '@angular/core';
 import {PostService} from '../../services/post.service';
+import {Post} from '../../models/post.model';
+import {PostType} from '../../models/enums';
+import {NotificationsService} from 'angular2-notifications/dist';
+import {Toastr} from '../../core/helpers/toastr';
 
 @Component({
     selector: 'post-form',
@@ -13,17 +17,37 @@ import {PostService} from '../../services/post.service';
 })
 export class PostFormComponent implements OnInit {
 
-    public wrongAnswer: boolean;
+    public post: Post;
 
-    constructor(private postService: PostService) {
+    @Input()
+    public onClose: Function;
+
+    @Input()
+    public onDismiss: Function;
+
+    constructor(private injector: Injector,
+                private postService: PostService) {
+        this.onClose = this.injector.get('onClose');
+        this.onDismiss = this.injector.get('onDismiss');
+
+        this.post = new Post();
+        this.post.type = PostType.Message;
     }
 
     public ngOnInit() {
 
     }
 
-    public save() {
-        console.log('save');
+    public async save() {
+        this.post.updatedAt = new Date();
+        this.post.createdAt = new Date();
+
+        let id = await this.postService.add(this.post);
+        this.post.id = id;
+
+        Toastr.success("Lưu bài viết thành công!");
+
+        this.onClose(this.post);
     }
 
 }

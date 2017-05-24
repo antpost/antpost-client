@@ -31,55 +31,18 @@
 		</div>
 		<div class="tab-content">
 			<div class="tab-pane active" id="post-form">
-				<div class="card">
-					<div class="card-content">
-						<div class="form-group label-floating is-empty">
-							<label class="control-label">Tiêu đề (*) </label>
-							<input class="form-control" name="title" type="text" required="true" aria-required="true">
-						</div>
-						<div class="form-group label-floating is-empty">
-							<label class="control-label">Nội dung </label>
-							<textarea name="message" rows="3" cols="50" class="form-control"></textarea>
-							<div id="emoticons">
-								<a href="#" title="👍" class="emoji _2e7 _1a-"></a><a href="#" title="👎" class="emoji _2e8 _1a-"></a><a href="#" title="😝" class="emoji _2g7 _1a-"></a><a href="#" title="😜" class="emoji _2g6 _1a-"></a><a href="#" title="😃" class="emoji _2fu _1a-"></a><a href="#" title="😉" class="emoji _2fx _1a-"></a><a href="#" title="😂" class="emoji _2ft _1a-"></a><a href="#" title="😨" class="emoji _2gf _1a-"></a><a href="#" title="😭" class="emoji _2gj _1a-"></a><a href="#" title="😓" class="emoji _2g1 _1a-"></a><a href="#" title="😡" class="emoji _2ga _1a-"></a><a href="#" title="😠" class="emoji _2g9 _1a-"></a><a href="#" title="👽" class="emoji _2es _1a-"></a><a href="#" title="😘" class="emoji _2g4 _1a-"></a><a href="#" title="🌹" class="emoji _2c9 _1a-"></a><a href="#" title="💋" class="emoji _2ez _1a-"></a><a href="#" title="💰" class="emoji _4_q- _1a-"></a><a href="#" title="💲" class="emoji _4_q_ _1a-"></a><a href="#" title="❤" class="emoji _2hc _1a-"></a><a href="#" title="💔" class="emoji _2f2 _1a-"></a><a href="#" title="💓" class="emoji _2f1 _1a-"></a><a href="#" title="😍" class="emoji _2f- _1a-"></a><a href="#" title="🌟" class="emoji _2c3 _1a-"></a><a href="#" title="✈" class="emoji _4_u2 _1a-"></a><a href="#" title="⚡" class="emoji _2h2 _1a-"></a><a href="#" title="🎵" class="emoji _2cy _1a-"></a><a href="#" title="➡" class="emoji _4_tk _1a-"></a><a href="#" title="⬅" class="emoji _4_tm _1a-"></a><a href="#" title="⚽" class="emoji _4_t9 _1a-"></a><a href="#" title="👀" class="emoji _2dx _1a-"></a><a href="#" title="☎" class="emoji _4_t4 _1a-"></a><a href="#" title="✉" class="emoji _4_u3 _1a-"></a>		</div>
-						</div>
-					</div>
+				<div class="form-group label-floating is-empty">
+					<label class="control-label">Tiêu đề (*) </label>
+					<input class="form-control" name="title" type="text" required="true" aria-required="true" [(ngModel)]="post.title">
+				</div>
+				<div class="form-group label-floating is-empty">
+					<label class="control-label">Nội dung </label>
+					<textarea name="message" rows="3" cols="50" class="form-control" [(ngModel)]="post.message"></textarea>
 				</div>
 			</div>
 		</div>
 	</div>
 	<div class="col-sm-6">
-		<div class="post-preview">
-			<div class="post">
-				<div class="PreviewPoster">
-					<img
-						src="http://graph.facebook.com/113577002377551/picture?redirect=1&amp;height=40&amp;width=40&amp;type=normal"
-						style="vertical-align:top;" onerror="this.src = 'theme/default/images/facebookUser.jpg'">
-					<span class="userFullName">
-					Ant Post				</span>
-					<span class="postPreviewDetails">
-					Now· Graph API Explorer				</span>
-					<div class="clear"></div>
-				</div>
-				<p class="message"><span class="defaultMessage"></span></p>
-
-				<a href="#" class="previewPostLink">
-					<div class="previewLink"></div>
-					<div class="postDetails">
-						<p class="name">
-							<span class="defaultName"></span>
-						</p>
-						<p class="description">
-							<span class="defaultDescription"></span>
-							<span class="defaultDescription"></span>
-							<span class="defaultDescription"></span>
-							<span class="defaultDescription"></span>
-							<span class="defaultDescription"></span>
-						</p>
-						<p class="caption"><span class="defaultCaption"></span></p>
-					</div>
-				</a>
-			</div>
-		</div>
+		<post-preview></post-preview>
 	</div>
 </div>
