@@ -6,6 +6,9 @@
 //$roboto-font-path: "../../node_modules/materialize-css/fonts/roboto/";
 //
 //@import "~materialize-css/sass/materialize";
+
+@import "kendo.modify.css";
+
 html {
   font-size: 13px;
 }
@@ -121,6 +124,10 @@ nav {
 .card .card-content .card-data {
   width: 100%;
   clear: both;
+}
+
+.card.no-header {
+   margin: 0 0;
 }
 
 .modal .modal-dialog {
@@ -280,3 +287,5 @@ nav {
   background-color: #337ab7;
   color: #FFFFFF;
 }
+
+

@@ -1,0 +1,7 @@
+/* KENDO */
+.k-widget {
+    font-size: 13px;
+}
+.k-grid td, .k-grid th {
+    padding: 5px 5px;
+}

@@ -35,6 +35,7 @@ import {HashLocationStrategy, LocationStrategy} from '@angular/common';
 import {NavbarModule} from './shared/navbar/navbar.module';
 import {BootstrapModalModule} from 'angular2-modal/plugins/bootstrap';
 import {ModalModule} from 'angular2-modal';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -59,6 +60,7 @@ type StoreType = {
     ],
     imports: [ // import Angular's modules
         BrowserModule,
+        BrowserAnimationsModule,
         AntPostModule,
         SidebarModule,
         NavbarModule,
