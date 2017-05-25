@@ -8,6 +8,7 @@ import {CoreModule} from '../core/core.module';
 import {PostService} from '../services/post.service';
 import {PostFormComponent} from './post/postForm.component';
 import {CommonModule} from '@angular/common';
+import {PostSelectorComponent} from "./post/postSelector.component";
 
 @NgModule({
     imports: [
@@ -25,7 +26,7 @@ import {CommonModule} from '@angular/common';
     // IMPORTANT:
     // Since 'AdditionCalculateWindow' is never explicitly used (in a template)
     // we must tell angular about it.
-    entryComponents: [PostFormComponent]
+    entryComponents: [PostFormComponent, PostSelectorComponent]
 })
 
 export class AntPostModule {
