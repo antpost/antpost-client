@@ -11,6 +11,9 @@ import {CommonModule} from '@angular/common';
 import {PostSelectorComponent} from "./post/postSelector.component";
 import {GridModule} from '@progress/kendo-angular-grid';
 import {FacebookService} from '../services/facebook.service';
+import {GroupService} from '../services/group.service';
+import {AppManager} from '../core/appManager';
+import {LocalStorageService} from '../services/localStorage.service';
 
 @NgModule({
     imports: [
@@ -25,7 +28,10 @@ import {FacebookService} from '../services/facebook.service';
     declarations: [MODULE_COMPONENTS],
     providers: [
         PostService,
-        FacebookService
+        FacebookService,
+        GroupService,
+        AppManager,
+        LocalStorageService
     ],
     // IMPORTANT:
     // Since 'AdditionCalculateWindow' is never explicitly used (in a template)

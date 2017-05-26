@@ -9,4 +9,6 @@ export class User {
     public username: string;
     public password: string;
     public status: number;
+    public email: string;
+    public token: string;
 }

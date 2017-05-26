@@ -3,24 +3,33 @@ import {AppConfig} from "../app.config";
 import {Observable} from "rxjs";
 import {Dexie} from 'dexie';
 import {DbService} from '../core/database';
+import {__await} from 'tslib';
 
-export class BaseService<T> {
+export class BaseService<U> {
     protected apiPath: string = AppConfig.basePath + 'api/';
-    protected table: Dexie.Table<T, number>;
+    protected table: Dexie.Table<U, number>;
 
     constructor(private db: DbService, tableName: string) {
         this.table = this.db.table(tableName);
     }
 
-    public add(data) {
-        return this.table.add(data);
+    public async add(data) {
+        return await this.table.add(data);
     }
 
-    public all() {
-        return this.table.toArray();
+    public async all() {
+        return await this.table.toArray();
     }
 
-    public delete(key: any) {
-        return this.table.delete(key);
+    public async delete(key: any) {
+        return await this.table.delete(key);
+    }
+
+    public async addAll(list: Array<U>): Promise<void> {
+        this.db.transaction('rw', this.table, () => {
+            list.forEach((item: U) => {
+                this.table.add(item);
+            });
+        });
     }
 }

@@ -58,6 +58,10 @@
     "prefer-for-of": false,
     "object-shorthand": false,
     "eqeqeq": false,
-    "forin": false
+    "forin": false,
+    "array-type": [false, "generic"],
+    "no-consecutive-blank-lines": false,
+    "whitespace": [false, "check-branch", "check-operator", "check-typecast"],
+    "max-classes-per-file": [true, 5]
   }
 }

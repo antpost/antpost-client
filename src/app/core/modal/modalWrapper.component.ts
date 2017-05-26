@@ -103,7 +103,7 @@ export default class ModalWrapperComponent implements OnInit, CloseGuard, ModalC
 
         this.componentData.inputs.onDismiss = (data: any) => {
             this.dialog.dismiss();
-        }
+        };
 
     }
 }

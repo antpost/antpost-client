@@ -2,14 +2,16 @@ import {Injectable} from '@angular/core';
 import {Md5} from 'ts-md5/dist/md5';
 import {Observable} from 'rxjs';
 import {Http, Response} from '@angular/http';
+import {AppManager} from '../core/appManager';
 
 @Injectable()
 export class FacebookService {
-    private api_key = '882a8490361da98702bf97a021ddc14d';
+    private apikey = '882a8490361da98702bf97a021ddc14d';
     private secretkey = '62f8ce9f74b12f84c123cc23437a4a32';
-    private host = 'http://localhost:8080/';
+    private host = 'http://localhost:8080';
+    private graphApi = 'https://graph.facebook.com';
 
-    constructor(private http: Http) {
+    constructor(private http: Http, private appManager: AppManager) {
     }
 
     /**
@@ -20,7 +22,7 @@ export class FacebookService {
      */
     public login(username: string, password: string): Observable<Response> {
         let data: any = {
-            api_key: this.api_key,
+            api_key: this.apikey,
             email: username,
             format: "JSON",
             locale: "vi_vn",
@@ -35,12 +37,36 @@ export class FacebookService {
         return this.http.post(`${this.host}/fblogin`, data);
     }
 
-    private getJoinedGroups(): Observable<boolean> {
-        return this.post({});
+    /**
+     * Get groups that joined by current user
+     * @returns {Observable<any>}
+     */
+    public getJoinedGroups(): Observable<boolean> {
+        let api = this.createApi('/me/groups');
+        return this.post(api, 'GET', null);
     }
 
-    private post(data: any): Observable<any> {
-        return this.http.post(`${this.host}/post`, {})
+    /**
+     * Create full facebook api by adding access_token
+     * @param url
+     * @param params
+     * @returns {string}
+     */
+    private createApi(url: string, params?: any) {
+        return `${this.graphApi}${url}?access_token=${this.appManager.currentUser.token}`;
+    }
+
+    /**
+     * Post to local proxy server to get data
+     * @param api
+     * @param method
+     * @param data
+     * @returns {any}
+     */
+    private post(api: string, method: string, data: any): Observable<any> {
+        let postData = {api, method, data};
+
+        return this.http.post(`${this.host}/post`, postData)
             .map((response: Response) => {
                return response.json();
             }).catch((error: Response) => {

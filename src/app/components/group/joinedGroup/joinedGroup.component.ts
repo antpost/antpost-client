@@ -4,6 +4,9 @@ import {
 } from '@angular/core';
 import {PostService} from '../../../services/post.service';
 import {ModalService} from '../../../core/modal/modal.service';
+import {FacebookService} from '../../../services/facebook.service';
+import {GroupService} from '../../../services/group.service';
+import {Group} from '../../../models/group.model';
 
 @Component({
     selector: 'join-group',
@@ -14,32 +17,29 @@ import {ModalService} from '../../../core/modal/modal.service';
 })
 export class JoinedGroupComponent implements OnInit {
 
-    private groups: any[];
+    public groups: Array<Group>;
 
-    constructor(private postService: PostService, private modal: ModalService) {
-        this.fetch((data) => {
-            this.groups = data;
-        });
+    constructor(private postService: PostService, private modal: ModalService,
+                private facebookService: FacebookService,
+                private groupService: GroupService) {
+
+
     }
 
-    public ngOnInit() {
+    public async ngOnInit() {
+        if(localStorage.getItem('group')) {
+            this.groups = await this.groupService.getJoinedGroups();
+        } else {
+            this.facebookService.getJoinedGroups().subscribe((result: any) => {
+                this.groups = result.data;
 
-        /*this.groups = [
-            {
-                "name": "Làm Cha mẹ",
-                "members": 10000,
-                "privacy": 'OPEN'
-            }]*/
-    }
+                // save to db
+                this.groupService.addAll(this.groups);
+                localStorage.setItem('group', '1');
 
-    fetch(cb) {
-        const req = new XMLHttpRequest();
-        req.open('GET', `assets/mock-data/company.json`);
+            });
+        }
 
-        req.onload = () => {
-            cb(JSON.parse(req.response));
-        };
 
-        req.send();
     }
 }

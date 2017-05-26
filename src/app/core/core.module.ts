@@ -7,6 +7,7 @@ import {ModalService} from './modal/modal.service';
 import ModalWrapperComponent from './modal/modalWrapper.component';
 import {CommonModule} from '@angular/common';
 import {DynamicComponent} from "./dynamic.component";
+import {AppManager} from './appManager';
 
 @NgModule({
     declarations: [DynamicComponent, ModalWrapperComponent],
@@ -17,7 +18,8 @@ import {DynamicComponent} from "./dynamic.component";
     ],
     providers: [
         DbService,
-        ModalService
+        ModalService,
+        AppManager
     ],
     bootstrap: [],
     entryComponents: [ModalWrapperComponent]

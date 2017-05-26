@@ -6,7 +6,8 @@ export class DbService extends Dexie {
         super('antpost');
 
         this.version(1).stores({
-            posts: "++id"
+            posts: "++id",
+            groups: "++id"
         });
     }
 }

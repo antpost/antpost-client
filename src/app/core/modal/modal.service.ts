@@ -19,10 +19,10 @@ export class ModalService {
         return new Promise((resolve, reject) => {
             this.modal
                 .open(ModalWrapperComponent, overlayConfigFactory(context, BSModalContext))
-                .then(resultPromise => {
+                .then((resultPromise) => {
                     return resultPromise.result
                         .then(
-                            result => resolve(result),
+                            (result) => resolve(result),
                             () => {}
                         );
                 });

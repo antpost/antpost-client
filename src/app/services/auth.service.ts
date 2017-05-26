@@ -4,6 +4,9 @@ import {CanActivate, Router} from "@angular/router";
 import {Observable} from "rxjs";
 import {Md5} from 'ts-md5/dist/md5';
 import {FacebookService} from './facebook.service';
+import {SharedService} from './shared.service';
+import {AppManager} from '../core/appManager';
+import {User} from '../models/user.model';
 
 @Injectable()
 export class AuthService implements CanActivate {
@@ -11,11 +14,13 @@ export class AuthService implements CanActivate {
     public token: string;
     private loggedIn = false;
 
-    constructor(private http: Http, private router: Router, private facebookService: FacebookService) {
+    constructor(private http: Http, private router: Router, private facebookService: FacebookService, private appManager: AppManager) {
         // set token if saved in local storage
         let currentUser = JSON.parse(localStorage.getItem('currentUser'));
         this.token = currentUser && currentUser.token;
         this.loggedIn = !!currentUser;
+
+        this.appManager.currentUser = currentUser;
     }
 
     public canActivate() {
@@ -38,8 +43,10 @@ export class AuthService implements CanActivate {
                     // set token property
                     this.token = token;
 
+                    let user = {username, token} as User;
+                    this.appManager.currentUser = user;
                     // store username and jwt token in local storage to keep user logged in between page refreshes
-                    localStorage.setItem('currentUser', JSON.stringify({username, token}));
+                    localStorage.setItem('currentUser', JSON.stringify(user));
 
                     // return true to indicate successful login
                     return true;
@@ -56,18 +63,5 @@ export class AuthService implements CanActivate {
         // clear token remove user from local storage to log user out
         this.token = null;
         localStorage.removeItem('currentUser');
-    }
-
-    private createSig(data: any) {
-        let secretkey = '62f8ce9f74b12f84c123cc23437a4a32';
-
-        let textsig: any = "";
-        for (let key in data) {
-            textsig += key + "=" + data[key];
-        }
-        textsig += secretkey;
-        textsig = Md5.hashStr(textsig);
-
-        return textsig;
     }
 }
