@@ -4,12 +4,14 @@ import {DbService} from '../core/database';
 import {Group} from '../models/group.model';
 
 @Injectable()
-export class GroupService extends BaseService<Group> {
+export class GroupService extends BaseService<Group, string> {
     constructor(db: DbService) {
         super(db, 'groups');
     }
 
     public async getJoinedGroups(): Promise<Array<Group>> {
-        return await this.table.where('administrator').equals(0).toArray();
+        return await this.table.where({
+            administrator: 0
+        }).toArray();
     }
 }

@@ -4,7 +4,7 @@ import {Post} from '../models/post.model';
 import {DbService} from '../core/database';
 
 @Injectable()
-export class PostService extends BaseService<Post> {
+export class PostService extends BaseService<Post, number> {
     constructor(db: DbService) {
         super(db, 'posts');
     }

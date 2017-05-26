@@ -28,15 +28,17 @@ export class JoinedGroupComponent implements OnInit {
 
     public async ngOnInit() {
         if(localStorage.getItem('group')) {
-            this.groups = await this.groupService.getJoinedGroups();
+            this.groups = await this.groupService.all();
         } else {
             this.facebookService.getJoinedGroups().subscribe((result: any) => {
                 this.groups = result.data;
+                this.groups.forEach((item) => {
+                    item.administrator = item.administrator ? 1 : 0;
+                })
 
                 // save to db
                 this.groupService.addAll(this.groups);
                 localStorage.setItem('group', '1');
-
             });
         }
 

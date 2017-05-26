@@ -5,9 +5,9 @@ import {Dexie} from 'dexie';
 import {DbService} from '../core/database';
 import {__await} from 'tslib';
 
-export class BaseService<U> {
+export class BaseService<U, T> {
     protected apiPath: string = AppConfig.basePath + 'api/';
-    protected table: Dexie.Table<U, number>;
+    protected table: Dexie.Table<U, T>;
 
     constructor(private db: DbService, tableName: string) {
         this.table = this.db.table(tableName);
@@ -30,6 +30,10 @@ export class BaseService<U> {
             list.forEach((item: U) => {
                 this.table.add(item);
             });
+        }).then((result) => {
+            console.log("Transaction committed");
+        }).catch((e) => {
+            console.error(e.stack);
         });
     }
 }
