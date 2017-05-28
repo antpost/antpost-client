@@ -8,7 +8,7 @@ import {AppManager} from '../core/appManager';
 export class FacebookService {
     private apikey = '882a8490361da98702bf97a021ddc14d';
     private secretkey = '62f8ce9f74b12f84c123cc23437a4a32';
-    private host = 'http://localhost:8080';
+    private host = 'http://localhost:3001';
     private graphApi = 'https://graph.facebook.com';
 
     constructor(private http: Http, private appManager: AppManager) {

@@ -31,7 +31,8 @@ Icon?
 Thumbs.db
 
 # Node Files #
-/node_modules/
+/node_modules/*
+!/node_modules/@progress/
 /bower_components/
 npm-debug.log
 /npm-debug.log.*
