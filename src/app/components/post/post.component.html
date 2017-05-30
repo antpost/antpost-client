@@ -24,9 +24,9 @@
 							</thead>
 							<tbody>
 							<tr *ngFor="let item of posts; let i = index; trackBy: id">
-								<td>{{item.title}}</td>
+								<td width="50%">{{item.title}}</td>
 								<td>{{item.type}}</td>
-								<td>{{item.createdAt}}</td>
+								<td>{{item.createdAt | date: 'short' }}</td>
 								<td class="td-actions">
 									<button type="button" class="btn btn-primary btn-simple btn-xs" (click)="edit(item)">
 										<i class="material-icons">edit</i>

@@ -11,7 +11,8 @@ export class ModalService {
     public open(options: IModalOptions): Promise<DialogRef<any>> {
         options = Object.assign({
             showClose: true,
-            size: 'lg'
+            size: 'lg',
+            inputs: {}
         }, options);
 
         let context = new CustomModalContext(options);

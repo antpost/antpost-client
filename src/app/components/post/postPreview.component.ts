@@ -13,7 +13,8 @@ import {Post} from '../../models/post.model';
 })
 export class PostPreviewComponent implements OnInit {
 
-    public post: Post = new Post();
+    @Input()
+    public post: Post;
 
     constructor() {
 

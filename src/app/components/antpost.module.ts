@@ -36,7 +36,7 @@ import {LocalStorageService} from '../services/localStorage.service';
     // IMPORTANT:
     // Since 'AdditionCalculateWindow' is never explicitly used (in a template)
     // we must tell angular about it.
-    entryComponents: [PostFormComponent, PostSelectorComponent]
+    entryComponents: [PostFormComponent, PostSelectorComponent, PostSelectorComponent]
 })
 
 export class AntPostModule {

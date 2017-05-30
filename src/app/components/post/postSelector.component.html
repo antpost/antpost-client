@@ -1,36 +1,28 @@
 <div class="row">
 	<div class="col-md-12">
-		<div class="card">
-			<div class="card-content">
-				<div class="card-data">
-					<div class="table-responsive">
-						<table class="table">
-							<thead class="text-primary">
-							<tr>
-								<th>Tiêu đề</th>
-								<th>Loại bài viết</th>
-								<th>Ngày tạo</th>
-								<th>Thao tác</th>
-							</tr>
-							</thead>
-							<tbody>
-							<tr *ngFor="let item of posts; let i = index; trackBy: id">
-								<td>{{item.title}}</td>
-								<td>{{item.type}}</td>
-								<td>{{item.createdAt}}</td>
-								<td class="td-actions">
-									<button type="button" class="btn btn-primary btn-simple btn-xs" (click)="select(item)">
-										<i class="material-icons">edit</i>
-										<div class="ripple-container"></div>
-									</button>
-								</td>
-							</tr>
-							</tbody>
-						</table>
-					</div>
-				</div>
-
-			</div>
+		<div class="table-responsive">
+			<table class="table">
+				<thead class="text-primary">
+				<tr>
+					<th>Tiêu đề</th>
+					<th>Loại bài viết</th>
+					<th>Ngày tạo</th>
+					<th>Thao tác</th>
+				</tr>
+				</thead>
+				<tbody>
+				<tr *ngFor="let item of posts; let i = index; trackBy: id">
+					<td width="50%">{{item.title}}</td>
+					<td>{{item.type}}</td>
+					<td>{{item.createdAt | date: 'short' }}</td>
+					<td class="td-actions">
+						<button type="button" class="btn btn-primary btn-simple btn-xs" (click)="select(item)">
+							<i class="material-icons">touch_app</i> Chọn
+						</button>
+					</td>
+				</tr>
+				</tbody>
+			</table>
 		</div>
 	</div>
 </div>

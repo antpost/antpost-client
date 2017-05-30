@@ -17,7 +17,8 @@ import {Toastr} from '../../core/helpers/toastr';
 })
 export class PostFormComponent implements OnInit {
 
-    public post: Post;
+    @Input()
+    public post: Post = new Post();
 
     @Input()
     public onClose: Function;
@@ -25,13 +26,42 @@ export class PostFormComponent implements OnInit {
     @Input()
     public onDismiss: Function;
 
+    public tabs: Array<any>;
+    public postType = PostType;
+
     constructor(private injector: Injector,
                 private postService: PostService) {
         this.onClose = this.injector.get('onClose');
         this.onDismiss = this.injector.get('onDismiss');
+        this.post = this.injector.get('post');
 
-        this.post = new Post();
-        this.post.type = PostType.Message;
+        this.tabs = [
+            {
+                type: PostType.Message,
+                label: 'Bài viết',
+                icon: 'message'
+            },
+            {
+                type: PostType.Link,
+                label: 'Liên kết',
+                icon: 'link'
+            },
+            {
+                type: PostType.Sale,
+                label: 'Bán hàng',
+                icon: 'shopping_cart'
+            },
+            {
+                type: PostType.Image,
+                label: 'Hình ảnh',
+                icon: 'add_a_photo'
+            },
+            {
+                type: PostType.Video,
+                label: 'Video',
+                icon: 'video_library'
+            }
+        ];
     }
 
     public ngOnInit() {
@@ -50,4 +80,7 @@ export class PostFormComponent implements OnInit {
         this.onClose(this.post);
     }
 
+    public cancel() {
+        this.onDismiss();
+    }
 }

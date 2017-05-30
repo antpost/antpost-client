@@ -3,4 +3,5 @@ export class Group {
     public name: string;
     public privacy: string;
     public administrator: number;
+    public members: number;
 }

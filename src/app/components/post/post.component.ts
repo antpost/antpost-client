@@ -53,8 +53,10 @@ export class PostComponent implements OnInit {
     private openForm(post: Post) {
         let dialog = this.modal.open({
             component: PostFormComponent,
-            inputs: post,
-            title: post.title
+            inputs: {
+                post
+            },
+            title: post.id ? post.title : 'Thêm mới bài viết'
         } as IModalOptions);
 
         dialog.then((result) => {

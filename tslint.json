@@ -62,6 +62,7 @@
     "array-type": [false, "generic"],
     "no-consecutive-blank-lines": false,
     "whitespace": [false, "check-branch", "check-operator", "check-typecast"],
-    "max-classes-per-file": [true, 5]
+    "max-classes-per-file": [true, 5],
+    "triple-equals": false
   }
 }

@@ -13,6 +13,10 @@ html {
   font-size: 13px;
 }
 
+a {
+  cursor: pointer;
+}
+
 html.login {
   display: table;
   margin: auto;
@@ -167,7 +171,7 @@ nav {
 }
 
 .PreviewPoster {
-  margin: 10px 0px;
+
 }
 
 .PreviewPoster img {
@@ -288,4 +292,11 @@ nav {
   color: #FFFFFF;
 }
 
+.btn.btn-sm, .btn-group-sm .btn, .navbar .navbar-nav > li > a.btn.btn-sm, .btn-group-sm .navbar .navbar-nav > li > a.btn {
+  padding: 5px 8px;
+}
 
+/* Table */
+.table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+  padding: 5px 5px;
+}

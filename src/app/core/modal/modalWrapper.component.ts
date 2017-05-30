@@ -44,10 +44,10 @@ export class CustomModalContext extends BSModalContext implements IModalOptions 
     <div class="modal-body">
         <dynamic-component [componentData]="componentData"></dynamic-component>
     </div>
-    <div class="modal-footer">
+    <!--<div class="modal-footer">
         <button class="btn btn-primary" (click)="save()">Lưu</button>
         <button class="btn" (click)="cancel()">Hủy bỏ</button>
-    </div>
+    </div>-->
         
       `,
 })

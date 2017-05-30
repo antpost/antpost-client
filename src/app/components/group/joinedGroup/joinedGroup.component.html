@@ -1,4 +1,13 @@
 <div>
+	<div class="search">
+		<div class="form-inline">
+			<div class="form-group">
+				<input type="text" class="form-control" placeholder="Tìm kiếm">
+			</div>
+			<button class="btn btn-primary btn-sm" (click)="loadMembers()"><i class="material-icons">face</i> Thành viên</button>
+			<button class="btn btn-primary btn-sm" (click)="reload()"><i class="material-icons">update</i> Tải lại</button>
+		</div>
+	</div>
 	<kendo-grid [data]="groups" [height]="410">
 		<kendo-grid-column field="checked" title="" width="20">
 			<ng-template kendoGridCellTemplate let-dataItem>

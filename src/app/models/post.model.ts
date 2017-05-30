@@ -5,4 +5,20 @@ export class Post {
     public type?: number;
     public createdAt?: Date;
     public updatedAt?: Date;
+
+    // image
+    public linkUrl?: string;
+    public linkTitle?: string;
+    public linkDescription?: string;
+    public linkCaption?: string;
+    public imageUrl?: string;
+
+    // sale
+    public productName?: string;
+    public price?: number;
+    public address?: string;
+
+    public images?: Array<string>;
+
+    public status?: number;
 }

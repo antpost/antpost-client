@@ -2,47 +2,51 @@
 	<div class="col-sm-6">
 		<div class="nav-center">
 			<ul class="nav nav-pills nav-pills-warning nav-pills-icons" role="tablist">
-				<li class="">
-					<a href="#post-form" role="tab" data-toggle="tab" aria-expanded="false">
-						<i class="material-icons">message</i> Bài viết
-					</a>
-				</li>
-				<li class="">
-					<a href="#post-form" role="tab" data-toggle="tab" aria-expanded="false">
-						<i class="material-icons">link</i> Liên kết
-					</a>
-				</li>
-				<li class="active">
-					<a href="#post-form" role="tab" data-toggle="tab" aria-expanded="true">
-						<i class="material-icons">shopping_cart</i> Bán hàng
-					</a>
-				</li>
-				<li>
-					<a href="#post-form" role="tab" data-toggle="tab">
-						<i class="material-icons">add_a_photo</i> Hình ảnh
-					</a>
-				</li>
-				<li>
-					<a href="#post-form" role="tab" data-toggle="tab">
-						<i class="material-icons">video_library</i> Video
+				<li [ngClass]="{'active': post.type == item.type}" *ngFor="let item of tabs">
+					<a role="tab" data-toggle="tab" aria-expanded="false" (click)="post.type=item.type">
+						<i class="material-icons">{{item.icon}}</i> {{item.label}}
 					</a>
 				</li>
 			</ul>
 		</div>
 		<div class="tab-content">
 			<div class="tab-pane active" id="post-form">
-				<div class="form-group label-floating is-empty">
-					<label class="control-label">Tiêu đề (*) </label>
+				<div class="form-group">
+					<label class="control-label">Tên bài viết (*) </label>
 					<input class="form-control" name="title" type="text" required="true" aria-required="true" [(ngModel)]="post.title">
 				</div>
-				<div class="form-group label-floating is-empty">
+				<div class="form-group">
 					<label class="control-label">Nội dung </label>
-					<textarea name="message" rows="3" cols="50" class="form-control" [(ngModel)]="post.message"></textarea>
+					<textarea name="message" rows="3" cols="50" class="form-control" [(ngModel)]="post.message" placeholder="Awesome!"></textarea>
+				</div>
+				<div class="form-group" *ngIf="post.type == postType.Link">
+					<label class="control-label">Link</label>
+					<input class="form-control" name="linkUrl" type="text" [(ngModel)]="post.linkUrl" placeholder="http://antpost.com">
+				</div>
+				<div class="form-group" *ngIf="post.type == postType.Link">
+					<label class="control-label">Đường dẫn ảnh</label>
+					<input class="form-control" name="imageUrl" type="text" [(ngModel)]="post.imageUrl" placeholder="http://antpost.com/logo.png">
+				</div>
+				<div class="form-group" *ngIf="post.type == postType.Link">
+					<label class="control-label">Tiêu đề liên kết</label>
+					<input class="form-control" name="linkTitle" type="text" [(ngModel)]="post.linkTitle" placeholder="The best facebook tool that I've used">
+				</div>
+				<!--<div class="form-group">
+					<label class="control-label">Chú thích</label>
+					<input class="form-control" name="linkCaption" type="text" [(ngModel)]="post.linkCaption" >
+				</div>-->
+				<div class="form-group" *ngIf="post.type == postType.Link">
+					<label class="control-label">Mô tả</label>
+					<textarea name="message" rows="3" cols="50" class="form-control" [(ngModel)]="post.linkDescription"></textarea>
 				</div>
 			</div>
 		</div>
 	</div>
 	<div class="col-sm-6">
-		<post-preview></post-preview>
+		<post-preview [post]="post"></post-preview>
 	</div>
+</div>
+<div class="modal-footer">
+	<button class="btn btn-primary" (click)="save()">Lưu</button>
+	<button class="btn" (click)="cancel()">Hủy bỏ</button>
 </div>

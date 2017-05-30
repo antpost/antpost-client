@@ -26,7 +26,9 @@ export class BaseService<U, T> {
     }
 
     public async addAll(list: Array<U>): Promise<void> {
-        this.db.transaction('rw', this.table, () => {
+        this.db.transaction('rw', this.table, async () => {
+            await this.table.clear();
+
             list.forEach((item: U) => {
                 this.table.add(item);
             });
