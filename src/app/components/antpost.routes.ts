@@ -9,6 +9,7 @@ import {GroupPostComponent} from './group/joinedGroup/groupPost.component';
 import {GroupPostScheduleComponent} from './group/schedule/groupPostSchedule.component';
 import {JoinedGroupComponent} from './group/joinedGroup/joinedGroup.component';
 import {AuthService} from '../services/auth.service';
+import {PostTypePipe} from '../pipes/postType.pipe';
 
 export const MODULE_ROUTES: Route[] = [
     {path: 'login', component: LoginComponent},
@@ -26,4 +27,8 @@ export const MODULE_COMPONENTS = [
     PostSelectorComponent,
     GroupPostScheduleComponent,
     JoinedGroupComponent
+];
+
+export const PIPES = [
+    PostTypePipe
 ];

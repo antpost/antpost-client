@@ -7,25 +7,31 @@
 			<span class="userFullName">
 					Ant Post				</span>
 			<span class="postPreviewDetails">
-					3PM				</span>
+					3 hour				</span>
 			<div class="clear"></div>
 		</div>
-		<p class="message"><span class="defaultMessage"></span></p>
+		<p class="message line-breaker"><span class="defaultMessage" *ngIf="!post.message"></span>{{post.message}}</p>
 
-		<a href="#" class="previewPostLink">
-			<div class="previewLink"></div>
+		<a href="#" class="previewPostLink" *ngIf="post.type == postType.Link">
+			<div class="previewLink">
+				<img [src]="post.imageUrl" *ngIf="post.imageUrl">
+			</div>
 			<div class="postDetails">
 				<p class="name">
-					<span class="defaultName"></span>
+					<span class="defaultName" *ngIf="!post.linkTitle"></span>
+					{{post.linkTitle}}
 				</p>
-				<p class="description">
+				<p class="description" *ngIf="!post.linkDescription">
 					<span class="defaultDescription"></span>
 					<span class="defaultDescription"></span>
 					<span class="defaultDescription"></span>
 					<span class="defaultDescription"></span>
 					<span class="defaultDescription"></span>
 				</p>
-				<p class="caption"><span class="defaultCaption"></span></p>
+				<p class="description" *ngIf="post.linkDescription">
+					{{post.linkDescription}}
+				</p>
+				<!--<p class="caption"><span class="defaultCaption"></span></p>-->
 			</div>
 		</a>
 	</div>

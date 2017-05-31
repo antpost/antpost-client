@@ -69,8 +69,12 @@ export class PostFormComponent implements OnInit {
     }
 
     public async save() {
+        if (!this.validate()) {
+            return;
+        }
+
         this.post.updatedAt = new Date();
-        this.post.createdAt = new Date();
+        this.post.createdAt = this.post.createdAt || new Date();
 
         let id = await this.postService.add(this.post);
         this.post.id = id;
@@ -82,5 +86,25 @@ export class PostFormComponent implements OnInit {
 
     public cancel() {
         this.onDismiss();
+    }
+
+    /**
+     * Validate post
+     */
+    private validate() {
+        // title must be not empty
+        if (!this.post.title.trim() || !this.post.title.trim()) {
+            Toastr.error('Tên bài viết không được bỏ trống.');
+            return false;
+        }
+
+        if (this.post.type == PostType.Link) {
+            if(!this.post.linkUrl || !this.post.linkUrl.trim()) {
+                Toastr.error('Link chia sẻ không được bỏ trống.');
+                return false;
+            }
+        }
+
+        return true;
     }
 }

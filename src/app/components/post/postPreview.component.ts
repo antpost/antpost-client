@@ -3,6 +3,7 @@ import {
     OnInit, ViewChild, ViewEncapsulation, ElementRef, Input, Injector
 } from '@angular/core';
 import {Post} from '../../models/post.model';
+import {PostType} from '../../models/enums';
 
 @Component({
     selector: 'post-preview',
@@ -14,7 +15,9 @@ import {Post} from '../../models/post.model';
 export class PostPreviewComponent implements OnInit {
 
     @Input()
-    public post: Post;
+    public post: Post = new Post();
+
+    public postType = PostType;
 
     constructor() {
 

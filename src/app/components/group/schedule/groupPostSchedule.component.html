@@ -1,14 +1,20 @@
 <div class="row">
 	<div class="card no-header">
 		<div class="card-content">
-			<div class="col-sm-5">
-				<joined-group></joined-group>
+			<div class="col-sm-6">
+				<joined-group (changeSelected)="onChangeSelectedGroups($groups)"></joined-group>
 			</div>
-			<div class="col-sm-7">
+			<div class="col-sm-6">
 				<div class="row ">
-					<button class="btn btn-info btn-sm pull-right" (click)="selectPost()"><i class="material-icons">content_paste</i> Chọn bài viết</button>
+					<button class="btn btn-info btn-sm pull-right" (click)="selectPost()"><i class="material-icons">content_paste</i>
+						Chọn bài viết
+					</button>
 				</div>
 				<post-preview [post]="post"></post-preview>
+				<div class="row" *ngIf="post.id">
+					<button class="btn btn-primary pull-right" (click)="start()"><i class="material-icons">motorcycle</i> Bắt đầu
+					</button>
+				</div>
 			</div>
 		</div>
 	</div>

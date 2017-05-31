@@ -20,7 +20,7 @@
 					<textarea name="message" rows="3" cols="50" class="form-control" [(ngModel)]="post.message" placeholder="Awesome!"></textarea>
 				</div>
 				<div class="form-group" *ngIf="post.type == postType.Link">
-					<label class="control-label">Link</label>
+					<label class="control-label">Link chia sẻ</label>
 					<input class="form-control" name="linkUrl" type="text" [(ngModel)]="post.linkUrl" placeholder="http://antpost.com">
 				</div>
 				<div class="form-group" *ngIf="post.type == postType.Link">

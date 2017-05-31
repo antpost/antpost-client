@@ -6,6 +6,10 @@ import {PostService} from '../../../services/post.service';
 import {ModalService} from '../../../core/modal/modal.service';
 import {PostSelectorComponent} from '../../post/postSelector.component';
 import {Post} from '../../../models/post.model';
+import {Toastr} from '../../../core/helpers/toastr';
+import {Group} from '../../../models/group.model';
+import {JoinedGroupComponent} from '../joinedGroup/joinedGroup.component';
+import {SchedulePost} from '../../../models/schedulePost.model';
 
 @Component({
     selector: 'group-post-schedule',
@@ -16,7 +20,10 @@ import {Post} from '../../../models/post.model';
 })
 export class GroupPostScheduleComponent implements OnInit {
 
-    public post: Post;
+    @ViewChild(JoinedGroupComponent)
+    public joinedGroupComponent: JoinedGroupComponent;
+
+    public post: Post = new Post();
 
     constructor(private postService: PostService, private modal: ModalService) {
 
@@ -35,5 +42,22 @@ export class GroupPostScheduleComponent implements OnInit {
         dialog.then((result) => {
             this.post = result;
         });
+    }
+
+    public start() {
+        if (!this.post.id) {
+            Toastr.error('Bạn hãy chọn 1 bài viết đã lưu trước.');
+            return;
+        }
+
+        // check no groups selected
+        if(this.joinedGroupComponent.getSelectedGroups().length == 0) {
+            Toastr.error('Bạn phải chọn ít nhất 1 nhóm để đăng.');
+            return;
+        }
+
+        // save schedule
+        let schedule = new SchedulePost();
+        schedule.postId = this.post.id;
     }
 }

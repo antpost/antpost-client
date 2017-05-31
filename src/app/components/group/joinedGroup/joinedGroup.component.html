@@ -10,8 +10,11 @@
 	</div>
 	<kendo-grid [data]="groups" [height]="410">
 		<kendo-grid-column field="checked" title="" width="20">
+			<ng-template kendoGridHeaderTemplate let-column let-columnIndex="columnIndex">
+				<input type="checkbox" [(ngModel)]="isCheckAll" (change)="onCheckAll()"/>
+			</ng-template>
 			<ng-template kendoGridCellTemplate let-dataItem>
-				<input type="checkbox" [checked]="dataItem.checked"/>
+				<input type="checkbox" [(ngModel)]="dataItem.checked" (change)="onCheckGroup(dataItem)"/>
 			</ng-template>
 		</kendo-grid-column>
 		<kendo-grid-column field="name" title="Nhóm" width="200">

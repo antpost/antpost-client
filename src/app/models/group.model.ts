@@ -4,4 +4,6 @@ export class Group {
     public privacy: string;
     public administrator: number;
     public members: number;
+
+    public checked: boolean;
 }
