@@ -14,6 +14,7 @@ import {FacebookService} from '../services/facebook.service';
 import {GroupService} from '../services/group.service';
 import {AppManager} from '../core/appManager';
 import {LocalStorageService} from '../services/localStorage.service';
+import {SchedulePostService} from "../services/schedulePost.service";
 
 @NgModule({
     imports: [
@@ -28,6 +29,7 @@ import {LocalStorageService} from '../services/localStorage.service';
     declarations: [MODULE_COMPONENTS, PIPES],
     providers: [
         PostService,
+        SchedulePostService,
         FacebookService,
         GroupService,
         AppManager,

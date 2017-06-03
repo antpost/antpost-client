@@ -7,7 +7,8 @@ export class DbService extends Dexie {
 
         this.version(1).stores({
             posts: "++id,title,type",
-            groups: "id,name,privacy,administrator"
+            groups: "id,name,privacy,administrator",
+            schedulePosts: "++id,postId,status"
         });
     }
 }

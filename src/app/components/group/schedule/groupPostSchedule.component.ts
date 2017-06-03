@@ -10,6 +10,10 @@ import {Toastr} from '../../../core/helpers/toastr';
 import {Group} from '../../../models/group.model';
 import {JoinedGroupComponent} from '../joinedGroup/joinedGroup.component';
 import {SchedulePost} from '../../../models/schedulePost.model';
+import {SchedulePostStatus} from "../../../models/enums";
+import {SchedulePostService} from "../../../services/schedulePost.service";
+import {JobQueue} from "../../../core/jobs/jobQueue";
+import {JobFactory} from "../../../core/jobs/jobFactory";
 
 @Component({
     selector: 'group-post-schedule',
@@ -25,7 +29,10 @@ export class GroupPostScheduleComponent implements OnInit {
 
     public post: Post = new Post();
 
-    constructor(private postService: PostService, private modal: ModalService) {
+    constructor(private postService: PostService,
+                private schedulePostService: SchedulePostService,
+                private modal: ModalService,
+                private jobQueue: JobQueue) {
 
     }
 
@@ -39,12 +46,12 @@ export class GroupPostScheduleComponent implements OnInit {
             title: 'Chọn bài viết'
         });
 
-        dialog.then((result) => {
+        dialog.then((result: any) => {
             this.post = result;
         });
     }
 
-    public start() {
+    public async start() {
         if (!this.post.id) {
             Toastr.error('Bạn hãy chọn 1 bài viết đã lưu trước.');
             return;
@@ -59,5 +66,10 @@ export class GroupPostScheduleComponent implements OnInit {
         // save schedule
         let schedule = new SchedulePost();
         schedule.postId = this.post.id;
+        schedule.status = SchedulePostStatus.Running;
+
+        await this.schedulePostService.add(schedule);
+
+        this.jobQueue.add(JobFactory.createScheduleJob(schedule));
     }
 }
