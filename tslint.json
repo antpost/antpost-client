@@ -64,6 +64,7 @@
     "whitespace": [false, "check-branch", "check-operator", "check-typecast"],
     "max-classes-per-file": [true, 5],
     "triple-equals": false,
-    "radix": false
+    "radix": false,
+    "switch-default": false
   }
 }

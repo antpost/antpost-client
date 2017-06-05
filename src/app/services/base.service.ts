@@ -1,9 +1,6 @@
-import {Http, Response} from "@angular/http";
 import {AppConfig} from "../app.config";
-import {Observable} from "rxjs";
 import {Dexie} from 'dexie';
 import {DbService} from '../core/database';
-import {__await} from 'tslib';
 
 export class BaseService<U, T> {
     protected apiPath: string = AppConfig.basePath + 'api/';
@@ -11,7 +8,6 @@ export class BaseService<U, T> {
 
     constructor(private db: DbService, tableName: string) {
         this.table = this.db.table(tableName);
-        this.table.mapToClass(U);
     }
 
     public async add(data) {
@@ -40,7 +36,7 @@ export class BaseService<U, T> {
         });
     }
 
-    public async getByIds(ids: Array<T>): Promise<Array<U>> {
+    public async getByIds(ids: Array<any>): Promise<Array<U>> {
         return await this.table.where('id').inAnyRange(ids).toArray();
     }
 }

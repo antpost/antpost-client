@@ -1,5 +1,5 @@
 import Dexie from 'dexie';
-import relationships from 'dexie-relationships';
+import relationships from './db/relationship';
 
 export class DbService extends Dexie {
 

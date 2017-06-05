@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import {LocationStrategy, PlatformLocation, Location} from '@angular/common';
 import * as $ from 'jquery';
+import {AppRunner} from './core/appRunner';
 
 /*
  * App Component
@@ -36,7 +37,8 @@ import * as $ from 'jquery';
 })
 export class AppComponent implements OnInit {
 
-    constructor(private location: Location) {
+    constructor(private location: Location, private appRunner: AppRunner) {
+        this.appRunner.run();
     }
 
     public ngOnInit() {

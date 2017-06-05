@@ -11,6 +11,7 @@ import {GroupService} from "./group.service";
 export class SchedulePostService extends BaseService<SchedulePost, number> {
     constructor(db: DbService, private groupService: GroupService) {
         super(db, 'schedulePosts');
+        this.table.mapToClass(SchedulePost);
     }
 
     /**
@@ -20,8 +21,7 @@ export class SchedulePostService extends BaseService<SchedulePost, number> {
     public async getActiveSchedules(): Promise<Array<SchedulePost>> {
         let list = await this.table
             .where('status').notEqual(SchedulePostStatus.Stopped)
-            .with({nodePosts: 'nodePosts'})
-            .toArray();
+            .with({nodePosts: 'nodePosts'});
 
         if(list) {
             list.forEach(async (item: SchedulePost) => {

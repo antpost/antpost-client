@@ -1,17 +1,20 @@
 import {Injectable} from "@angular/core";
 import {SchedulePostService} from "../services/schedulePost.service";
 import {JobQueue} from "./jobs/jobQueue";
-import {ScheduleJob} from "./jobs/scheduleJob";
+import {JobFactory} from './jobs/jobFactory';
+import {ScheduleType} from '../models/enums';
 
 @Injectable()
 export class AppRunner {
     constructor(private jobQueue: JobQueue,
                 private schedulePostService: SchedulePostService) {
-        this.jobQueue.start();
+
     }
 
     public run() {
+        this.jobQueue.start();
 
+        this.buildSchedulePostJobs();
     }
 
     public async buildSchedulePostJobs() {
@@ -19,7 +22,7 @@ export class AppRunner {
         let schedules = await this.schedulePostService.getActiveSchedules();
         if(schedules) {
             schedules.forEach((schedule) => {
-                let job = new ScheduleJob(schedule);
+                let job = JobFactory.createScheduleJob(schedule, ScheduleType.Post);
                 this.jobQueue.push(job);
             });
         }

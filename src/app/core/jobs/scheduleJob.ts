@@ -13,10 +13,12 @@ export class ScheduleJob implements IJob {
     }
 
     private process() {
-        while(this.engine.hasNext()) {
+        if(this.engine.hasNext()) {
             this.engine.doNext(() => {
                 this.process();
             });
+        } else {
+            this.engine.stop();
         }
     }
 }

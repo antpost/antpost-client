@@ -22,6 +22,10 @@ export class JobQueue {
         this.loop(1000);
     }
 
+    public push(job: IJob) {
+        this.queue.push(job);
+    }
+
     private loop(timeout: number) {
         setTimeout(() => {
             if(this.queue.length > 0) {
@@ -33,9 +37,5 @@ export class JobQueue {
 
             this.loop(this.interval);
         }, timeout);
-    }
-
-    public push(job: IJob) {
-        this.queue.push(job);
     }
 }

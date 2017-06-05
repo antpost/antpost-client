@@ -58,7 +58,8 @@ export class GroupPostScheduleComponent implements OnInit {
         }
 
         // check no groups selected
-        if(this.joinedGroupComponent.getSelectedGroups().length == 0) {
+        let groups = this.joinedGroupComponent.getSelectedGroups();
+        if(groups.length == 0) {
             Toastr.error('Bạn phải chọn ít nhất 1 nhóm để đăng.');
             return;
         }
@@ -66,10 +67,13 @@ export class GroupPostScheduleComponent implements OnInit {
         // save schedule
         let schedule = new SchedulePost();
         schedule.postId = this.post.id;
-        schedule.status = SchedulePostStatus.Running;
+        schedule.status = SchedulePostStatus.Opened;
+        schedule.nodes = groups.map(group => group.id).join(',');
 
-        await this.schedulePostService.add(schedule);
+        let id = await this.schedulePostService.add(schedule);
 
-        this.jobQueue.add(JobFactory.createScheduleJob(schedule, ScheduleType.Post));
+        schedule.groups = groups;
+
+        this.jobQueue.push(JobFactory.createScheduleJob(schedule, ScheduleType.Post));
     }
 }

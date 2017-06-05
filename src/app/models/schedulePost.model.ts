@@ -21,13 +21,13 @@ export class SchedulePost extends Schedule {
     /**
      * Get all unposted groups
      */
-    public getUnposted(): Array<Groups> {
+    public getUnposted(): Array<Group> {
         return this.groups.filter((group: Group) => {
             let post = this.nodePosts.find((p) => {
                 return group.id == p.nodeId;
             });
 
-            return !!post;
+            return !post;
         });
     }
 }

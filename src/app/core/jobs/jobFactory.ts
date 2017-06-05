@@ -15,7 +15,7 @@ export class JobFactory {
      */
     public static createScheduleJob (schedule: Schedule, type: number): IJob {
         let types = {
-            'Post': PostScheduleEngine
+            Post: PostScheduleEngine
         };
 
         let key = ScheduleType[type];

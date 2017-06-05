@@ -24,7 +24,7 @@ export class HomeComponent implements OnInit {
     public localState = {value: ''};
     // TypeScript public modifiers
     constructor(private appRunner: AppRunner) {
-        this.appRunner.run();
+        //this.appRunner.run();
     }
 
     public ngOnInit() {

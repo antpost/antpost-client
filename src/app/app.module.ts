@@ -38,6 +38,7 @@ import {ModalModule} from 'angular2-modal';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {JobQueue} from "./core/jobs/jobQueue";
 import {ServiceLocator} from "./core/serviceLocator";
+import {AppRunner} from './core/appRunner';
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -75,6 +76,7 @@ type StoreType = {
         ENV_PROVIDERS,
         APP_PROVIDERS,
         AuthService,
+        AppRunner,
         {provide: LocationStrategy, useClass: HashLocationStrategy}
     ]
 })
@@ -82,7 +84,7 @@ export class AppModule {
 
     constructor(public appRef: ApplicationRef,
                 public appState: AppState,
-                injector: Injector) {
+                private injector: Injector) {
         ServiceLocator.injector = injector;
     }
 

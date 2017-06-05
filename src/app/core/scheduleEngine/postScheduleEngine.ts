@@ -4,7 +4,7 @@ import {FacebookService} from "../../services/facebook.service";
 import {ServiceLocator} from "../serviceLocator";
 import {SchedulePostService} from "../../services/schedulePost.service";
 
-export class PostScheduleEngine extends BaseScheduleEngine implements IScheduleEngine{
+export class PostScheduleEngine extends BaseScheduleEngine implements IScheduleEngine {
     private facebookService: FacebookService;
     private schedulePostService: SchedulePostService;
 
@@ -15,10 +15,11 @@ export class PostScheduleEngine extends BaseScheduleEngine implements IScheduleE
     }
 
     public hasNext(): boolean {
-        return this.schedule.hasAvailable();
+        return this.schedule.hasUnposted();
     }
 
     public doNext(doneCallback: Function): void {
+        console.log('do next');
         return null;
     }
 
