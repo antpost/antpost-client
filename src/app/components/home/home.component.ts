@@ -2,6 +2,8 @@ import {
     Component,
     OnInit
 } from '@angular/core';
+import {JobQueue} from "../../core/jobs/jobQueue";
+import {AppRunner} from "../../core/appRunner";
 
 @Component({
     // The selector is what angular internally uses
@@ -21,7 +23,8 @@ export class HomeComponent implements OnInit {
     // Set our default values
     public localState = {value: ''};
     // TypeScript public modifiers
-    constructor() {
+    constructor(private appRunner: AppRunner) {
+        this.appRunner.run();
     }
 
     public ngOnInit() {

@@ -82,10 +82,8 @@ export class AppModule {
 
     constructor(public appRef: ApplicationRef,
                 public appState: AppState,
-                private jobQueue: JobQueue,
                 injector: Injector) {
         ServiceLocator.injector = injector;
-        jobQueue.start();
     }
 
     public hmrOnInit(store: StoreType) {

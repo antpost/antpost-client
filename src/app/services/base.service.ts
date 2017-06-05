@@ -11,13 +11,14 @@ export class BaseService<U, T> {
 
     constructor(private db: DbService, tableName: string) {
         this.table = this.db.table(tableName);
+        this.table.mapToClass(U);
     }
 
     public async add(data) {
         return await this.table.add(data);
     }
 
-    public async all() {
+    public async all(): Promise<Array<U>> {
         return await this.table.toArray();
     }
 
@@ -37,5 +38,9 @@ export class BaseService<U, T> {
         }).catch((e) => {
             console.error(e.stack);
         });
+    }
+
+    public async getByIds(ids: Array<T>): Promise<Array<U>> {
+        return await this.table.where('id').inAnyRange(ids).toArray();
     }
 }

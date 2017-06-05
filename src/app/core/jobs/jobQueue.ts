@@ -35,7 +35,7 @@ export class JobQueue {
         }, timeout);
     }
 
-    public add(job: IJob) {
+    public push(job: IJob) {
         this.queue.push(job);
     }
 }

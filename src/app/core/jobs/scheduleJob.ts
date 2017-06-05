@@ -14,7 +14,7 @@ export class ScheduleJob implements IJob {
 
     private process() {
         while(this.engine.hasNext()) {
-            this.engine.doSchedule(() => {
+            this.engine.doNext(() => {
                 this.process();
             });
         }

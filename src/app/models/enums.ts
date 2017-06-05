@@ -7,9 +7,10 @@ export enum PostType {
 }
 
 export enum SchedulePostStatus {
+    Opened = 0,
     Running = 1,
-    Pause = 2,
-    Stop = 3
+    Paused = 2,
+    Stopped = 3
 }
 
 export enum ScheduleType {
