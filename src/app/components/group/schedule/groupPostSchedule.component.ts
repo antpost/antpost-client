@@ -10,7 +10,7 @@ import {Toastr} from '../../../core/helpers/toastr';
 import {Group} from '../../../models/group.model';
 import {JoinedGroupComponent} from '../joinedGroup/joinedGroup.component';
 import {SchedulePost} from '../../../models/schedulePost.model';
-import {SchedulePostStatus} from "../../../models/enums";
+import {SchedulePostStatus, ScheduleType} from "../../../models/enums";
 import {SchedulePostService} from "../../../services/schedulePost.service";
 import {JobQueue} from "../../../core/jobs/jobQueue";
 import {JobFactory} from "../../../core/jobs/jobFactory";
@@ -70,6 +70,6 @@ export class GroupPostScheduleComponent implements OnInit {
 
         await this.schedulePostService.add(schedule);
 
-        this.jobQueue.add(JobFactory.createScheduleJob(schedule));
+        this.jobQueue.add(JobFactory.createScheduleJob(schedule, ScheduleType.Post));
     }
 }

@@ -3,7 +3,7 @@ import {FormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
 import {
     NgModule,
-    ApplicationRef
+    ApplicationRef, Injector
 } from '@angular/core';
 import {
     removeNgStyles,
@@ -36,11 +36,14 @@ import {NavbarModule} from './shared/navbar/navbar.module';
 import {BootstrapModalModule} from 'angular2-modal/plugins/bootstrap';
 import {ModalModule} from 'angular2-modal';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {JobQueue} from "./core/jobs/jobQueue";
+import {ServiceLocator} from "./core/serviceLocator";
 
 // Application wide providers
 const APP_PROVIDERS = [
     ...APP_RESOLVER_PROVIDERS,
-    AppState
+    AppState,
+    JobQueue
 ];
 
 type StoreType = {
@@ -78,7 +81,11 @@ type StoreType = {
 export class AppModule {
 
     constructor(public appRef: ApplicationRef,
-                public appState: AppState) {
+                public appState: AppState,
+                private jobQueue: JobQueue,
+                injector: Injector) {
+        ServiceLocator.injector = injector;
+        jobQueue.start();
     }
 
     public hmrOnInit(store: StoreType) {
