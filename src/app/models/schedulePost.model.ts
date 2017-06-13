@@ -1,6 +1,7 @@
 import {Schedule} from "./baseSchedule";
 import {NodePost} from "./nodePost.model";
 import {Group} from "./group.model";
+import {Post} from './post.model';
 
 export class SchedulePost extends Schedule {
     public id: number;
@@ -8,6 +9,7 @@ export class SchedulePost extends Schedule {
     public nodes: string;
     public status: number;
 
+    public post: Post;
     public groups: Array<Group>;
     public nodePosts: Array<NodePost>;
 
@@ -23,6 +25,16 @@ export class SchedulePost extends Schedule {
      */
     public getUnposted(): Array<Group> {
         return this.groups.filter((group: Group) => {
+            let post = this.nodePosts.find((p) => {
+                return group.id == p.nodeId;
+            });
+
+            return !post;
+        });
+    }
+
+    public findUnposted(): Group {
+        return this.groups.find((group: Group) => {
             let post = this.nodePosts.find((p) => {
                 return group.id == p.nodeId;
             });

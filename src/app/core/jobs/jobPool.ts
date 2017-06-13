@@ -19,6 +19,9 @@ export class JobPool {
         }
 
         this.jobs.push(job);
-        job.start();
+        job.start(() => {
+            let index = this.jobs.indexOf(job);
+            this.jobs.splice(index, 1);
+        });
     }
 }

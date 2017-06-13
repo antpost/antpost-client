@@ -10,12 +10,14 @@ import {GroupPostScheduleComponent} from './group/schedule/groupPostSchedule.com
 import {JoinedGroupComponent} from './group/joinedGroup/joinedGroup.component';
 import {AuthService} from '../services/auth.service';
 import {PostTypePipe} from '../pipes/postType.pipe';
+import {GroupPostHistoryComponent} from './group/schedule/groupPostHistory.component';
 
 export const MODULE_ROUTES: Route[] = [
     {path: 'login', component: LoginComponent},
     {path: '', component: HomeComponent, canActivate: [AuthService]},
     {path: 'post', component: PostComponent, canActivate: [AuthService]},
-    {path: 'post-group', component: GroupPostScheduleComponent, canActivate: [AuthService]}
+    {path: 'post-group', component: GroupPostScheduleComponent, canActivate: [AuthService]},
+    {path: 'post-group-history', component: GroupPostHistoryComponent, canActivate: [AuthService]}
 ];
 
 export const MODULE_COMPONENTS = [
@@ -26,7 +28,8 @@ export const MODULE_COMPONENTS = [
     PostPreviewComponent,
     PostSelectorComponent,
     GroupPostScheduleComponent,
-    JoinedGroupComponent
+    JoinedGroupComponent,
+    GroupPostHistoryComponent
 ];
 
 export const PIPES = [

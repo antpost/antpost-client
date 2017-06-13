@@ -21,7 +21,7 @@ export class SchedulePostService extends BaseService<SchedulePost, number> {
     public async getActiveSchedules(): Promise<Array<SchedulePost>> {
         let list = await this.table
             .where('status').notEqual(SchedulePostStatus.Stopped)
-            .with({nodePosts: 'nodePosts'});
+            .with({nodePosts: 'nodePosts', post: 'postId'});
 
         if(list) {
             list.forEach(async (item: SchedulePost) => {

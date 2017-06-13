@@ -10,8 +10,12 @@ export class BaseService<U, T> {
         this.table = this.db.table(tableName);
     }
 
-    public async add(data) {
+    public async add(data: U) {
         return await this.table.add(data);
+    }
+
+    public async update(key: T, changes: any) {
+        return await this.table.update(key, changes);
     }
 
     public async all(): Promise<Array<U>> {

@@ -3,6 +3,7 @@ import {Md5} from 'ts-md5/dist/md5';
 import {Observable} from 'rxjs';
 import {Http, Response} from '@angular/http';
 import {AppManager} from '../core/appManager';
+import {Post} from '../models/post.model';
 
 @Injectable()
 export class FacebookService {
@@ -47,6 +48,23 @@ export class FacebookService {
     }
 
     /**
+     * Post to node (feed of group, page, user)
+     * @param nodeId
+     * @param post
+     * @returns {Observable<any>}
+     */
+    public postToNode(nodeId: string, post: Post): Observable<any> {
+        let api = this.createApi(`/${nodeId}/feed`);
+
+        let data = {
+            access_token: this.getAcessToken(),
+            message: post.message
+        };
+
+        return this.post(api, 'POST', data);
+    }
+
+    /**
      * Create full facebook api by adding access_token
      * @param url
      * @param params
@@ -54,6 +72,10 @@ export class FacebookService {
      */
     private createApi(url: string, params?: any) {
         return `${this.graphApi}${url}?access_token=${this.appManager.currentUser.token}`;
+    }
+
+    private getAcessToken() {
+        return this.appManager.currentUser.token;
     }
 
     /**

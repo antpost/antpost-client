@@ -15,6 +15,7 @@ import {GroupService} from '../services/group.service';
 import {AppManager} from '../core/appManager';
 import {LocalStorageService} from '../services/localStorage.service';
 import {SchedulePostService} from "../services/schedulePost.service";
+import {NodePostService} from '../services/nodePost.service';
 
 @NgModule({
     imports: [
@@ -33,7 +34,8 @@ import {SchedulePostService} from "../services/schedulePost.service";
         FacebookService,
         GroupService,
         AppManager,
-        LocalStorageService
+        LocalStorageService,
+        NodePostService
     ],
     // IMPORTANT:
     // Since 'AdditionCalculateWindow' is never explicitly used (in a template)
