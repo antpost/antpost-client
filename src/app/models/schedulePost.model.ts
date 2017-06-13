@@ -8,6 +8,8 @@ export class SchedulePost extends Schedule {
     public postId: number;
     public nodes: string;
     public status: number;
+    public createdAt: Date;
+    public updatedAt: Date;
 
     public post: Post;
     public groups: Array<Group>;
@@ -25,9 +27,9 @@ export class SchedulePost extends Schedule {
      */
     public getUnposted(): Array<Group> {
         return this.groups.filter((group: Group) => {
-            let post = this.nodePosts.find((p) => {
+            let post = this.nodePosts ? this.nodePosts.find((p) => {
                 return group.id == p.nodeId;
-            });
+            }) : null;
 
             return !post;
         });
@@ -35,9 +37,9 @@ export class SchedulePost extends Schedule {
 
     public findUnposted(): Group {
         return this.groups.find((group: Group) => {
-            let post = this.nodePosts.find((p) => {
+            let post = this.nodePosts ? this.nodePosts.find((p) => {
                 return group.id == p.nodeId;
-            });
+            }) : null;
 
             return !post;
         });

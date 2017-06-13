@@ -83,6 +83,7 @@ export class PostScheduleEngine extends BaseScheduleEngine implements IScheduleE
                         fbPostId: result.id
                     } as NodePost;
 
+                    this.schedule.nodePosts = this.schedule.nodePosts || [];
                     this.schedule.nodePosts.push(nodePost);
 
                     await this.nodePostService.add(nodePost);

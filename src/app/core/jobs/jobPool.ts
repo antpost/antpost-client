@@ -23,5 +23,7 @@ export class JobPool {
             let index = this.jobs.indexOf(job);
             this.jobs.splice(index, 1);
         });
+
+        return true;
     }
 }

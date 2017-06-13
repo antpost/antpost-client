@@ -7,6 +7,7 @@ import {Post} from '../../models/post.model';
 import {PostType} from '../../models/enums';
 import {NotificationsService} from 'angular2-notifications/dist';
 import {Toastr} from '../../core/helpers/toastr';
+import {FacebookService} from '../../services/facebook.service';
 
 @Component({
     selector: 'post-form',
@@ -30,7 +31,8 @@ export class PostFormComponent implements OnInit {
     public postType = PostType;
 
     constructor(private injector: Injector,
-                private postService: PostService) {
+                private postService: PostService,
+                private facebookService: FacebookService) {
         this.onClose = this.injector.get('onClose');
         this.onDismiss = this.injector.get('onDismiss');
         this.post = this.injector.get('post');
@@ -76,8 +78,12 @@ export class PostFormComponent implements OnInit {
         this.post.updatedAt = new Date();
         this.post.createdAt = this.post.createdAt || new Date();
 
-        let id = await this.postService.add(this.post);
-        this.post.id = id;
+        if(this.post.id) {
+            await this.postService.update(this.post.id, this.post);
+        } else {
+            let id = await this.postService.add(this.post);
+            this.post.id = id;
+        }
 
         Toastr.success("Lưu bài viết thành công!");
 
@@ -86,6 +92,21 @@ export class PostFormComponent implements OnInit {
 
     public cancel() {
         this.onDismiss();
+    }
+
+    public getPreviewUrl() {
+        if(!this.post.linkUrl) {
+            this.post.linkTitle = null;
+            this.post.linkCaption = null;
+            this.post.linkDescription = null;
+            this.post.imageUrl = null;
+        } else {
+            this.facebookService.getLinkPreview(this.post.linkUrl).subscribe((preview) => {
+                this.post.linkTitle = preview.title;
+                this.post.linkDescription = preview.description;
+                this.post.imageUrl = preview.image;
+            });
+        }
     }
 
     /**

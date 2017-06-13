@@ -11,6 +11,7 @@ import {JoinedGroupComponent} from './group/joinedGroup/joinedGroup.component';
 import {AuthService} from '../services/auth.service';
 import {PostTypePipe} from '../pipes/postType.pipe';
 import {GroupPostHistoryComponent} from './group/schedule/groupPostHistory.component';
+import {ScheduleStatusPipe} from '../pipes/scheduleStatus.pipe';
 
 export const MODULE_ROUTES: Route[] = [
     {path: 'login', component: LoginComponent},
@@ -33,5 +34,6 @@ export const MODULE_COMPONENTS = [
 ];
 
 export const PIPES = [
-    PostTypePipe
+    PostTypePipe,
+    ScheduleStatusPipe
 ];

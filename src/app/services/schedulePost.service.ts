@@ -14,6 +14,25 @@ export class SchedulePostService extends BaseService<SchedulePost, number> {
         this.table.mapToClass(SchedulePost);
     }
 
+    public async all(): Promise<Array<SchedulePost>> {
+        let list = await this.table
+            .with({nodePosts: 'nodePosts', post: 'postId'});
+
+        list = list.sort((s1, s2) => {
+            return s1.createdAt.getMilliseconds() - s2.createdAt.getMilliseconds();
+        });
+
+        if(list) {
+            list.forEach(async (item: SchedulePost) => {
+                let ids = item.nodes.split(',');
+
+                item.groups = await this.groupService.getByIds(ids);
+            });
+        }
+
+        return list;
+    }
+
     /**
      * Get post schedules that status is Opened, Running or Paused
      * @returns {any}

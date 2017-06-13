@@ -69,9 +69,11 @@ export class GroupPostScheduleComponent implements OnInit {
         schedule.postId = this.post.id;
         schedule.status = SchedulePostStatus.Opened;
         schedule.nodes = groups.map(group => group.id).join(',');
+        schedule.createdAt = new Date();
 
         let id = await this.schedulePostService.add(schedule);
 
+        schedule.post = this.post;
         schedule.groups = groups;
 
         this.jobQueue.push(JobFactory.createScheduleJob(schedule, ScheduleType.Post));

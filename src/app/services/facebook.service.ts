@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Md5} from 'ts-md5/dist/md5';
 import {Observable} from 'rxjs';
-import {Http, Response} from '@angular/http';
+import {Http, Response, Jsonp} from '@angular/http';
 import {AppManager} from '../core/appManager';
 import {Post} from '../models/post.model';
 
@@ -12,7 +12,11 @@ export class FacebookService {
     private host = 'http://localhost:3001';
     private graphApi = 'https://graph.facebook.com';
 
-    constructor(private http: Http, private appManager: AppManager) {
+    // link preview
+    private linkPreviewKey = '593ffa5bc5bb73210806875ddb9745d3d8313e65b81ab';
+    private linkPreviewApi = 'http://api.linkpreview.net/';
+
+    constructor(private http: Http, private jsonp: Jsonp, private appManager: AppManager) {
     }
 
     /**
@@ -58,10 +62,28 @@ export class FacebookService {
 
         let data = {
             access_token: this.getAcessToken(),
-            message: post.message
+            message: post.message,
+            link: post.linkUrl
         };
 
         return this.post(api, 'POST', data);
+    }
+
+    /**
+     * Get title, description, image from url
+     * @param url
+     * @returns {Reducer}
+     */
+    public getLinkPreview(url: string): Observable<any> {
+        let api = this.linkPreviewApi
+            + '?key=' + this.linkPreviewKey
+            + '&q=' + url
+            + '&callback=JSONP_CALLBACK';
+
+        return this.jsonp.request(api)
+            .map((response: Response) => {
+                return response.json() || {};
+            });
     }
 
     /**
