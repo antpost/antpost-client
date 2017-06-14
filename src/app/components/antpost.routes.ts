@@ -12,6 +12,7 @@ import {AuthService} from '../services/auth.service';
 import {PostTypePipe} from '../pipes/postType.pipe';
 import {GroupPostHistoryComponent} from './group/schedule/groupPostHistory.component';
 import {ScheduleStatusPipe} from '../pipes/scheduleStatus.pipe';
+import {GroupPostDetailComponent} from './group/schedule/groupPostDetail.component';
 
 export const MODULE_ROUTES: Route[] = [
     {path: 'login', component: LoginComponent},
@@ -30,7 +31,8 @@ export const MODULE_COMPONENTS = [
     PostSelectorComponent,
     GroupPostScheduleComponent,
     JoinedGroupComponent,
-    GroupPostHistoryComponent
+    GroupPostHistoryComponent,
+    GroupPostDetailComponent
 ];
 
 export const PIPES = [
