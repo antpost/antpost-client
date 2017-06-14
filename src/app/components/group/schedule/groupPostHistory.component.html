@@ -6,14 +6,19 @@
 				style="height:500px"
 			>
 				<kendo-grid-column field="post.title" title="Bài viết" [width]="300"></kendo-grid-column>
+				<kendo-grid-column field="createdAt" title="Ngày tạo" [width]="100">
+					<ng-template kendoGridCellTemplate let-dataItem>
+						{{dataItem.createdAt | date: 'short' }}
+					</ng-template>
+				</kendo-grid-column>
 				<kendo-grid-column field="status" title="Trạng thái" [width]="100">
 					<ng-template kendoGridCellTemplate let-dataItem>
 						{{dataItem.status | scheduleStatus}}
 					</ng-template>
 				</kendo-grid-column>
-				<kendo-grid-column field="createdAt" title="Ngày tạo" [width]="100">
+				<kendo-grid-column title="Kết quả" [width]="50">
 					<ng-template kendoGridCellTemplate let-dataItem>
-						{{dataItem.createdAt | date: 'short' }}
+						{{dataItem.nodePosts ?  dataItem.nodePosts.length : 0}}/{{dataItem.groups.length}}
 					</ng-template>
 				</kendo-grid-column>
 				<ng-template kendoGridDetailTemplate let-dataItem>

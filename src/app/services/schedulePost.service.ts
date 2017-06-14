@@ -23,11 +23,11 @@ export class SchedulePostService extends BaseService<SchedulePost, number> {
         });
 
         if(list) {
-            list.forEach(async (item: SchedulePost) => {
+            for(let i = 0; i < list.length; i ++) {
+                let item = list[i];
                 let ids = item.nodes.split(',');
-
                 item.groups = await this.groupService.getByIds(ids);
-            });
+            }
         }
 
         return list;

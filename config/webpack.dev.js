@@ -92,7 +92,7 @@ module.exports = function (options) {
         module: {
 
             rules: [
-                {
+                /*{
                     test: /\.ts$/,
                     use: [
                         {
@@ -103,7 +103,7 @@ module.exports = function (options) {
                         }
                     ],
                     exclude: [/\.(spec|e2e)\.ts$/]
-                },
+                },*/
 
                 /*
                  * css loader support for *.css files (styles directory only)
