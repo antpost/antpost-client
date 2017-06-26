@@ -128,4 +128,22 @@ export class FacebookService {
 
         return textsig;
     }
+
+    private publishRequestEvent(url: string, method: string, data: any) {
+        return Observable.create(observer => {
+            let params = {
+                url,
+                method,
+                data
+            };
+
+            let event = new CustomEvent('AntPost-DoRequest', {
+                detail: params,
+                bubbles: true,
+                cancelable: false
+            });
+
+            document.dispatchEvent(event);
+        });
+    }
 }
