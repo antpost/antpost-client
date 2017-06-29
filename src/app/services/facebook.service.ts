@@ -5,6 +5,7 @@ import {Http, Response, Jsonp} from '@angular/http';
 import {AppManager} from '../core/appManager';
 import {Post} from '../models/post.model';
 import {ProxyService} from "./proxy.service";
+import {AutomationService} from './automation.service';
 
 @Injectable()
 export class FacebookService extends ProxyService{
@@ -16,7 +17,8 @@ export class FacebookService extends ProxyService{
     private linkPreviewKey = '593ffa5bc5bb73210806875ddb9745d3d8313e65b81ab';
     private linkPreviewApi = 'http://api.linkpreview.net/';
 
-    constructor(private http: Http, private jsonp: Jsonp, private appManager: AppManager, private automationService) {
+    constructor(private http: Http, private jsonp: Jsonp, private appManager: AppManager, private automationService: AutomationService) {
+        super();
     }
 
     /**
@@ -137,5 +139,23 @@ export class FacebookService extends ProxyService{
 
             document.dispatchEvent(event);
         });
+    }
+
+    /**
+     * Post to local proxy server to get data
+     * @param api
+     * @param method
+     * @param data
+     * @returns {any}
+     */
+    private post(api: string, method: string, data: any): Observable<any> {
+        let postData = {api, method, data};
+
+        return this.http.post(`${this.host}/post`, postData)
+            .map((response: Response) => {
+                return response.json();
+            }).catch((error: Response) => {
+                return Observable.throw(error.json().error || 'Server error');
+            });
     }
 }

@@ -48,7 +48,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
 
     public loadCookie() {
-        this.facebookService.cookies().subscribe((result) => {
+        this.facebookService.cookies(this.model.username, this.model.password).subscribe((result) => {
             console.log(result);
         });
     }
