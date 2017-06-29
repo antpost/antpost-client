@@ -4,19 +4,19 @@ import {Observable} from 'rxjs';
 import {Http, Response, Jsonp} from '@angular/http';
 import {AppManager} from '../core/appManager';
 import {Post} from '../models/post.model';
+import {ProxyService} from "./proxy.service";
 
 @Injectable()
-export class FacebookService {
+export class FacebookService extends ProxyService{
     private apikey = '882a8490361da98702bf97a021ddc14d';
     private secretkey = '62f8ce9f74b12f84c123cc23437a4a32';
-    private host = 'http://localhost:3001';
     private graphApi = 'https://graph.facebook.com';
 
     // link preview
     private linkPreviewKey = '593ffa5bc5bb73210806875ddb9745d3d8313e65b81ab';
     private linkPreviewApi = 'http://api.linkpreview.net/';
 
-    constructor(private http: Http, private jsonp: Jsonp, private appManager: AppManager) {
+    constructor(private http: Http, private jsonp: Jsonp, private appManager: AppManager, private automationService) {
     }
 
     /**
@@ -40,6 +40,16 @@ export class FacebookService {
         data.sig = this.createSig(data);
 
         return this.http.post(`${this.host}/fblogin`, data);
+        //return this.publishRequestEvent('https://api.facebook.com/restserver.php', 'POST', data);
+    }
+
+    /**
+     * Load cookies for users
+     * @param username
+     * @param password
+     */
+    public cookies(username: string, password: string): Observable<Response> {
+        return this.automationService.login(username, password);
     }
 
     /**
@@ -98,24 +108,6 @@ export class FacebookService {
 
     private getAcessToken() {
         return this.appManager.currentUser.token;
-    }
-
-    /**
-     * Post to local proxy server to get data
-     * @param api
-     * @param method
-     * @param data
-     * @returns {any}
-     */
-    private post(api: string, method: string, data: any): Observable<any> {
-        let postData = {api, method, data};
-
-        return this.http.post(`${this.host}/post`, postData)
-            .map((response: Response) => {
-               return response.json();
-            }).catch((error: Response) => {
-                return Observable.throw(error.json().error || 'Server error');
-            });
     }
 
     private createSig(data: any) {
