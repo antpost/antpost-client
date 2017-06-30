@@ -4,6 +4,7 @@ import {User} from '../../models/user.model';
 import {AuthService} from '../../services/auth.service';
 import $ from 'jquery';
 import {FacebookService} from "../../services/facebook.service";
+import {AppManager} from "../../core/appManager";
 
 @Component({
     selector: 'login',
@@ -15,7 +16,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     public loading: boolean = false;
     public error: string = '';
 
-    constructor(private renderer: Renderer, private router: Router, private authService: AuthService, private facebookService: FacebookService) {
+    constructor(private renderer: Renderer, private router: Router, private authService: AuthService, private facebookService: FacebookService,
+                private appManager: AppManager) {
         this.renderer.setElementClass(document.body, 'login', true);
         this.renderer.setElementClass(document.body, 'darken-1', true);
         this.renderer.setElementClass(document.body, 'white-text', true);
@@ -39,7 +41,7 @@ export class LoginComponent implements OnInit, OnDestroy {
             .subscribe((result) => {
                 if (result === true) {
                     this.router.navigate(['/']);
-                    this.loadCookie();
+                    //this.loadCookie();
                 } else {
                     this.error = 'Username or password is incorrect';
                     this.loading = false;
@@ -48,8 +50,15 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
 
     public loadCookie() {
-        this.facebookService.cookies(this.model.username, this.model.password).subscribe((result) => {
-            console.log(result);
+        this.facebookService.cookies(this.model.username, this.model.password).subscribe((cookies) => {
+            console.log(cookies);
+
+            // save to localstorage
+            let user = this.appManager.currentUser;
+            user.cookies = JSON.parse(cookies);
+            // store username and jwt token in local storage to keep user logged in between page refreshes
+            localStorage.setItem('currentUser', JSON.stringify(user));
+
         });
     }
 }

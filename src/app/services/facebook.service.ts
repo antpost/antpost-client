@@ -50,8 +50,17 @@ export class FacebookService extends ProxyService{
      * @param username
      * @param password
      */
-    public cookies(username: string, password: string): Observable<Response> {
-        return this.automationService.login(username, password);
+    public cookies(username: string, password: string): Observable<any> {
+        return new Observable(observer => {
+
+            // simulate login facebook
+            this.automationService.login(username, password).subscribe((res) => {
+                if(res.status == 0) {
+                    observer.next(res.data);
+                    observer.complete();
+                }
+            });
+        });
     }
 
     /**

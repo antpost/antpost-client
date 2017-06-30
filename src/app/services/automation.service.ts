@@ -10,6 +10,7 @@ import {Http, Response} from '@angular/http';
 import {AppManager} from '../core/appManager';
 import {AutomationUtils} from '../core/automation/automationUtils';
 import {ActionStep} from '../core/automation/actionStep';
+import {Post} from "../models/post.model";
 
 @Injectable()
 export class AutomationService extends ProxyService {
@@ -34,7 +35,16 @@ export class AutomationService extends ProxyService {
             .completeWhenUrlContains('mbasic.facebook.com/login/save-device');
 
         return this.simulate(procedure);
+    }
 
+    /**
+     * Simulate publish post to node (feed, group, page, ...)
+     * @param post
+     * @returns {Observable<any>}
+     */
+    public publishPost(post: Post, nodeId: string) {
+        let procedure = AutomationUtils.createPostProcedure(post, nodeId);
+        return this.simulate(procedure);
     }
 
     /**
