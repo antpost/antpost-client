@@ -35,7 +35,7 @@ export class AutomationReq {
      * @param selector
      * @returns {AutomationReq}
      */
-    public addInputAction(value: string, selector: string) {
+    public input(selector: string, value: string) {
         const step = <ActionStep> {
             action: AutomationActionType.input,
             params: {value, selector}
@@ -49,7 +49,7 @@ export class AutomationReq {
      * @param selector
      * @returns {AutomationReq}
      */
-    public addClickAction(selector: string) {
+    public click(selector: string) {
         const step = <ActionStep> {
             action: AutomationActionType.click,
             params: {selector}
@@ -58,7 +58,16 @@ export class AutomationReq {
         return this;
     }
 
-    public addSubmitAction(form: string) {
+    public upload(selector: string, value: string) {
+        const step = <ActionStep> {
+            action: AutomationActionType.upload,
+            params: {value, selector}
+        };
+        this.formActions.push(step);
+        return this;
+    }
+
+    public submit(form: string) {
         const step = <ActionStep> {
             action: AutomationActionType.submit,
             params: {selector: form}

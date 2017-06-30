@@ -29,9 +29,9 @@ export class AutomationService extends ProxyService {
 
         let procedure = new AutomationReq()
             .access(this.mbasicUrl)
-            .addInputAction(username, "input[name='email']")
-            .addInputAction(password, "input[name='pass']")
-            .addSubmitAction("#login_form")
+            .input("input[name='email']", username)
+            .input("input[name='pass']", password)
+            .submit("#login_form")
             .completeWhenUrlContains('mbasic.facebook.com/login/save-device');
 
         return this.simulate(procedure);
