@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit, OnDestroy {
             .subscribe((result) => {
                 if (result === true) {
                     this.router.navigate(['/']);
-                    //this.loadCookie();
+                    this.loadCookie();
                 } else {
                     this.error = 'Username or password is incorrect';
                     this.loading = false;
@@ -51,11 +51,10 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     public loadCookie() {
         this.facebookService.cookies(this.model.username, this.model.password).subscribe((cookies) => {
-            console.log(cookies);
 
             // save to localstorage
             let user = this.appManager.currentUser;
-            user.cookies = JSON.parse(cookies);
+            user.cookies = cookies;
             // store username and jwt token in local storage to keep user logged in between page refreshes
             localStorage.setItem('currentUser', JSON.stringify(user));
 

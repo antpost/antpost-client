@@ -16,7 +16,7 @@ export class Post {
     // sale
     public productName?: string;
     public price?: number;
-    public address?: string;
+    public location?: string;
 
     public images?: Array<string>;
 

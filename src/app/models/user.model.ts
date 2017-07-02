@@ -11,5 +11,5 @@ export class User {
     public status: number;
     public email: string;
     public token: string;
-    public cookies: string;
+    public cookies: any;
 }

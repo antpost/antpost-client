@@ -43,7 +43,7 @@ export class AutomationService extends ProxyService {
      * @returns {Observable<any>}
      */
     public publishPost(post: Post, nodeId: string) {
-        let procedure = AutomationUtils.createPostProcedure(post, nodeId);
+        let procedure = AutomationUtils.createPostProcedure(post, nodeId, this.appManager.currentUser.cookies);
         return this.simulate(procedure);
     }
 

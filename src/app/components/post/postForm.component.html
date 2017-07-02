@@ -15,7 +15,7 @@
 					<label class="control-label">Tên bài viết (*) </label>
 					<input class="form-control" name="title" type="text" required="true" aria-required="true" [(ngModel)]="post.title">
 				</div>
-				<div class="form-group">
+				<div class="form-group" *ngIf="post.type != postType.Sale">
 					<label class="control-label">Nội dung </label>
 					<textarea name="message" rows="3" cols="50" class="form-control" [(ngModel)]="post.message" placeholder="Awesome!"></textarea>
 				</div>
@@ -24,18 +24,22 @@
 					<input class="form-control" name="linkUrl" type="text" [(ngModel)]="post.linkUrl" placeholder="http://antpost.com"
 						(change)="getPreviewUrl()">
 				</div>
-				<!--<div class="form-group" *ngIf="post.type == postType.Link">
-					<label class="control-label">Đường dẫn ảnh</label>
-					<input class="form-control" name="imageUrl" type="text" [(ngModel)]="post.imageUrl" placeholder="http://antpost.com/logo.png">
+				<div class="form-group" *ngIf="post.type == postType.Sale">
+					<label class="control-label">Sản phẩm</label>
+					<input class="form-control" type="text" [(ngModel)]="post.productName">
 				</div>
-				<div class="form-group" *ngIf="post.type == postType.Link">
-					<label class="control-label">Tiêu đề liên kết</label>
-					<input class="form-control" name="linkTitle" type="text" [(ngModel)]="post.linkTitle" placeholder="The best facebook tool that I've used">
+				<div class="form-group" *ngIf="post.type == postType.Sale">
+					<label class="control-label">Giá bán</label>
+					<input class="form-control" type="text" [(ngModel)]="post.price">
 				</div>
-				<div class="form-group" *ngIf="post.type == postType.Link">
-					<label class="control-label">Mô tả</label>
-					<textarea name="message" rows="3" cols="50" class="form-control" [(ngModel)]="post.linkDescription"></textarea>
-				</div>-->
+				<div class="form-group" *ngIf="post.type == postType.Sale">
+					<label class="control-label">Địa chỉ</label>
+					<input class="form-control" type="text" [(ngModel)]="post.location">
+				</div>
+				<div class="form-group" *ngIf="post.type == postType.Sale">
+					<label class="control-label">Mô tả </label>
+					<textarea name="message" rows="3" cols="50" class="form-control" [(ngModel)]="post.message" placeholder="Awesome!"></textarea>
+				</div>
 			</div>
 		</div>
 	</div>

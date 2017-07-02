@@ -18,7 +18,7 @@ export class AutomationReq {
      * @param cookies
      * @returns {AutomationReq}
      */
-    public access(url: string, cookies?: string) {
+    public access(url: string, cookies?: any) {
         this.requestAction = <ActionStep> {
             action: AutomationActionType.accessUrl,
             params: {

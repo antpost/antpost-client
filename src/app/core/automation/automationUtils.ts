@@ -51,17 +51,18 @@ export class AutomationUtils {
      * @param post
      * @returns {AutomationReq}
      */
-    static createPostProcedure(post: Post, nodeId: string) {
+    static createPostProcedure(post: Post, nodeId: string, cookies: any) {
         let procedure = new AutomationReq();
 
         if(post.type == PostType.Sale) {//257702558042509
-            procedure.access(`https://mbasic.facebook.com/groups/sell/_edit/?group_id=${nodeId}`)
-                .input("input[name='composer_attachment_sell_title']", '')
-                .input("input[name='composer_attachment_sell_price']", '')
-                .input("input[name='composer_attachment_sell_pickup_note']", '')
-                .input("input[name='xc_message']", '')
-                .upload("input[name='file1']", '')
-                .submit('form');
+            procedure.access(`https://mbasic.facebook.com/groups/sell/_edit/?group_id=${nodeId}`, cookies)
+                .input("input[name='composer_attachment_sell_title']", post.productName)
+                .input("input[name='composer_attachment_sell_price']", post.price + '')
+                .input("input[name='composer_attachment_sell_pickup_note']", post.location)
+                .input("input[name='xc_message']", post.message)
+                //.upload("input[name='file1']", post.images[0])
+                .submit('form')
+                .completeWhenUrlContains(`mbasic.facebook.com/groups/${nodeId}?_rdr`);
 
         }
 

@@ -6,7 +6,8 @@ import {SchedulePostService} from "../../services/schedulePost.service";
 import {PostSettings} from '../settings/postSettings';
 import {NodePost} from '../../models/nodePost.model';
 import {NodePostService} from '../../services/nodePost.service';
-import {SchedulePostStatus} from '../../models/enums';
+import {SchedulePostStatus, PostType} from '../../models/enums';
+import {AutomationService} from '../../services/automation.service';
 
 export class PostScheduleEngine extends BaseScheduleEngine implements IScheduleEngine {
     private schedule: SchedulePost;
@@ -14,6 +15,7 @@ export class PostScheduleEngine extends BaseScheduleEngine implements IScheduleE
     private facebookService: FacebookService;
     private schedulePostService: SchedulePostService;
     private nodePostService: NodePostService;
+    private automationService: AutomationService;
 
     private postSettings: PostSettings;
     private isFirst: boolean = true;
@@ -57,6 +59,7 @@ export class PostScheduleEngine extends BaseScheduleEngine implements IScheduleE
         this.facebookService = ServiceLocator.injector.get(FacebookService);
         this.schedulePostService = ServiceLocator.injector.get(SchedulePostService);
         this.nodePostService = ServiceLocator.injector.get(NodePostService);
+        this.automationService = ServiceLocator.injector.get(AutomationService);
 
         this.postSettings = {
             delay: 120
@@ -72,7 +75,19 @@ export class PostScheduleEngine extends BaseScheduleEngine implements IScheduleE
             let group = this.schedule.findUnposted();
 
             if(group) {
-                this.facebookService.postToNode(group.id, this.schedule.post).subscribe(async (result) => {
+
+                let observable = null;
+                switch (this.schedule.post.type) {
+                    case PostType.Message, PostType.Link:
+                        observable = this.facebookService.postToNode(group.id, this.schedule.post);
+                        break;
+
+                    case PostType.Sale:
+                        observable = this.automationService.publishPost(this.schedule.post, group.id);
+                        break;
+                }
+
+                observable.subscribe(async (result) => {
                     console.log(result);
                     this.isFirst = false;
 

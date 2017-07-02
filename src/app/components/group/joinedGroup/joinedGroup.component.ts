@@ -52,7 +52,7 @@ export class JoinedGroupComponent implements OnInit {
      */
     public reload() {
         this.facebookService.getJoinedGroups().subscribe(async (result: any) => {
-            let list = result.data as Array<Group>;
+            let list = result.data as Array<Group> || [];
 
             // update members from old groups
             list.forEach((item) => {
