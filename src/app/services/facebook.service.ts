@@ -56,7 +56,7 @@ export class FacebookService extends ProxyService{
             // simulate login facebook
             this.automationService.login(username, password).subscribe((res) => {
                 if(res.status == 0) {
-                    observer.next(res.data);
+                    observer.next(res.data.cookies);
                     observer.complete();
                 }
             });

@@ -11,6 +11,8 @@ import {AppManager} from '../core/appManager';
 import {AutomationUtils} from '../core/automation/automationUtils';
 import {ActionStep} from '../core/automation/actionStep';
 import {Post} from "../models/post.model";
+import {AutomationRes} from "../core/automation/automationRes";
+import * as $ from 'jquery';
 
 @Injectable()
 export class AutomationService extends ProxyService {
@@ -44,7 +46,28 @@ export class AutomationService extends ProxyService {
      */
     public publishPost(post: Post, nodeId: string) {
         let procedure = AutomationUtils.createPostProcedure(post, nodeId, this.appManager.currentUser.cookies);
-        return this.simulate(procedure);
+
+        return new Observable(observer => {
+            this.simulate(procedure).subscribe((res) => {
+                if(res.status == 0) {
+                    // parse post id
+                    let fbPostId = null;
+
+                    let element = $('<div></div>');
+                    element.html(res.data.content);
+                    let postElement = element.find('div[data-ft]').first();
+                    if(postElement) {
+                        let obj = JSON.parse(postElement.attr('data-ft'));
+                        fbPostId = obj.mf_story_key;
+                    }
+
+                    observer.next({
+                        id: fbPostId
+                    });
+                    observer.complete();
+                }
+            });
+        });
     }
 
     /**
@@ -52,7 +75,7 @@ export class AutomationService extends ProxyService {
      * @param procedure
      * @returns {Observable<R>}
      */
-    protected simulate(procedure: AutomationReq): Observable<any> {
+    protected simulate(procedure: AutomationReq): Observable<AutomationRes> {
         return this.http.post(`${this.host}/simulate`, procedure)
             .map((response: Response) => {
                 return response.json();

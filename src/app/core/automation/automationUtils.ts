@@ -62,7 +62,8 @@ export class AutomationUtils {
                 .input("input[name='xc_message']", post.message)
                 //.upload("input[name='file1']", post.images[0])
                 .submit('form')
-                .completeWhenUrlContains(`mbasic.facebook.com/groups/${nodeId}?_rdr`);
+                .completeWhenUrlContains(`mbasic.facebook.com/groups/${nodeId}?_rdr`)
+                .responseContent('#m_group_stories_container');
 
         }
 

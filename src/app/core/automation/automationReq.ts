@@ -7,6 +7,7 @@ export class AutomationReq {
     private requestAction: ActionStep;
     private formActions: Array<ActionStep> = [];
     private completeRule: CompleteRule;
+    private responseElement: string;
 
     public constructor() {
 
@@ -82,5 +83,9 @@ export class AutomationReq {
         };
 
         return this;
+    }
+
+    public responseContent(element: string) {
+        this.responseElement = element;
     }
 }
