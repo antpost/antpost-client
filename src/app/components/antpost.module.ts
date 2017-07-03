@@ -3,8 +3,8 @@ import {RouterModule} from '@angular/router';
 import {MODULE_COMPONENTS, MODULE_ROUTES, PIPES} from './antpost.routes';
 import {HttpModule} from '@angular/http';
 import {FormsModule} from '@angular/forms';
-import {NgxDatatableModule} from "@swimlane/ngx-datatable";
 import {CoreModule} from '../core/core.module';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {PostService} from '../services/post.service';
 import {PostFormComponent} from './post/postForm.component';
 import {CommonModule} from '@angular/common';
@@ -25,7 +25,7 @@ import {AutomationService} from "../services/automation.service";
         HttpModule,
         CoreModule,
         GridModule,
-        NgxDatatableModule,
+        NgbModule.forRoot(),
         RouterModule.forChild(MODULE_ROUTES)
     ],
     declarations: [MODULE_COMPONENTS, PIPES],

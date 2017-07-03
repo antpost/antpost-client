@@ -12,9 +12,14 @@
 				</div>
 				<post-preview [post]="post"></post-preview>
 				<div class="row" *ngIf="post.id">
-					<button class="btn btn-primary pull-right" (click)="start()"><i class="material-icons">motorcycle</i> Bắt đầu
+					<button class="btn btn-primary pull-right" (click)="start()" *ngIf="schedule.status == scheduleStatus.Opened"><i class="material-icons">motorcycle</i> Bắt đầu
+					</button>
+					<button class="btn btn-error pull-right" (click)="stop()" *ngIf="schedule.status != scheduleStatus.Opened && schedule.status != scheduleStatus.Stopped"><i class="material-icons">stop</i> Kết thúc
+					</button>
+					<button class="btn btn-info pull-right" (click)="pause()" *ngIf="schedule.status != scheduleStatus.Opened && schedule.status != scheduleStatus.Stopped"><i class="material-icons">pause</i> Tạm dừng
 					</button>
 				</div>
+				<p><ngb-progressbar type="info" [value]="50">Đang chạy ... (Đã đăng <b>2/4</b> nhóm)</ngb-progressbar></p>
 			</div>
 		</div>
 	</div>

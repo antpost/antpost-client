@@ -82,6 +82,7 @@
     "@angularclass/conventions-loader": "^1.0.13",
     "@angularclass/hmr": "~1.2.2",
     "@angularclass/hmr-loader": "~3.0.2",
+    "@ng-bootstrap/ng-bootstrap": "^1.0.0-alpha.27",
     "@progress/kendo-angular-dateinputs": "^1.0.1",
     "@progress/kendo-angular-dropdowns": "^1.0.9",
     "@progress/kendo-angular-excel-export": "^1.0.1",

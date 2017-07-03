@@ -26,6 +26,36 @@ export class JobQueue {
         this.queue.push(job);
     }
 
+    /**
+     * Stop job by id
+     * @param jobId
+     * @returns {any}
+     */
+    public remove(jobId: string) {
+        const index = this.queue.findIndex((jobItem) => jobItem.getId() == jobId);
+        if(index) {
+            const job = this.queue[index];
+            this.queue.splice(index, 1);
+            return job;
+        }
+
+        return this.pool.remove(jobId);
+    }
+
+    /**
+     * Find job by id
+     * @param jobId
+     * @returns {any}
+     */
+    public findJob(jobId) {
+        const index = this.queue.findIndex((jobItem) => jobItem.getId() == jobId);
+        if(index) {
+            return this.queue[index];
+        }
+
+        return this.pool.findJob(jobId);
+    }
+
     private loop(timeout: number) {
         setTimeout(() => {
             if(this.queue.length > 0) {

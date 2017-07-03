@@ -11,6 +11,7 @@ import {AutomationService} from '../../services/automation.service';
 
 export class PostScheduleEngine extends BaseScheduleEngine implements IScheduleEngine {
     private schedule: SchedulePost;
+    public static ENGINE_KEY = 'POSTENGINE';
 
     private facebookService: FacebookService;
     private schedulePostService: SchedulePostService;
@@ -28,6 +29,10 @@ export class PostScheduleEngine extends BaseScheduleEngine implements IScheduleE
         this.init();
     }
 
+    public getId() {
+        return PostScheduleEngine.ENGINE_KEY + this.schedule.id;
+    }
+
     public hasNext(): boolean {
         return this.schedule.status == SchedulePostStatus.Stopped || this.schedule.hasUnposted();
     }
@@ -42,6 +47,16 @@ export class PostScheduleEngine extends BaseScheduleEngine implements IScheduleE
 
     public async stop() {
         this.schedule.status = SchedulePostStatus.Stopped;
+
+        await this.schedulePostService.update(this.schedule.id, {
+            status: this.schedule.status
+        });
+
+        return true;
+    }
+
+    public async pause() {
+        this.schedule.status = SchedulePostStatus.Paused;
 
         await this.schedulePostService.update(this.schedule.id, {
             status: this.schedule.status
@@ -88,7 +103,6 @@ export class PostScheduleEngine extends BaseScheduleEngine implements IScheduleE
                 }
 
                 observable.subscribe(async (result) => {
-                    console.log(result);
                     this.isFirst = false;
 
                     let nodePost = {

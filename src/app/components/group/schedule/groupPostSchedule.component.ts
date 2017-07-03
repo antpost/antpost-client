@@ -28,12 +28,14 @@ export class GroupPostScheduleComponent implements OnInit {
     public joinedGroupComponent: JoinedGroupComponent;
 
     public post: Post = new Post();
+    public schedule: SchedulePost = new SchedulePost();
+    public scheduleStatus = SchedulePostStatus;
 
     constructor(private postService: PostService,
                 private schedulePostService: SchedulePostService,
                 private modal: ModalService,
                 private jobQueue: JobQueue) {
-
+        this.schedule.status = SchedulePostStatus.Opened;
     }
 
     public ngOnInit() {
@@ -65,17 +67,17 @@ export class GroupPostScheduleComponent implements OnInit {
         }
 
         // save schedule
-        let schedule = new SchedulePost();
-        schedule.postId = this.post.id;
-        schedule.status = SchedulePostStatus.Opened;
-        schedule.nodes = groups.map(group => group.id).join(',');
-        schedule.createdAt = new Date();
+        this.schedule = new SchedulePost();
+        this.schedule.postId = this.post.id;
+        this.schedule.status = SchedulePostStatus.Running;
+        this.schedule.nodes = groups.map(group => group.id).join(',');
+        this.schedule.createdAt = new Date();
 
-        let id = await this.schedulePostService.add(schedule);
+        let id = await this.schedulePostService.add(this.schedule);
 
-        schedule.post = this.post;
-        schedule.groups = groups;
+        this.schedule.post = this.post;
+        this.schedule.groups = groups;
 
-        this.jobQueue.push(JobFactory.createScheduleJob(schedule, ScheduleType.Post));
+        this.jobQueue.push(JobFactory.createScheduleJob(this.schedule, ScheduleType.Post));
     }
 }
