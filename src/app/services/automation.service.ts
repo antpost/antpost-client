@@ -13,6 +13,7 @@ import {ActionStep} from '../core/automation/actionStep';
 import {Post} from "../models/post.model";
 import {AutomationRes} from "../core/automation/automationRes";
 import * as $ from 'jquery';
+import {PostType} from "../models/enums";
 
 @Injectable()
 export class AutomationService extends ProxyService {
@@ -62,9 +63,18 @@ export class AutomationService extends ProxyService {
                     }
 
                     observer.next({
-                        id: fbPostId
+                        id: fbPostId,
                     });
                     observer.complete();
+                } else {
+                    let error = null;
+                    if(post.type == PostType.Sale) {
+                        error = 'Không phải nhóm bán hàng'
+                    }
+
+                    observer.next({
+                        error
+                    });
                 }
             });
         });

@@ -1,6 +1,7 @@
 import {IJob} from "./iJob";
 import {IScheduleEngine} from "../scheduleEngine/baseScheduleEngine";
 import {Observable, Subject} from 'rxjs';
+import {SchedulePostStatus} from "../../models/enums";
 
 export class ScheduleJob implements IJob {
     public static JOB_KEY = 'SCHEDULE';
@@ -47,7 +48,7 @@ export class ScheduleJob implements IJob {
         } else {
             await this.engine.stop();
             this.subject.next({
-                status: 'stop'
+                status: SchedulePostStatus.Stopped
             });
 
             this.onFinish();

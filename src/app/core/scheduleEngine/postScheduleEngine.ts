@@ -40,12 +40,16 @@ export class PostScheduleEngine extends BaseScheduleEngine implements IScheduleE
     public doNext(doneCallback: Function): void {
         if(this.schedule.status != SchedulePostStatus.Running) {
             this.schedule.status = SchedulePostStatus.Running;
-            doneCallback(this.schedule.status);
+            doneCallback({
+                status: this.schedule.status
+            });
         }
 
         setTimeout(() => {
             this.postGroup().then((data) => {
-                doneCallback(data);
+                doneCallback({
+                    nodePost: data
+                });
             })
         }, this.isFirst ? 0 : this.postSettings.delay * 1000);
     }
@@ -114,7 +118,8 @@ export class PostScheduleEngine extends BaseScheduleEngine implements IScheduleE
                         scheduleId: this.schedule.id,
                         nodeId: group.id,
                         postId: this.schedule.postId,
-                        fbPostId: result.id
+                        fbPostId: result.id,
+                        error: result.error
                     } as NodePost;
 
                     this.schedule.nodePosts = this.schedule.nodePosts || [];

@@ -60,7 +60,7 @@ export class AutomationUtils {
                 .input("input[name='composer_attachment_sell_price']", post.price + '')
                 .input("input[name='composer_attachment_sell_pickup_note']", post.location)
                 .input("input[name='xc_message']", post.message)
-                //.upload("input[name='file1']", post.images[0])
+                .upload("input[name='file1']", post.images && post.images.length > 0 ? post.images[0] : null)
                 .submit('form')
                 .completeWhenUrlContains(`mbasic.facebook.com/groups/${nodeId}?_rdr`)
                 .responseContent('#m_group_stories_container');
