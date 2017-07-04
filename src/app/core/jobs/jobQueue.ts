@@ -7,7 +7,7 @@ export class JobQueue {
     private pool: JobPool;
     private queue: Array<IJob>;
     private isRunning: boolean;
-    private interval: number = 30 * 1000;
+    private interval: number = 1 * 1000;
 
     constructor() {
         this.isRunning = false;
@@ -33,7 +33,7 @@ export class JobQueue {
      */
     public remove(jobId: string) {
         const index = this.queue.findIndex((jobItem) => jobItem.getId() == jobId);
-        if(index) {
+        if(index >= 0) {
             const job = this.queue[index];
             this.queue.splice(index, 1);
             return job;

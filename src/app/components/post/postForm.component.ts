@@ -70,6 +70,13 @@ export class PostFormComponent implements OnInit {
 
     }
 
+    public onImgChange(event: any) {
+        /*let file = event.target.files[0];
+        let fileName = file.name;*/
+        let inputName: any = document.getElementById('productImage');
+        let imgPath = inputName.value;
+    }
+
     public async save() {
         if (!this.validate()) {
             return;

@@ -46,11 +46,13 @@ export class PostScheduleEngine extends BaseScheduleEngine implements IScheduleE
         }
 
         setTimeout(() => {
-            this.postGroup().then((data) => {
-                doneCallback({
-                    nodePost: data
-                });
-            })
+            if(this.schedule.status == SchedulePostStatus.Running) {
+                this.postGroup().then((data) => {
+                    doneCallback({
+                        nodePost: data
+                    });
+                })
+            }
         }, this.isFirst ? 0 : this.postSettings.delay * 1000);
     }
 
@@ -86,7 +88,7 @@ export class PostScheduleEngine extends BaseScheduleEngine implements IScheduleE
         this.automationService = ServiceLocator.injector.get(AutomationService);
 
         this.postSettings = {
-            delay: 120
+            delay: 60
         };
     }
 
@@ -119,7 +121,8 @@ export class PostScheduleEngine extends BaseScheduleEngine implements IScheduleE
                         nodeId: group.id,
                         postId: this.schedule.postId,
                         fbPostId: result.id,
-                        error: result.error
+                        error: result.error,
+                        timePosted: new Date()
                     } as NodePost;
 
                     this.schedule.nodePosts = this.schedule.nodePosts || [];

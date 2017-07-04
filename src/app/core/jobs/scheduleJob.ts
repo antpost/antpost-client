@@ -25,10 +25,16 @@ export class ScheduleJob implements IJob {
 
     public async pause() {
         await this.engine.pause();
+        this.subject.next({
+            status: SchedulePostStatus.Paused
+        });
     }
 
     public async stop() {
         await this.engine.stop();
+        this.subject.next({
+            status: SchedulePostStatus.Stopped
+        });
     }
 
     public observe() {

@@ -15,6 +15,7 @@ import {SchedulePostService} from "../../../services/schedulePost.service";
 import {JobQueue} from "../../../core/jobs/jobQueue";
 import {JobFactory} from "../../../core/jobs/jobFactory";
 import {ScheduleJob} from "../../../core/jobs/scheduleJob";
+import {GroupPostDetailComponent} from './groupPostDetail.component';
 
 @Component({
     selector: 'group-post-schedule',
@@ -28,11 +29,15 @@ export class GroupPostScheduleComponent implements OnInit {
     @ViewChild(JoinedGroupComponent)
     public joinedGroupComponent: JoinedGroupComponent;
 
+    @ViewChild(GroupPostDetailComponent)
+    public groupPostDetailComponent: GroupPostDetailComponent;
+
     public post: Post = new Post();
     public schedule: SchedulePost = new SchedulePost();
     public scheduleStatus = SchedulePostStatus;
     public job: ScheduleJob;
     public started: boolean = false;
+    public percent: number = 0;
 
     constructor(private postService: PostService,
                 private schedulePostService: SchedulePostService,
@@ -82,6 +87,7 @@ export class GroupPostScheduleComponent implements OnInit {
 
         this.schedule.post = this.post;
         this.schedule.groups = groups;
+        this.groupPostDetailComponent.refresh();
 
         this.job = <ScheduleJob>JobFactory.createScheduleJob(this.schedule, ScheduleType.Post);
 
@@ -92,28 +98,31 @@ export class GroupPostScheduleComponent implements OnInit {
             if(result.status !== undefined) {
                 this.schedule.status = result.status;
             } else {
-
+                this.percent = this.schedule.nodePosts.length / this.schedule.groups.length * 100;
             }
+            this.groupPostDetailComponent.refresh();
         });
+    }
+
+    public pause() {
+        this.jobQueue.remove(this.job.getId());
+        this.job.pause();
+    }
+
+    public stop() {
+        this.jobQueue.remove(this.job.getId());
+        this.job.stop();
+    }
+
+    public resume() {
+        this.schedule.status = SchedulePostStatus.Running;
+        this.jobQueue.push(this.job);
     }
 
     public progressMessage() {
         let message = '';
 
-        switch (this.schedule.status) {
-            case SchedulePostStatus.Opened:
-                message = 'Chuẩn bị chạy...';
-                break;
-            case SchedulePostStatus.Running:
-                message = `Đang chạy... (đã đăng 2/4 nhóm)`;
-                break;
-            case SchedulePostStatus.Paused:
-                message = `Tạm dừng... (đã đăng 2/4 nhóm)`;
-                break;
-            case SchedulePostStatus.Running:
-                message = `Kết thúc (đã đăng 2/4 nhóm).`;
-                break;
-        }
+        message = `${this.schedule.nodePosts ? this.schedule.nodePosts.length : 0}/${this.schedule.groups ? this.schedule.groups.length : 0}`;
 
         return message;
     }

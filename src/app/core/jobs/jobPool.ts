@@ -39,7 +39,7 @@ export class JobPool {
      */
     public remove(jobId: string): IJob {
         const index = this.jobs.findIndex((jobItem) => jobItem.getId() == jobId);
-        if(index) {
+        if(index >= 0) {
             const job = this.jobs[index];
             this.jobs.splice(index, 1);
             return job;

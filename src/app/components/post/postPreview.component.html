@@ -12,7 +12,7 @@
 		</div>
 		<p class="message line-breaker"><span class="defaultMessage" *ngIf="!post.message"></span>{{post.message}}</p>
 
-		<a href="#" class="previewPostLink" *ngIf="post.type == postType.Link">
+		<a class="previewPostLink" *ngIf="post.type == postType.Link">
 			<div class="previewLink">
 				<img [src]="post.imageUrl" *ngIf="post.imageUrl">
 			</div>

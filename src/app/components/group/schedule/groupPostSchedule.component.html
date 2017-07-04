@@ -15,12 +15,14 @@
 				<div class="row" *ngIf="post.id">
 					<button class="btn btn-primary pull-right" (click)="start()" *ngIf="schedule.status == scheduleStatus.Opened"><i class="material-icons">motorcycle</i> Bắt đầu
 					</button>
-					<button class="btn btn-error pull-right" (click)="stop()" *ngIf="schedule.status != scheduleStatus.Opened && schedule.status != scheduleStatus.Stopped"><i class="material-icons">stop</i> Kết thúc
+					<!--<button class="btn btn-error pull-right" (click)="stop()" *ngIf="schedule.status != scheduleStatus.Opened && schedule.status != scheduleStatus.Stopped"><i class="material-icons">stop</i> Kết thúc
+					</button>-->
+					<button class="btn btn-info pull-right" (click)="pause()" *ngIf="schedule.status == scheduleStatus.Running"><i class="material-icons">pause</i> Tạm dừng
 					</button>
-					<button class="btn btn-info pull-right" (click)="pause()" *ngIf="schedule.status != scheduleStatus.Opened && schedule.status != scheduleStatus.Stopped"><i class="material-icons">pause</i> Tạm dừng
+					<button class="btn btn-info pull-right" (click)="resume()" *ngIf="schedule.status == scheduleStatus.Paused"><i class="material-icons">play_arrow</i> Tiếp tục
 					</button>
 				</div>
-				<p><ngb-progressbar type="info" [value]="50">{{progressMessage()}}</ngb-progressbar></p>
+				<p><ngb-progressbar type="info" [value]="percent" *ngIf="started">{{progressMessage()}}</ngb-progressbar></p>
 			</div>
 		</div>
 	</div>

@@ -40,6 +40,10 @@
 					<label class="control-label">Mô tả </label>
 					<textarea name="message" rows="3" cols="50" class="form-control" [(ngModel)]="post.message" placeholder="Awesome!"></textarea>
 				</div>
+				<div class="form-group" *ngIf="post.type == postType.Sale">
+					<label class="control-label">Hình ảnh </label>
+					<input type="file" id="productImage" class="form-control" (change)="onImgChange($event)">
+				</div>
 			</div>
 		</div>
 	</div>

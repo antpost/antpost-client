@@ -12,13 +12,19 @@ import {Group} from '../../../models/group.model';
       <kendo-grid
           [data]="list"
         >
-      <kendo-grid-column field="name" title="Nhóm" width="300">
+      <kendo-grid-column field="name" title="Nhóm" [width]="250">
       </kendo-grid-column>
+      <kendo-grid-column field="timePosted" title="Ngày đăng" [width]="150">
+            <ng-template kendoGridCellTemplate let-dataItem>
+                {{dataItem.timePosted | date: 'short' }}
+            </ng-template>
+        </kendo-grid-column>
       <kendo-grid-column title="Kết quả">
             <ng-template kendoGridCellTemplate let-dataItem>
                 <span *ngIf="dataItem.fbPostId"><a target="_blank" href="https://facebook.com/{{dataItem.fbPostId}}">
                     <i class="fa fa-facebook-square"></i> Click xem
                 </a></span>
+                <span *ngIf="dataItem.error">{{dataItem.error}}</span>
             </ng-template>
       </kendo-grid-column>
       </kendo-grid>
@@ -40,6 +46,11 @@ export class GroupPostDetailComponent implements OnInit {
 
     public ngOnInit() {
         // build list node-posts from schedule actions
+
+        this.refresh();
+    }
+
+    public refresh() {
         this.list = this.schedule.groups;
 
         if (this.schedule.nodePosts) {
@@ -48,9 +59,10 @@ export class GroupPostDetailComponent implements OnInit {
                 let post = this.schedule.nodePosts.find((item) => item.nodeId == group.id);
                 if (post) {
                     group.fbPostId = post.fbPostId;
+                    group.error = post.error;
+                    group.timePosted = post.timePosted;
                 }
             });
         }
-
     }
 }

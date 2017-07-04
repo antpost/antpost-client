@@ -41,6 +41,6 @@ export class BaseService<U, T> {
     }
 
     public async getByIds(ids: Array<any>): Promise<Array<U>> {
-        return await this.table.where('id').inAnyRange(ids).toArray();
+        return await this.table.where('id').anyOf(ids).toArray();
     }
 }

@@ -19,6 +19,7 @@ export class Post {
     public location?: string;
 
     public images?: Array<string>;
+    public image: string;
 
     public status?: number;
 }

@@ -19,7 +19,7 @@ export class SchedulePostService extends BaseService<SchedulePost, number> {
             .with({nodePosts: 'nodePosts', post: 'postId'});
 
         list = list.sort((s1, s2) => {
-            return s1.createdAt.getMilliseconds() - s2.createdAt.getMilliseconds();
+            return s2.createdAt.getTime() - s1.createdAt.getTime();
         });
 
         if(list) {

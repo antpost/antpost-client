@@ -8,6 +8,7 @@ export class NodePost {
     public shares: number;
     public fbPostId: string;
     public fbUrl: string;
+    public error: string;
 
     public status: number;
 }
