@@ -32,6 +32,7 @@ export class GroupPostScheduleComponent implements OnInit {
     public schedule: SchedulePost = new SchedulePost();
     public scheduleStatus = SchedulePostStatus;
     public job: ScheduleJob;
+    public started: boolean = false;
 
     constructor(private postService: PostService,
                 private schedulePostService: SchedulePostService,
@@ -68,6 +69,8 @@ export class GroupPostScheduleComponent implements OnInit {
             return;
         }
 
+        this.started = true;
+
         // save schedule
         this.schedule = new SchedulePost();
         this.schedule.postId = this.post.id;
@@ -86,6 +89,32 @@ export class GroupPostScheduleComponent implements OnInit {
 
         this.job.observe().subscribe((result) => {
             console.log(result);
+            if(result.status !== undefined) {
+                this.schedule.status = result.status;
+            } else {
+
+            }
         });
+    }
+
+    public progressMessage() {
+        let message = '';
+
+        switch (this.schedule.status) {
+            case SchedulePostStatus.Opened:
+                message = 'Chuẩn bị chạy...';
+                break;
+            case SchedulePostStatus.Running:
+                message = `Đang chạy... (đã đăng 2/4 nhóm)`;
+                break;
+            case SchedulePostStatus.Paused:
+                message = `Tạm dừng... (đã đăng 2/4 nhóm)`;
+                break;
+            case SchedulePostStatus.Running:
+                message = `Kết thúc (đã đăng 2/4 nhóm).`;
+                break;
+        }
+
+        return message;
     }
 }

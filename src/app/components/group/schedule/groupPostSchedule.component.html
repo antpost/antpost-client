@@ -2,7 +2,8 @@
 	<div class="card no-header">
 		<div class="card-content">
 			<div class="col-sm-6">
-				<joined-group></joined-group>
+				<joined-group [hidden]="started"></joined-group>
+				<group-post-detail [schedule]="schedule" [hidden]="!started"></group-post-detail>
 			</div>
 			<div class="col-sm-6">
 				<div class="row ">
@@ -19,7 +20,7 @@
 					<button class="btn btn-info pull-right" (click)="pause()" *ngIf="schedule.status != scheduleStatus.Opened && schedule.status != scheduleStatus.Stopped"><i class="material-icons">pause</i> Tạm dừng
 					</button>
 				</div>
-				<p><ngb-progressbar type="info" [value]="50">Đang chạy ... (Đã đăng <b>2/4</b> nhóm)</ngb-progressbar></p>
+				<p><ngb-progressbar type="info" [value]="50">{{progressMessage()}}</ngb-progressbar></p>
 			</div>
 		</div>
 	</div>
