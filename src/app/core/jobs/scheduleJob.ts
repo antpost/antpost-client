@@ -10,6 +10,7 @@ export class ScheduleJob implements IJob {
 
     constructor(engine: IScheduleEngine) {
         this.engine = engine;
+        this.subject = new Subject();
     }
 
     public getId() {
@@ -39,11 +40,15 @@ export class ScheduleJob implements IJob {
 
     private async process() {
         if(this.engine.hasNext()) {
-            this.engine.doNext(() => {
+            this.engine.doNext((res) => {
+                this.subject.next(res);
                 this.process();
             });
         } else {
             await this.engine.stop();
+            this.subject.next({
+                status: 'stop'
+            });
 
             this.onFinish();
         }

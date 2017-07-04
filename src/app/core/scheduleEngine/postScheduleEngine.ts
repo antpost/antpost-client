@@ -38,9 +38,14 @@ export class PostScheduleEngine extends BaseScheduleEngine implements IScheduleE
     }
 
     public doNext(doneCallback: Function): void {
+        if(this.schedule.status != SchedulePostStatus.Running) {
+            this.schedule.status = SchedulePostStatus.Running;
+            doneCallback(this.schedule.status);
+        }
+
         setTimeout(() => {
-            this.postGroup().then(() => {
-                doneCallback();
+            this.postGroup().then((data) => {
+                doneCallback(data);
             })
         }, this.isFirst ? 0 : this.postSettings.delay * 1000);
     }
@@ -85,8 +90,8 @@ export class PostScheduleEngine extends BaseScheduleEngine implements IScheduleE
      * Post next group
      * @returns {Promise<void>}
      */
-    private postGroup(): Promise<void> {
-        return new Promise<void>((resolve, reject) => {
+    private postGroup(): Promise<any> {
+        return new Promise<any>((resolve, reject) => {
             let group = this.schedule.findUnposted();
 
             if(group) {
@@ -117,7 +122,7 @@ export class PostScheduleEngine extends BaseScheduleEngine implements IScheduleE
 
                     await this.nodePostService.add(nodePost);
 
-                    resolve();
+                    resolve(nodePost);
                 });
             }
         });

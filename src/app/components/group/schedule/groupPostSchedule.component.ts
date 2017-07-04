@@ -14,6 +14,7 @@ import {SchedulePostStatus, ScheduleType} from "../../../models/enums";
 import {SchedulePostService} from "../../../services/schedulePost.service";
 import {JobQueue} from "../../../core/jobs/jobQueue";
 import {JobFactory} from "../../../core/jobs/jobFactory";
+import {ScheduleJob} from "../../../core/jobs/scheduleJob";
 
 @Component({
     selector: 'group-post-schedule',
@@ -30,6 +31,7 @@ export class GroupPostScheduleComponent implements OnInit {
     public post: Post = new Post();
     public schedule: SchedulePost = new SchedulePost();
     public scheduleStatus = SchedulePostStatus;
+    public job: ScheduleJob;
 
     constructor(private postService: PostService,
                 private schedulePostService: SchedulePostService,
@@ -78,6 +80,12 @@ export class GroupPostScheduleComponent implements OnInit {
         this.schedule.post = this.post;
         this.schedule.groups = groups;
 
-        this.jobQueue.push(JobFactory.createScheduleJob(this.schedule, ScheduleType.Post));
+        this.job = <ScheduleJob>JobFactory.createScheduleJob(this.schedule, ScheduleType.Post);
+
+        this.jobQueue.push(this.job);
+
+        this.job.observe().subscribe((result) => {
+            console.log(result);
+        });
     }
 }
