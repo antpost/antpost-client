@@ -29,6 +29,8 @@ export class PostFormComponent implements OnInit {
 
     public tabs: Array<any>;
     public postType = PostType;
+    public uploadSaveUrl = 'http://localhost:3001/upload';
+    public uploadRemoveUrl = 'http://localhost:3001/remove';
 
     constructor(private injector: Injector,
                 private postService: PostService,

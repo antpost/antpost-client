@@ -10,6 +10,7 @@ import {PostFormComponent} from './post/postForm.component';
 import {CommonModule} from '@angular/common';
 import {PostSelectorComponent} from "./post/postSelector.component";
 import {GridModule} from '@progress/kendo-angular-grid';
+import {UploadModule} from '@progress/kendo-angular-upload';
 import {FacebookService} from '../services/facebook.service';
 import {GroupService} from '../services/group.service';
 import {AppManager} from '../core/appManager';
@@ -25,6 +26,7 @@ import {AutomationService} from "../services/automation.service";
         HttpModule,
         CoreModule,
         GridModule,
+        UploadModule,
         NgbModule.forRoot(),
         RouterModule.forChild(MODULE_ROUTES)
     ],
