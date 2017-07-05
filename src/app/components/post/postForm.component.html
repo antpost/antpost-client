@@ -44,7 +44,11 @@
 					<label class="control-label">Hình ảnh </label>
 					<kendo-upload
 						[saveUrl]="uploadSaveUrl"
-						[removeUrl]="uploadRemoveUrl">
+						[removeUrl]="uploadRemoveUrl"
+						[multiple]="false"
+						[restrictions]="restrictions"
+						(success)="successEventHandler($event)"
+						[(ngModel)]="images">
 					</kendo-upload>
 				</div>
 			</div>

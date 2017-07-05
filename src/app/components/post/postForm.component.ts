@@ -8,6 +8,7 @@ import {PostType} from '../../models/enums';
 import {NotificationsService} from 'angular2-notifications/dist';
 import {Toastr} from '../../core/helpers/toastr';
 import {FacebookService} from '../../services/facebook.service';
+import {FileRestrictions, SuccessEvent, FileInfo} from '@progress/kendo-angular-upload';
 
 @Component({
     selector: 'post-form',
@@ -31,6 +32,10 @@ export class PostFormComponent implements OnInit {
     public postType = PostType;
     public uploadSaveUrl = 'http://localhost:3001/upload';
     public uploadRemoveUrl = 'http://localhost:3001/remove';
+    public restrictions: FileRestrictions = {
+        allowedExtensions: [".jpg", ".png"]
+    };
+    public images: Array<FileInfo>;
 
     constructor(private injector: Injector,
                 private postService: PostService,
@@ -69,14 +74,19 @@ export class PostFormComponent implements OnInit {
     }
 
     public ngOnInit() {
-
+        if(this.post.images && this.post.images.length > 0) {
+            this.images = this.post.images.map(image => {
+                return {
+                    name: image
+                };
+            })
+        }
     }
 
-    public onImgChange(event: any) {
-        /*let file = event.target.files[0];
-        let fileName = file.name;*/
-        let inputName: any = document.getElementById('productImage');
-        let imgPath = inputName.value;
+    public successEventHandler(e: SuccessEvent) {
+        if(e.operation == 'upload') {
+            this.post.images = e.files.map(f => f.name);
+        }
     }
 
     public async save() {
