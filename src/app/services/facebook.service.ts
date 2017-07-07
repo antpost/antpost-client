@@ -6,6 +6,7 @@ import {AppManager} from '../core/appManager';
 import {Post} from '../models/post.model';
 import {ProxyService} from "./proxy.service";
 import {AutomationService} from './automation.service';
+import {Group} from "../models/group.model";
 
 @Injectable()
 export class FacebookService extends ProxyService{
@@ -91,6 +92,82 @@ export class FacebookService extends ProxyService{
     }
 
     /**
+     * Get node information
+     * @param nodeId
+     * @returns {Observable<any>}
+     */
+    public getNodeInfo(nodeId: string): Observable<any> {
+        let api = this.createApi(`/${nodeId}`);
+        return this.post(api, 'GET');
+    }
+
+    /* ============ GROUP ==============*/
+
+    /**
+     * Search group by keyword
+     * @param keyword
+     * @returns
+     */
+    public searchGroup(keyword: string): Observable<Group> {
+        return new Observable(observer => {
+            let params = {
+                type: 'group',
+                limit: 5000,
+                offset: 0
+            };
+            // simulate login facebook
+            this.searchGraph(params).subscribe((res) => {
+                if(res.status == 0) {
+                    observer.next(res.data);
+                    observer.complete();
+                }
+            });
+        });
+    }
+
+    /**
+     * Get members of group
+     * @param groupId
+     * @returns {any}
+     */
+    public getGroupMembers(groupId: string): Observable<any> {
+        return this.automationService.getGroupMembers(groupId);
+    }
+
+    /**
+     * Get owner of group
+     * @param groupId
+     * @returns {Observable<any>}
+     */
+    public getOwner(groupId: string): Observable<any> {
+        let params = {
+            fields: 'owner'
+        };
+
+        let api = this.createApi(`/${nodeId}`, params);
+        return this.post(api, 'GET');
+    }
+
+    /**
+     * Get user infomation
+     * @param uid
+     * @param params
+     * @returns {Observable<any>}
+     */
+    public getUserInfo(uid: string, params: any) {
+        let api = this.createApi(`/${uid}`, params);
+        return this.post(api, 'GET');
+    }
+
+    /**
+     * Join group
+     * @param groupId
+     */
+    public joinGroup(groupId): Observable<any> {
+        return this.automationService.joinGroup(groupId);
+    }
+
+    /**
      * Get title, description, image from url
      * @param url
      * @returns {Reducer}
@@ -114,9 +191,22 @@ export class FacebookService extends ProxyService{
      * @returns {string}
      */
     private createApi(url: string, params?: any) {
-        return `${this.graphApi}${url}?access_token=${this.appManager.currentUser.token}`;
+        let query = params ? Object.keys(params)
+            .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(params[k]))
+            .join('&') : '';
+
+        let url = `${this.graphApi}${url}?access_token=${this.appManager.currentUser.token}`;
+        if(query) {
+            url += '&' + query;
+        }
+
+        return url;
     }
 
+    /**
+     * Get current access_token
+     * @returns {string}
+     */
     private getAcessToken() {
         return this.appManager.currentUser.token;
     }
@@ -157,7 +247,7 @@ export class FacebookService extends ProxyService{
      * @param data
      * @returns {any}
      */
-    private post(api: string, method: string, data: any): Observable<any> {
+    private post(api: string, method: string, data?: any): Observable<any> {
         let postData = {api, method, data};
 
         return this.http.post(`${this.host}/post`, postData)
@@ -166,5 +256,15 @@ export class FacebookService extends ProxyService{
             }).catch((error: Response) => {
                 return Observable.throw(error.json().error || 'Server error');
             });
+    }
+
+    /**
+     * Facebook graph search
+     * @param params
+     * @returns {Observable<any>}
+     */
+    private searchGraph(params: any): Observable<any> {
+        let api = this.createApi('/search', params);
+        return this.post(api, 'GET', null);
     }
 }
