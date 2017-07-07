@@ -160,6 +160,14 @@ export class FacebookService extends ProxyService{
     }
 
     /**
+     * Join group
+     * @param groupId
+     */
+    public joinGroup(groupId): Observable<any> {
+        return this.automationService.joinGroup(groupId);
+    }
+
+    /**
      * Get title, description, image from url
      * @param url
      * @returns {Reducer}

@@ -113,7 +113,7 @@ export class AutomationService extends ProxyService {
      */
     public checkPendingPost(groupId: string): Observable<any> {
         let procedure = new AutomationReq()
-            .access(`${this.mbasicUrl}/groups/${groupId}?view=info`)
+            .access(`${this.mbasicUrl}/groups/${groupId}/madminpanel`)
             .responseContent('.bz');
 
         return new Observable(observer => {
@@ -128,6 +128,30 @@ export class AutomationService extends ProxyService {
                     pendingPost
                 });
                 observer.complete();
+            });
+        });
+    }
+
+    /**
+     * Join group
+     * @param groupId
+     * @returns {Observable<any>}
+     */
+    public joinGroup(groupId: string) {
+        let procedure = new AutomationReq()
+            .access(`${this.mbasicUrl}/groups/${groupId}?view=info`)
+            .click('a[href*="join"]');
+
+        return new Observable(observer => {
+            this.simulate(procedure).subscribe((res) => {
+                if(res.status == 0) {
+                    observer.next({
+                        id: groupId
+                    });
+                    observer.complete();
+                } else {
+                    observer.error('error');
+                }
             });
         });
     }
