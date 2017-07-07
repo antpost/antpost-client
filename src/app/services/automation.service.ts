@@ -9,7 +9,6 @@ import {AutomationReq} from '../core/automation/automationReq';
 import {Http, Response} from '@angular/http';
 import {AppManager} from '../core/appManager';
 import {AutomationUtils} from '../core/automation/automationUtils';
-import {ActionStep} from '../core/automation/actionStep';
 import {Post} from "../models/post.model";
 import {AutomationRes} from "../core/automation/automationRes";
 import * as $ from 'jquery';
@@ -17,7 +16,7 @@ import {PostType} from "../models/enums";
 
 @Injectable()
 export class AutomationService extends ProxyService {
-    private mbasicUrl: string = 'https://mbasic.facebook.com/';
+    private mbasicUrl: string = 'https://mbasic.facebook.com';
 
     constructor(private http: Http, private appManager: AppManager) {
         super();
@@ -76,6 +75,59 @@ export class AutomationService extends ProxyService {
                         error
                     });
                 }
+            });
+        });
+    }
+
+    /**
+     * Simulate to get group members
+     * @param groupId
+     * @returns {Observable<any>}
+     */
+    public getGroupMembers(groupId: string): Observable<any> {
+        let procedure = new AutomationReq()
+            .access(`${this.mbasicUrl}/groups/${groupId}?view=info`)
+            .responseContent('#u_0_0');
+
+        return new Observable(observer => {
+            this.simulate(procedure).subscribe((res) => {
+                if(res.status == 0) {
+                    let members = parseInt(res.data.content);
+
+                    observer.next({
+                        id: groupId,
+                        members
+                    });
+                    observer.complete();
+                } else {
+                    observer.error('error');
+                }
+            });
+        });
+    }
+
+    /**
+     *  Check group has pending posts
+     * @param groupId
+     * @returns {Observable<any>}
+     */
+    public checkPendingPost(groupId: string): Observable<any> {
+        let procedure = new AutomationReq()
+            .access(`${this.mbasicUrl}/groups/${groupId}?view=info`)
+            .responseContent('.bz');
+
+        return new Observable(observer => {
+            this.simulate(procedure).subscribe((res) => {
+                let pendingPost = false;
+                if(res.status != 0) {
+                    pendingPost = true;
+                }
+
+                observer.next({
+                    id: groupId,
+                    pendingPost
+                });
+                observer.complete();
             });
         });
     }
