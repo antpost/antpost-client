@@ -87,5 +87,6 @@ export class AutomationReq {
 
     public responseContent(element: string) {
         this.responseElement = element;
+        return this;
     }
 }

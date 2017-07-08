@@ -108,19 +108,18 @@ export class FacebookService extends ProxyService{
      * @param keyword
      * @returns
      */
-    public searchGroup(keyword: string): Observable<Group> {
+    public searchGroup(keyword: string): Observable<any> {
         return new Observable(observer => {
             let params = {
                 type: 'group',
                 limit: 5000,
-                offset: 0
+                offset: 0,
+                q: keyword
             };
             // simulate login facebook
             this.searchGraph(params).subscribe((res) => {
-                if(res.status == 0) {
-                    observer.next(res.data);
-                    observer.complete();
-                }
+                observer.next(res.data);
+                observer.complete();
             });
         });
     }
@@ -144,7 +143,7 @@ export class FacebookService extends ProxyService{
             fields: 'owner'
         };
 
-        let api = this.createApi(`/${nodeId}`, params);
+        let api = this.createApi(`/${groupId}`, params);
         return this.post(api, 'GET');
     }
 
@@ -192,15 +191,15 @@ export class FacebookService extends ProxyService{
      */
     private createApi(url: string, params?: any) {
         let query = params ? Object.keys(params)
-            .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(params[k]))
+            .map(k => encodeURI(k) + '=' + encodeURI(params[k]))
             .join('&') : '';
 
-        let url = `${this.graphApi}${url}?access_token=${this.appManager.currentUser.token}`;
+        let api = `${this.graphApi}${url}?access_token=${this.appManager.currentUser.token}`;
         if(query) {
-            url += '&' + query;
+            api += '&' + query;
         }
 
-        return url;
+        return api;
     }
 
     /**

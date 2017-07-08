@@ -13,13 +13,16 @@ import {PostTypePipe} from '../pipes/postType.pipe';
 import {GroupPostHistoryComponent} from './group/schedule/groupPostHistory.component';
 import {ScheduleStatusPipe} from '../pipes/scheduleStatus.pipe';
 import {GroupPostDetailComponent} from './group/schedule/groupPostDetail.component';
+import {GroupSearchComponent} from './group/groupSearch/groupSearch.component';
+import {JoinGroupFormComponent} from './group/joinGroupForm/joinGroupForm.component';
 
 export const MODULE_ROUTES: Route[] = [
     {path: 'login', component: LoginComponent},
     {path: '', component: HomeComponent, canActivate: [AuthService]},
     {path: 'post', component: PostComponent, canActivate: [AuthService]},
     {path: 'post-group', component: GroupPostScheduleComponent, canActivate: [AuthService]},
-    {path: 'post-group-history', component: GroupPostHistoryComponent, canActivate: [AuthService]}
+    {path: 'post-group-history', component: GroupPostHistoryComponent, canActivate: [AuthService]},
+    {path: 'join-group', component: JoinGroupFormComponent, canActivate: [AuthService]}
 ];
 
 export const MODULE_COMPONENTS = [
@@ -32,7 +35,9 @@ export const MODULE_COMPONENTS = [
     GroupPostScheduleComponent,
     JoinedGroupComponent,
     GroupPostHistoryComponent,
-    GroupPostDetailComponent
+    GroupPostDetailComponent,
+    JoinGroupFormComponent,
+    GroupSearchComponent
 ];
 
 export const PIPES = [
