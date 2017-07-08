@@ -39,6 +39,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {JobQueue} from "./core/jobs/jobQueue";
 import {ServiceLocator} from "./core/serviceLocator";
 import {AppRunner} from './core/appRunner';
+import {TabsModule} from "ngx-bootstrap";
+import {CoreModule} from "./core/core.module";
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -66,10 +68,12 @@ type StoreType = {
         BrowserModule,
         BrowserAnimationsModule,
         AntPostModule,
+        CoreModule,
         SidebarModule,
         NavbarModule,
         ModalModule.forRoot(),
         BootstrapModalModule,
+        TabsModule.forRoot(),
         JsonpModule,
         RouterModule.forRoot([])
     ],

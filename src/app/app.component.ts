@@ -27,7 +27,7 @@ import {AppRunner} from './core/appRunner';
                 <sidebar ></sidebar>
             </div>
             <div [ngClass]="{'main-panel ps-container ps-theme-default ps-active-y' : isLogin()}">
-                <navbar *ngIf="isLogin()"></navbar>
+                <!--<navbar *ngIf="isLogin()"></navbar>-->
                 <div class="content">
                     <antpost></antpost>
                 </div>
@@ -54,4 +54,6 @@ export class AppComponent implements OnInit {
             return true;
         }
     }
+
+
 }

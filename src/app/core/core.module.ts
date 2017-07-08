@@ -24,7 +24,8 @@ import {JobQueue} from "./jobs/jobQueue";
         JobQueue
     ],
     bootstrap: [],
-    entryComponents: [ModalWrapperComponent]
+    entryComponents: [ModalWrapperComponent],
+    exports: [DynamicComponent]
 })
 export class CoreModule {
     constructor(@Optional() @SkipSelf() parentModule: CoreModule) {
