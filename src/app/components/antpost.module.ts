@@ -11,6 +11,8 @@ import {CommonModule} from '@angular/common';
 import {PostSelectorComponent} from "./post/postSelector.component";
 import {GridModule} from '@progress/kendo-angular-grid';
 import {UploadModule} from '@progress/kendo-angular-upload';
+import { TabsModule } from 'ngx-bootstrap';
+
 import {FacebookService} from '../services/facebook.service';
 import {GroupService} from '../services/group.service';
 import {AppManager} from '../core/appManager';
@@ -28,6 +30,7 @@ import {AutomationService} from "../services/automation.service";
         GridModule,
         UploadModule,
         NgbModule.forRoot(),
+        TabsModule.forRoot(),
         RouterModule.forChild(MODULE_ROUTES)
     ],
     declarations: [MODULE_COMPONENTS, PIPES],

@@ -6,7 +6,7 @@ import {PostService} from '../../services/post.service';
 import {Post} from '../../models/post.model';
 
 @Component({
-    selector: 'post',
+    selector: 'post-selector',
     providers: [],
     styleUrls: [],
     templateUrl: 'postSelector.component.html',

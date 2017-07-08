@@ -4,6 +4,8 @@ import {
 } from '@angular/core';
 import {JobQueue} from "../../core/jobs/jobQueue";
 import {AppRunner} from "../../core/appRunner";
+import {PostComponent} from "../post/post.component";
+import {GroupPostScheduleComponent} from "../group/schedule/groupPostSchedule.component";
 
 @Component({
     // The selector is what angular internally uses
