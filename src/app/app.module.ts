@@ -41,6 +41,8 @@ import {ServiceLocator} from "./core/serviceLocator";
 import {AppRunner} from './core/appRunner';
 import {TabsModule} from "ngx-bootstrap";
 import {CoreModule} from "./core/core.module";
+import {POPUP_CONTAINER, PopupModule} from '@progress/kendo-angular-popup';
+import {MODULE_COMPONENTS} from './components/antpost.routes';
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -75,14 +77,21 @@ type StoreType = {
         BootstrapModalModule,
         TabsModule.forRoot(),
         JsonpModule,
-        RouterModule.forRoot([])
+        RouterModule.forRoot([]),
+        PopupModule
     ],
     providers: [ // expose our Services and Providers into Angular's dependency injection
         ENV_PROVIDERS,
         APP_PROVIDERS,
         AuthService,
         AppRunner,
-        {provide: LocationStrategy, useClass: HashLocationStrategy}
+        {provide: LocationStrategy, useClass: HashLocationStrategy},
+        {
+            provide: POPUP_CONTAINER,
+            useFactory: () => {
+                //return the container ElementRef, where the popup will be injected
+            }
+        }
     ]
 })
 export class AppModule {

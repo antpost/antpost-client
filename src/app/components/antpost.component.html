@@ -1,10 +1,14 @@
 <tabset>
-	<tab *ngFor="let tabz of tabs"
-		 [active]="tabz.active"
-		 (select)="tabz.active = true"
-		 [customClass]="tabz.customClass">
+	<tab [active]="tabs.length == 0">
 		<template tabHeading>
-			{{tabz.title}} <a (click)="removeTabHandler(tabz)" style="color: #FFFFFF;"><i class="material-icons">close</i></a>
+			<i class="material-icons">home</i>
+		</template>
+		<home></home>
+	</tab>
+	<tab *ngFor="let tabz of tabs"
+		 [active]="tabz.active">
+		<template tabHeading>
+			{{tabz.title}} <a (click)="removeTabHandler(tabz)" style="color: #FFFFFF;" *ngIf="tabz.removable"><i class="material-icons">close</i></a>
 		</template>
 		<dynamic-component [componentData]="tabz.componentData"></dynamic-component>
 	</tab>

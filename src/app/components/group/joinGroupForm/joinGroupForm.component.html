@@ -5,7 +5,67 @@
 				<group-search></group-search>
 			</div>
 			<div class="col-sm-6">
-
+				<div class="form-horizontal">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Thành viên từ</label>
+						<div class="col-sm-9">
+							<input type="number" class="form-control" value="5000">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Loại nhóm</label>
+						<div class="col-sm-9">
+							<kendo-multiselect
+								[data]="privacyList"
+								textField="text"
+								valueField="value"
+								[valuePrimitive]="true"
+								[(ngModel)]="joinForm.privacy"
+							></kendo-multiselect>
+							<div class="checkbox">
+								<label>
+									<input type="checkbox"> Nhóm công khai
+								</label>
+							</div>
+							<div class="checkbox">
+								<label>
+									<input type="checkbox"> Nhóm kín
+								</label>
+							</div>
+							<div class="checkbox">
+								<label>
+									<input type="checkbox"> Nhóm bí mật
+								</label>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Ngôn ngữ</label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control" value="">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Địa điểm</label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control" value="" placeholder="Hà nội">
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-offset-3 col-sm-9">
+							<div class="checkbox">
+								<label>
+									<input type="checkbox"> Không gia nhập nhóm phải duyệt khi đăng bài
+								</label>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-offset-3 col-sm-9">
+							<button class="btn btn-primary btn-sm"><i class="material-icons">group_add</i> Gia nhập</button>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

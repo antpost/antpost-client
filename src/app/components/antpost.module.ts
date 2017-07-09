@@ -11,7 +11,8 @@ import {CommonModule} from '@angular/common';
 import {PostSelectorComponent} from "./post/postSelector.component";
 import {GridModule} from '@progress/kendo-angular-grid';
 import {UploadModule} from '@progress/kendo-angular-upload';
-import { TabsModule } from 'ngx-bootstrap';
+import {DropDownsModule} from '@progress/kendo-angular-dropdowns';
+import {TabsModule} from 'ngx-bootstrap';
 
 import {FacebookService} from '../services/facebook.service';
 import {GroupService} from '../services/group.service';
@@ -20,6 +21,9 @@ import {LocalStorageService} from '../services/localStorage.service';
 import {SchedulePostService} from "../services/schedulePost.service";
 import {NodePostService} from '../services/nodePost.service';
 import {AutomationService} from "../services/automation.service";
+import {GroupPostScheduleComponent} from './group/schedule/groupPostSchedule.component';
+import {PostComponent} from './post/post.component';
+import {JoinGroupFormComponent} from './group/joinGroupForm/joinGroupForm.component';
 
 @NgModule({
     imports: [
@@ -29,9 +33,10 @@ import {AutomationService} from "../services/automation.service";
         CoreModule,
         GridModule,
         UploadModule,
+        DropDownsModule,
         NgbModule.forRoot(),
         TabsModule.forRoot(),
-        RouterModule.forChild(MODULE_ROUTES)
+        //RouterModule.forChild(MODULE_ROUTES)
     ],
     declarations: [MODULE_COMPONENTS, PIPES],
     providers: [
@@ -42,12 +47,14 @@ import {AutomationService} from "../services/automation.service";
         GroupService,
         AppManager,
         LocalStorageService,
-        NodePostService,
+        NodePostService
     ],
     // IMPORTANT:
     // Since 'AdditionCalculateWindow' is never explicitly used (in a template)
     // we must tell angular about it.
-    entryComponents: [PostFormComponent, PostSelectorComponent, PostSelectorComponent]
+    entryComponents: [PostFormComponent, PostSelectorComponent, PostSelectorComponent, GroupPostScheduleComponent, PostComponent,
+        JoinGroupFormComponent],
+    exports: [MODULE_COMPONENTS]
 })
 
 export class AntPostModule {
