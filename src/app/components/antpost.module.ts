@@ -47,7 +47,8 @@ import {JoinGroupFormComponent} from './group/joinGroupForm/joinGroupForm.compon
         GroupService,
         AppManager,
         LocalStorageService,
-        NodePostService
+        NodePostService,
+
     ],
     // IMPORTANT:
     // Since 'AdditionCalculateWindow' is never explicitly used (in a template)

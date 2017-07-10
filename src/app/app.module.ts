@@ -3,7 +3,7 @@ import {FormsModule} from '@angular/forms';
 import {HttpModule, JsonpModule} from '@angular/http';
 import {
     NgModule,
-    ApplicationRef, Injector
+    ApplicationRef, Injector, ElementRef
 } from '@angular/core';
 import {
     removeNgStyles,
@@ -31,7 +31,7 @@ import '../styles/headings.css';
 import {AntPostModule} from './components/antpost.module';
 import {AntPostComponent} from './components/antpost.component';
 import {SidebarModule} from './shared/sidebar/sidebar.module';
-import {HashLocationStrategy, LocationStrategy} from '@angular/common';
+import {HashLocationStrategy, LocationStrategy, CommonModule} from '@angular/common';
 import {NavbarModule} from './shared/navbar/navbar.module';
 import {BootstrapModalModule} from 'angular2-modal/plugins/bootstrap';
 import {ModalModule} from 'angular2-modal';
@@ -42,7 +42,24 @@ import {AppRunner} from './core/appRunner';
 import {TabsModule} from "ngx-bootstrap";
 import {CoreModule} from "./core/core.module";
 import {POPUP_CONTAINER, PopupModule} from '@progress/kendo-angular-popup';
-import {MODULE_COMPONENTS} from './components/antpost.routes';
+import {MODULE_COMPONENTS, PIPES} from './components/antpost.routes';
+import {JoinGroupFormComponent} from "./components/group/joinGroupForm/joinGroupForm.component";
+import {PostComponent} from "./components/post/post.component";
+import {GroupPostScheduleComponent} from "./components/group/schedule/groupPostSchedule.component";
+import {PostSelectorComponent} from "./components/post/postSelector.component";
+import {PostFormComponent} from "./components/post/postForm.component";
+import {GridModule} from "@progress/kendo-angular-grid";
+import {UploadModule} from "@progress/kendo-angular-upload";
+import {DropDownsModule} from "@progress/kendo-angular-dropdowns";
+import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
+import {NodePostService} from "./services/nodePost.service";
+import {LocalStorageService} from "./services/localStorage.service";
+import {AppManager} from "./core/appManager";
+import {GroupService} from "./services/group.service";
+import {AutomationService} from "./services/automation.service";
+import {FacebookService} from "./services/facebook.service";
+import {SchedulePostService} from "./services/schedulePost.service";
+import {PostService} from "./services/post.service";
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -64,12 +81,23 @@ type StoreType = {
     bootstrap: [AppComponent],
     declarations: [
         AppComponent,
-        AntPostComponent
+        AntPostComponent,
+        MODULE_COMPONENTS, PIPES
     ],
     imports: [ // import Angular's modules
+        CommonModule,
         BrowserModule,
+        FormsModule,
+        HttpModule,
+        CoreModule,
+        GridModule,
+        UploadModule,
+        DropDownsModule,
+        PopupModule,
+        NgbModule.forRoot(),
+        TabsModule.forRoot(),
         BrowserAnimationsModule,
-        AntPostModule,
+        //AntPostModule,
         CoreModule,
         SidebarModule,
         NavbarModule,
@@ -77,22 +105,32 @@ type StoreType = {
         BootstrapModalModule,
         TabsModule.forRoot(),
         JsonpModule,
-        RouterModule.forRoot([]),
-        PopupModule
+        RouterModule.forRoot([])
     ],
     providers: [ // expose our Services and Providers into Angular's dependency injection
         ENV_PROVIDERS,
         APP_PROVIDERS,
         AuthService,
         AppRunner,
+        PostService,
+        SchedulePostService,
+        FacebookService,
+        AutomationService,
+        GroupService,
+        AppManager,
+        LocalStorageService,
+        NodePostService,
         {provide: LocationStrategy, useClass: HashLocationStrategy},
         {
             provide: POPUP_CONTAINER,
             useFactory: () => {
                 //return the container ElementRef, where the popup will be injected
+                return ({ nativeElement: document.body } as ElementRef);
             }
         }
-    ]
+    ],
+    entryComponents: [PostFormComponent, PostSelectorComponent, PostSelectorComponent, GroupPostScheduleComponent, PostComponent,
+        JoinGroupFormComponent],
 })
 export class AppModule {
 
