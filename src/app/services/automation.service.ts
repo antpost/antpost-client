@@ -86,7 +86,7 @@ export class AutomationService extends ProxyService {
      */
     public getGroupMembers(groupId: string): Observable<any> {
         let procedure = new AutomationReq()
-            .access(`${this.mbasicUrl}/groups/${groupId}?view=info`)
+            .access(`${this.mbasicUrl}/groups/${groupId}?view=info`, this.appManager.currentUser.cookies)
             .responseContent('#u_0_0');
 
         return new Observable(observer => {
@@ -113,7 +113,7 @@ export class AutomationService extends ProxyService {
      */
     public checkPendingPost(groupId: string): Observable<any> {
         let procedure = new AutomationReq()
-            .access(`${this.mbasicUrl}/groups/${groupId}/madminpanel`)
+            .access(`${this.mbasicUrl}/groups/${groupId}/madminpanel`, this.appManager.currentUser.cookies)
             .responseContent('.bz');
 
         return new Observable(observer => {
@@ -139,7 +139,7 @@ export class AutomationService extends ProxyService {
      */
     public joinGroup(groupId: string) {
         let procedure = new AutomationReq()
-            .access(`${this.mbasicUrl}/groups/${groupId}?view=info`)
+            .access(`${this.mbasicUrl}/groups/${groupId}?view=info`, this.appManager.currentUser.cookies)
             .click('a[href*="join"]');
 
         return new Observable(observer => {

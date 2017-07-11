@@ -41,16 +41,6 @@ export class AntPostComponent {
         }
     ];
 
-    public addNewTab(): void {
-        const newTabIndex = this.tabs.length + 1;
-        this.tabs.push({
-            title: `Dynamic Title ${newTabIndex}`,
-            content: `Dynamic content ${newTabIndex}`,
-            disabled: false,
-            removable: true
-        });
-    }
-
     public removeTabHandler(tab: any): void {
         let active = tab.active;
         this.tabs.splice(this.tabs.indexOf(tab), 1);
