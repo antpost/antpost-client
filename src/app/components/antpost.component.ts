@@ -14,6 +14,7 @@ export class AntPostComponent {
     public tabs: any[] = [
         {
             title: 'Đăng nhóm',
+            path: 'post-group',
             active: false,
             removable: true,
             componentData: {
@@ -23,6 +24,7 @@ export class AntPostComponent {
         },
         {
             title: 'Bài viết',
+            path: 'post',
             removable: true,
             active: true,
             componentData: {
@@ -32,6 +34,7 @@ export class AntPostComponent {
         },
         {
             title: 'Gia nhập nhóm',
+            path: 'join-group',
             removable: true,
             active: true,
             componentData: {
@@ -40,6 +43,25 @@ export class AntPostComponent {
             }
         }
     ];
+
+    public openTab(option: any) {
+        // check tab opened
+        let tab = this.tabs.find((item) => item.path == option.path);
+        this.tabs.forEach((item) => item.active = false);
+        if(tab) {
+            // active tab
+            tab.active = true;
+        } else {
+            option.removable = true;
+            option.active = true;
+            option.componentData = {
+                component: option.component,
+                inputs: {}
+            }
+
+            this.tabs.push(option);
+        }
+    }
 
     public removeTabHandler(tab: any): void {
         let active = tab.active;
