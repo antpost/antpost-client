@@ -1,16 +1,27 @@
-<tabset>
-	<tab [active]="tabs.length == 0">
-		<template tabHeading>
-			<i class="material-icons">home</i>
-		</template>
-		<home></home>
-	</tab>
-	<tab *ngFor="let tabz of tabs"
-		 [active]="tabz.active">
-		<template tabHeading>
-			{{tabz.title}} <a (click)="removeTabHandler(tabz)" style="color: #FFFFFF;" *ngIf="tabz.removable"><i class="material-icons">close</i></a>
-		</template>
-		<dynamic-component [componentData]="tabz.componentData"></dynamic-component>
-	</tab>
-</tabset>
 <!--<router-outlet></router-outlet>-->
+<span defaultOverlayTarget></span>
+<div [ngClass]="{'wrapper' : isLogin()}">
+	<div class="sidebar" data-active-color="rose" data-background-color="black" data-image="../assets/img/sidebar.jpg" *ngIf="isLogin()">
+		<sidebar ></sidebar>
+	</div>
+	<div [ngClass]="{'main-panel ps-container ps-theme-default ps-active-y' : isLogin()}">
+		<!--<navbar *ngIf="isLogin()"></navbar>-->
+		<div class="content">
+			<tabset>
+				<tab [active]="tabs.length == 0">
+					<template tabHeading>
+						<i class="material-icons">home</i>
+					</template>
+					<home></home>
+				</tab>
+				<tab *ngFor="let tabz of tabs"
+					 [active]="tabz.active">
+					<template tabHeading>
+						{{tabz.title}} <a (click)="removeTabHandler(tabz)" style="color: #FFFFFF;" *ngIf="tabz.removable"><i class="material-icons">close</i></a>
+					</template>
+					<dynamic-component [componentData]="tabz.componentData"></dynamic-component>
+				</tab>
+			</tabset>
+		</div>
+	</div>
+</div>

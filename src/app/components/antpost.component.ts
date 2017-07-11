@@ -59,4 +59,8 @@ export class AntPostComponent {
             this.tabs[this.tabs.length - 1].active = true;
         }
     }
+
+    public isLogin() {
+        return true;
+    }
 }

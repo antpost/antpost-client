@@ -16,8 +16,9 @@ let PROVIDERS: any[] = [
 // https://github.com/angular/angular/blob/86405345b781a9dc2438c0fbe3e9409245647019/TOOLS_JS.md
 let _decorateModuleRef = <T>(value: T): T => { return value; };
 
+enableProdMode();
 if ('production' === ENV) {
-  enableProdMode();
+  //enableProdMode();
 
   // Production
   _decorateModuleRef = (modRef: any) => {

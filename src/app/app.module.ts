@@ -105,7 +105,7 @@ type StoreType = {
         BootstrapModalModule,
         TabsModule.forRoot(),
         JsonpModule,
-        RouterModule.forRoot([])
+        RouterModule.forRoot(ROUTES)
     ],
     providers: [ // expose our Services and Providers into Angular's dependency injection
         ENV_PROVIDERS,

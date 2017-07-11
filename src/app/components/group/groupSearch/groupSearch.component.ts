@@ -1,4 +1,4 @@
-import {OnInit, Component} from '@angular/core';
+import {OnInit, Component, Input} from '@angular/core';
 import {FacebookService} from '../../../services/facebook.service';
 import {Group} from '../../../models/group.model';
 
@@ -7,8 +7,7 @@ import {Group} from '../../../models/group.model';
     templateUrl: 'groupSearch.component.html'
 })
 export class GroupSearchComponent implements OnInit {
-
-    public groups: Array<Group>;
+    public groups: Array<any> = [];
     public term: string;
 
     constructor(private facebookService: FacebookService) {
@@ -30,5 +29,9 @@ export class GroupSearchComponent implements OnInit {
         this.facebookService.searchGroup(this.term).subscribe((result) => {
             this.groups = result;
         });
+    }
+
+    public getGroups() {
+        return this.groups;
     }
 }
