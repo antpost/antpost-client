@@ -69,7 +69,7 @@
 				<div *ngIf="started">
 					<span>{{message}}</span>
 					<p>
-						<ngb-progressbar type="info" [value]="percent">30%</ngb-progressbar>
+						<ngb-progressbar type="info" [value]="percent">{{progressMessage}}</ngb-progressbar>
 					</p>
 					<span>Gửi yêu cầu gia nhập thành công: {{successGroupCount}}</span>
 				</div>

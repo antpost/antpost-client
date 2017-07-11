@@ -94,13 +94,12 @@ export class AutomationService extends ProxyService {
                 if(res.status == 0) {
                     let members = parseInt(res.data.content);
 
-                    observer.next({
-                        id: groupId,
-                        members
-                    });
+                    observer.next(members);
                     observer.complete();
                 } else {
-                    observer.error('error');
+                    //observer.error('error');
+                    observer.next(0);
+                    observer.complete();
                 }
             });
         });
@@ -119,14 +118,11 @@ export class AutomationService extends ProxyService {
         return new Observable(observer => {
             this.simulate(procedure).subscribe((res) => {
                 let pendingPost = false;
-                if(res.status != 0) {
+                if(res.data.content) {
                     pendingPost = true;
                 }
 
-                observer.next({
-                    id: groupId,
-                    pendingPost
-                });
+                observer.next(pendingPost);
                 observer.complete();
             });
         });

@@ -7,6 +7,7 @@ import {Post} from '../models/post.model';
 import {ProxyService} from "./proxy.service";
 import {AutomationService} from './automation.service';
 import {Group} from "../models/group.model";
+import {userInfo} from 'os';
 
 @Injectable()
 export class FacebookService extends ProxyService{
@@ -131,6 +132,33 @@ export class FacebookService extends ProxyService{
      */
     public getGroupMembers(groupId: string): Observable<any> {
         return this.automationService.getGroupMembers(groupId);
+    }
+
+    /**
+     *
+     * @param groupId
+     * @returns {Observable<any>}
+     */
+    public checkPendingPost(groupId: string): Observable<any> {
+        return this.automationService.checkPendingPost(groupId);
+    }
+
+    /**
+     *
+     * @param groupId
+     * @returns {Observable<any>}
+     */
+    public getGroupLocaleAndLocation(groupId: string): Observable<any> {
+        return new Observable(observer => {
+            this.getOwner(groupId).subscribe(result => {
+                this.getUserInfo(result.owner.id, {
+                    fields: 'location%2Clocale'
+                }).subscribe(user => {
+                    observer.next(user);
+                    observer.complete();
+                });
+            });
+        });
     }
 
     /**

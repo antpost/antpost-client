@@ -60,6 +60,7 @@ import {AutomationService} from "./services/automation.service";
 import {FacebookService} from "./services/facebook.service";
 import {SchedulePostService} from "./services/schedulePost.service";
 import {PostService} from "./services/post.service";
+import {GroupPostHistoryComponent} from './components/group/schedule/groupPostHistory.component';
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -130,7 +131,7 @@ type StoreType = {
         }
     ],
     entryComponents: [PostFormComponent, PostSelectorComponent, PostSelectorComponent, GroupPostScheduleComponent, PostComponent,
-        JoinGroupFormComponent],
+        JoinGroupFormComponent, GroupPostHistoryComponent],
 })
 export class AppModule {
 

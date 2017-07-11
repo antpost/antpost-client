@@ -8,7 +8,8 @@ import $ from 'jquery';
 })
 
 export class SidebarComponent implements OnInit {
-    @Output() onOpen = new EventEmitter();
+    @Output()
+    public onOpen = new EventEmitter();
 
     public menuItems: any[];
 
@@ -19,8 +20,6 @@ export class SidebarComponent implements OnInit {
 
     public goTo(path: string) {
         let item = ROUTES.find(r => r.path == path);
-        this.onOpen.emit({
-            value: item
-        });
+        this.onOpen.emit(item);
     }
 }

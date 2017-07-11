@@ -4,6 +4,7 @@ import {Group} from '../../../models/group.model';
 import {GroupSearchComponent} from '../groupSearch/groupSearch.component';
 import {Toastr} from '../../../core/helpers/toastr';
 import {FacebookService} from '../../../services/facebook.service';
+import {Observable} from 'rxjs';
 
 @Component({
     selector: 'join-group-form',
@@ -62,31 +63,56 @@ export class JoinGroupFormComponent implements OnInit {
 
         for(let i = 0; i < groups.length; i ++) {
             groups[i].status = await this.doJoin(groups[i]);
-            this.percent = (i + 1)/groups.length;
+            this.percent = (i + 1)/groups.length * 100;
             this.progressMessage = Math.round((i + 1)/groups.length) + "%";
             this.successGroupCount += groups[i].status ? 1: 0;
         }
     }
 
-    private async doJoin(group: Group) {
+    private async doJoin(group: any) {
         return new Promise((resolve, reject) => {
             if(this.joinForm.privacy.indexOf(group.privacy) < 0) {
                 resolve(false);
             }
 
             // load members
-            if(this.joinForm.members) {
-                this.message = `Đang xem thành viên của nhóm ${group.name} ...`;
-                this.facebookService.getGroupMembers(group.id).subscribe((result) => {
-                    group.members = result.members;
-                    if(group.members < this.joinForm.members) {
-                        resolve(false);
+            this.joinForm.members = this.joinForm.members || 1;
+            this.message = `Đang kiểm tra thông tin nhóm ${group.name} ...`;
+
+            /*let observables = [];
+            observables.push(this.facebookService.getGroupMembers(group.id));
+
+            Observable.forkJoin(observables).subscribe((result: Array<any>) => {
+                group.members = result[0];
+
+                if(group.members < this.joinForm.members) {
+                    resolve(false);
+                }
+                else {
+                    resolve(true);
+                }
+            });*/
+
+            this.facebookService.getGroupMembers(group.id)
+                .flatMap(members => {
+                    group.members = members;
+                    if(group.members < this.joinForm.members || this.joinForm.noPendingPost) {
+                        return Observable.of(undefined);
+                    } else {
+                        return this.facebookService.checkPendingPost(group.id);
                     }
-                    else {
-                        resolve(true);
+                })
+                .flatMap(status => {
+                    group.hasPendingPost = status;
+                    if(!status) {
+                        return this.facebookService.getGroupLocaleAndLocation(group.id);
+                    } else {
+                        return Observable.of({});
                     }
+                })
+                .subscribe(result => {
+                    console.log(result);
                 });
-            }
         });
     }
 }

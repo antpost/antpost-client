@@ -13,26 +13,6 @@ export class AntPostComponent {
 
     public tabs: any[] = [
         {
-            title: 'Đăng nhóm',
-            path: 'post-group',
-            active: false,
-            removable: true,
-            componentData: {
-                component: GroupPostScheduleComponent,
-                inputs: {}
-            }
-        },
-        {
-            title: 'Bài viết',
-            path: 'post',
-            removable: true,
-            active: true,
-            componentData: {
-                component: PostComponent,
-                inputs: {}
-            }
-        },
-        {
             title: 'Gia nhập nhóm',
             path: 'join-group',
             removable: true,
