@@ -33,7 +33,8 @@ export class JoinGroupFormComponent implements OnInit {
         this.joinForm = {
             privacy: ['OPEN', 'CLOSED', 'SECRET'],
             noPendingPost: true,
-            members: 5000
+            members: 5000,
+            location: ''
         };
 
         this.locales = LOCALES;
@@ -64,7 +65,7 @@ export class JoinGroupFormComponent implements OnInit {
         for(let i = 0; i < groups.length; i ++) {
             groups[i].status = await this.doJoin(groups[i]);
             this.percent = (i + 1)/groups.length * 100;
-            this.progressMessage = Math.round((i + 1)/groups.length) + "%";
+            this.progressMessage = (Math.round((i + 1)/groups.length) * 100) + "%";
             this.successGroupCount += groups[i].status ? 1: 0;
         }
     }
@@ -96,7 +97,7 @@ export class JoinGroupFormComponent implements OnInit {
             this.facebookService.getGroupMembers(group.id)
                 .flatMap(members => {
                     group.members = members;
-                    if(group.members < this.joinForm.members || this.joinForm.noPendingPost) {
+                    if(group.members < this.joinForm.members || !this.joinForm.noPendingPost) {
                         return Observable.of(undefined);
                     } else {
                         return this.facebookService.checkPendingPost(group.id);
@@ -104,7 +105,7 @@ export class JoinGroupFormComponent implements OnInit {
                 })
                 .flatMap(status => {
                     group.hasPendingPost = status;
-                    if(!status) {
+                    if(!status && (this.joinForm.locale || this.joinForm.location)) {
                         return this.facebookService.getGroupLocaleAndLocation(group.id);
                     } else {
                         return Observable.of({});
@@ -112,6 +113,9 @@ export class JoinGroupFormComponent implements OnInit {
                 })
                 .subscribe(result => {
                     console.log(result);
+                    group.location = result.location ? result.location.name : null;
+                    group.locale = result.locale;
+                    resolve(true);
                 });
         });
     }

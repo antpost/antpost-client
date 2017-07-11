@@ -151,12 +151,18 @@ export class FacebookService extends ProxyService{
     public getGroupLocaleAndLocation(groupId: string): Observable<any> {
         return new Observable(observer => {
             this.getOwner(groupId).subscribe(result => {
-                this.getUserInfo(result.owner.id, {
-                    fields: 'location%2Clocale'
-                }).subscribe(user => {
-                    observer.next(user);
+                if(result.owner) {
+                    this.getUserInfo(result.owner.id, {
+                        fields: 'location,locale'
+                    }).subscribe(user => {
+                        observer.next(user);
+                        observer.complete();
+                    });
+                } else {
+                    observer.next({});
                     observer.complete();
-                });
+                }
+
             });
         });
     }
