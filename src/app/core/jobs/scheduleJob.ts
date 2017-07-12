@@ -1,7 +1,7 @@
 import {IJob} from "./iJob";
 import {IScheduleEngine} from "../scheduleEngine/baseScheduleEngine";
 import {Observable, Subject} from 'rxjs';
-import {SchedulePostStatus} from "../../models/enums";
+import {JobStatus} from "../../models/enums";
 
 export class ScheduleJob implements IJob {
     public static JOB_KEY = 'SCHEDULE';
@@ -26,14 +26,14 @@ export class ScheduleJob implements IJob {
     public async pause() {
         await this.engine.pause();
         this.subject.next({
-            status: SchedulePostStatus.Paused
+            status: JobStatus.Paused
         });
     }
 
     public async stop() {
         await this.engine.stop();
         this.subject.next({
-            status: SchedulePostStatus.Stopped
+            status: JobStatus.Stopped
         });
     }
 
@@ -54,7 +54,7 @@ export class ScheduleJob implements IJob {
         } else {
             await this.engine.stop();
             this.subject.next({
-                status: SchedulePostStatus.Stopped
+                status: JobStatus.Stopped
             });
 
             this.onFinish();

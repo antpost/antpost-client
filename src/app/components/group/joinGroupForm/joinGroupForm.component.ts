@@ -5,6 +5,7 @@ import {GroupSearchComponent} from '../groupSearch/groupSearch.component';
 import {Toastr} from '../../../core/helpers/toastr';
 import {FacebookService} from '../../../services/facebook.service';
 import {Observable} from 'rxjs';
+import {JobStatus} from "../../../models/enums";
 
 @Component({
     selector: 'join-group-form',
@@ -23,7 +24,7 @@ export class JoinGroupFormComponent implements OnInit {
     ];
     public joinForm: any;
     public locales: Array<any>;
-    public started: boolean = false;
+    public status: JobStatus = JobStatus.Stopped;
     public percent: number = 0;
     public successGroupCount = 0;
     public message: string = "";
@@ -44,11 +45,15 @@ export class JoinGroupFormComponent implements OnInit {
 
     }
 
+    ngOnDestroy(){
+        this.status = JobStatus.Stopped;
+    }
+
     public handleFilterLocale(value) {
         this.locales = LOCALES.filter((s) => s.name.toLowerCase().indexOf(value.toLowerCase()) !== -1);
     }
 
-    public async start() {
+    public async start(reset: boolean = true) {
         // check group list
         let groups = this.groupSearchComponent.getGroups();
         if(groups.length == 0) {
@@ -56,18 +61,43 @@ export class JoinGroupFormComponent implements OnInit {
             return;
         }
 
-        this.started = true;
+        if(reset) {
+            groups.forEach(group => group.status = undefined);
+        }
+
+        this.status = JobStatus.Running;
 
         this.percent = 0;
         this.progressMessage = "0%";
         this.successGroupCount = 0;
 
         for(let i = 0; i < groups.length; i ++) {
+            if(this.status != JobStatus.Running) {
+                break;
+            }
+
+            if(groups[i].status !== undefined) {
+                continue;
+            }
+
             groups[i].status = await this.doJoin(groups[i]);
             this.percent = (i + 1)/groups.length * 100;
             this.progressMessage = (Math.round((i + 1)/groups.length) * 100) + "%";
             this.successGroupCount += groups[i].status ? 1: 0;
         }
+    }
+
+    public pause() {
+        this.status = JobStatus.Paused;
+    }
+
+    public resume() {
+        this.status = JobStatus.Running;
+        this.start(false);
+    }
+
+    public stop() {
+        this.status = JobStatus.Stopped;
     }
 
     private async doJoin(group: any) {
@@ -105,18 +135,29 @@ export class JoinGroupFormComponent implements OnInit {
                 })
                 .flatMap(status => {
                     group.hasPendingPost = status;
-                    if(!status && (this.joinForm.locale || this.joinForm.location)) {
-                        return this.facebookService.getGroupLocaleAndLocation(group.id);
+                    if(this.checkGroupValid(group)) {
+                        return this.facebookService.joinGroup(group.id);
                     } else {
-                        return Observable.of({});
+                        return Observable.of(false);
                     }
                 })
-                .subscribe(result => {
-                    console.log(result);
-                    group.location = result.location ? result.location.name : null;
-                    group.locale = result.locale;
-                    resolve(true);
+                .subscribe(status => {
+                    resolve(status);
                 });
         });
+    }
+
+    private checkGroupValid(group: any) {
+        // check membters
+        if(group.members < this.joinForm.members) {
+            return false;
+        }
+
+        if(this.joinForm.noPendingPost && group.hasPendingPost) {
+            return false;
+        }
+
+        return true;
+
     }
 }

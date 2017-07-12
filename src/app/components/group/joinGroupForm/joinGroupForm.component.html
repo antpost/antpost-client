@@ -64,10 +64,16 @@
 							<button class="btn btn-primary btn-sm" (click)="start()"><i
 								class="material-icons">group_add</i> Gia nhập
 							</button>
+							<button class="btn btn-primary btn-sm" (click)="pause()"><i
+								class="material-icons">pause</i> Dừng
+							</button>
+							<button class="btn btn-primary btn-sm" (click)="stop()"><i
+								class="material-icons">pause</i> Dừng
+							</button>
 						</div>
 					</div>
 				</div>
-				<div *ngIf="started">
+				<div *ngIf="status != 3">
 					<span>{{message}}</span>
 					<p>
 						<ngb-progressbar type="info" [value]="percent">{{progressMessage}}</ngb-progressbar>

@@ -10,7 +10,7 @@ import {Toastr} from '../../../core/helpers/toastr';
 import {Group} from '../../../models/group.model';
 import {JoinedGroupComponent} from '../joinedGroup/joinedGroup.component';
 import {SchedulePost} from '../../../models/schedulePost.model';
-import {SchedulePostStatus, ScheduleType} from "../../../models/enums";
+import {JobStatus, ScheduleType} from "../../../models/enums";
 import {SchedulePostService} from "../../../services/schedulePost.service";
 import {JobQueue} from "../../../core/jobs/jobQueue";
 import {JobFactory} from "../../../core/jobs/jobFactory";
@@ -34,7 +34,7 @@ export class GroupPostScheduleComponent implements OnInit {
 
     public post: Post = new Post();
     public schedule: SchedulePost = new SchedulePost();
-    public scheduleStatus = SchedulePostStatus;
+    public scheduleStatus = JobStatus;
     public job: ScheduleJob;
     public started: boolean = false;
     public percent: number = 0;
@@ -43,7 +43,7 @@ export class GroupPostScheduleComponent implements OnInit {
                 private schedulePostService: SchedulePostService,
                 private modal: ModalService,
                 private jobQueue: JobQueue) {
-        this.schedule.status = SchedulePostStatus.Opened;
+        this.schedule.status = JobStatus.Opened;
     }
 
     public ngOnInit() {
@@ -79,7 +79,7 @@ export class GroupPostScheduleComponent implements OnInit {
         // save schedule
         this.schedule = new SchedulePost();
         this.schedule.postId = this.post.id;
-        this.schedule.status = SchedulePostStatus.Running;
+        this.schedule.status = JobStatus.Running;
         this.schedule.nodes = groups.map(group => group.id).join(',');
         this.schedule.createdAt = new Date();
 
@@ -115,7 +115,7 @@ export class GroupPostScheduleComponent implements OnInit {
     }
 
     public resume() {
-        this.schedule.status = SchedulePostStatus.Running;
+        this.schedule.status = JobStatus.Running;
         this.jobQueue.push(this.job);
     }
 

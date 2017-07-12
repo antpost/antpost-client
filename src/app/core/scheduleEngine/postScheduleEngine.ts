@@ -6,7 +6,7 @@ import {SchedulePostService} from "../../services/schedulePost.service";
 import {PostSettings} from '../settings/postSettings';
 import {NodePost} from '../../models/nodePost.model';
 import {NodePostService} from '../../services/nodePost.service';
-import {SchedulePostStatus, PostType} from '../../models/enums';
+import {JobStatus, PostType} from '../../models/enums';
 import {AutomationService} from '../../services/automation.service';
 
 export class PostScheduleEngine extends BaseScheduleEngine implements IScheduleEngine {
@@ -34,19 +34,19 @@ export class PostScheduleEngine extends BaseScheduleEngine implements IScheduleE
     }
 
     public hasNext(): boolean {
-        return this.schedule.status == SchedulePostStatus.Stopped || this.schedule.hasUnposted();
+        return this.schedule.status == JobStatus.Stopped || this.schedule.hasUnposted();
     }
 
     public doNext(doneCallback: Function): void {
-        if(this.schedule.status != SchedulePostStatus.Running) {
-            this.schedule.status = SchedulePostStatus.Running;
+        if(this.schedule.status != JobStatus.Running) {
+            this.schedule.status = JobStatus.Running;
             doneCallback({
                 status: this.schedule.status
             });
         }
 
         setTimeout(() => {
-            if(this.schedule.status == SchedulePostStatus.Running) {
+            if(this.schedule.status == JobStatus.Running) {
                 this.postGroup().then((data) => {
                     doneCallback({
                         nodePost: data
@@ -57,7 +57,7 @@ export class PostScheduleEngine extends BaseScheduleEngine implements IScheduleE
     }
 
     public async stop() {
-        this.schedule.status = SchedulePostStatus.Stopped;
+        this.schedule.status = JobStatus.Stopped;
 
         await this.schedulePostService.update(this.schedule.id, {
             status: this.schedule.status
@@ -67,7 +67,7 @@ export class PostScheduleEngine extends BaseScheduleEngine implements IScheduleE
     }
 
     public async pause() {
-        this.schedule.status = SchedulePostStatus.Paused;
+        this.schedule.status = JobStatus.Paused;
 
         await this.schedulePostService.update(this.schedule.id, {
             status: this.schedule.status

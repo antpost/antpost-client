@@ -14,7 +14,7 @@
 				<i class="material-icons text-muted" *ngIf="dataItem.status === false" style="font-size: 12px">error</i>
 			</ng-template>
 		</kendo-grid-column>
-		<kendo-grid-column field="name" title="Nhóm" width="180">
+		<kendo-grid-column field="name" title="Nhóm" width="200">
 			<ng-template kendoGridCellTemplate let-dataItem>
 				<a target="_blank" href="https://facebook.com/{{dataItem.id}}">{{dataItem.name}}</a>
 			</ng-template>
@@ -25,9 +25,9 @@
 		</kendo-grid-column>
 		<kendo-grid-column field="hasPendingPost" title="Duyệt bài" width="80">
 		</kendo-grid-column>
-		<kendo-grid-column field="locale" title="Ngôn ngữ" width="80">
+		<!--<kendo-grid-column field="locale" title="Ngôn ngữ" width="80">
 		</kendo-grid-column>
 		<kendo-grid-column field="location" title="Khu vực" width="100">
-		</kendo-grid-column>
+		</kendo-grid-column>-->
 	</kendo-grid>
 </div>

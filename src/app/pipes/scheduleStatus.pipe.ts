@@ -1,18 +1,18 @@
 import {Pipe, PipeTransform} from '@angular/core';
-import {PostType, SchedulePostStatus} from '../models/enums';
+import {PostType, JobStatus} from '../models/enums';
 
 @Pipe({name: 'scheduleStatus'})
 export class ScheduleStatusPipe implements PipeTransform {
     public transform(value: string, args: string[]): any {
         let postType = parseInt(value);
         switch (postType) {
-            case SchedulePostStatus.Opened:
+            case JobStatus.Opened:
                 return 'Chưa chạy';
-            case SchedulePostStatus.Running:
+            case JobStatus.Running:
                 return 'Đang chạy';
-            case SchedulePostStatus.Paused:
+            case JobStatus.Paused:
                 return 'Tạm dừng';
-            case SchedulePostStatus.Stopped:
+            case JobStatus.Stopped:
                 return 'Đã dừng';
         }
     }

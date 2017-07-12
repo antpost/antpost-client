@@ -6,7 +6,7 @@ export enum PostType {
     Video = 5
 }
 
-export enum SchedulePostStatus {
+export enum JobStatus {
     Opened = 0,
     Running = 1,
     Paused = 2,

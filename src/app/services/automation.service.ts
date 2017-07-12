@@ -141,13 +141,11 @@ export class AutomationService extends ProxyService {
         return new Observable(observer => {
             this.simulate(procedure).subscribe((res) => {
                 if(res.status == 0) {
-                    observer.next({
-                        id: groupId
-                    });
-                    observer.complete();
+                    observer.next(true);
                 } else {
-                    observer.error('error');
+                    observer.next(false);
                 }
+                observer.complete();
             });
         });
     }

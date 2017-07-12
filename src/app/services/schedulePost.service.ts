@@ -3,7 +3,7 @@ import {BaseService} from './base.service';
 import {Post} from '../models/post.model';
 import {DbService} from '../core/database';
 import {SchedulePost} from "../models/schedulePost.model";
-import {SchedulePostStatus} from "../models/enums";
+import {JobStatus} from "../models/enums";
 import {forEach} from "@angular/router/src/utils/collection";
 import {GroupService} from "./group.service";
 
@@ -39,7 +39,7 @@ export class SchedulePostService extends BaseService<SchedulePost, number> {
      */
     public async getActiveSchedules(): Promise<Array<SchedulePost>> {
         let list = await this.table
-            .where('status').notEqual(SchedulePostStatus.Stopped)
+            .where('status').notEqual(JobStatus.Stopped)
             .with({nodePosts: 'nodePosts', post: 'postId'});
 
         if(list) {
