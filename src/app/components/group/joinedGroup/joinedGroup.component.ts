@@ -32,7 +32,7 @@ export class JoinedGroupComponent implements OnInit {
     }
 
     public async ngOnInit() {
-        if(localStorage.getItem('group')) {
+        /*if(localStorage.getItem('group')) {
             this.groups = await this.groupService.all();
             this.checkAll(true);
         } else {
@@ -44,7 +44,15 @@ export class JoinedGroupComponent implements OnInit {
                 localStorage.setItem('group', '1');
                 this.checkAll(true);
             });
-        }
+        }*/
+        this.facebookService.getJoinedGroups().subscribe(async (result: any) => {
+            this.groups = result.data;
+
+            // save to db
+            await this.groupService.addAll(this.groups);
+            localStorage.setItem('group', '1');
+            this.checkAll(true);
+        });
     }
 
     /**

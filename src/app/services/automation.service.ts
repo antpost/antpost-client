@@ -13,6 +13,7 @@ import {Post} from "../models/post.model";
 import {AutomationRes} from "../core/automation/automationRes";
 import * as $ from 'jquery';
 import {PostType} from "../models/enums";
+import {link} from 'fs';
 
 @Injectable()
 export class AutomationService extends ProxyService {
@@ -99,6 +100,36 @@ export class AutomationService extends ProxyService {
                 } else {
                     //observer.error('error');
                     observer.next(0);
+                    observer.complete();
+                }
+            });
+        });
+    }
+
+    public viewGroupInfo(groupId: string): Observable<any> {
+        let procedure = new AutomationReq()
+            .access(`${this.mbasicUrl}/groups/${groupId}?view=info`, this.appManager.currentUser.cookies)
+            .responseContent('#root');
+
+        return new Observable(observer => {
+            this.simulate(procedure).subscribe((res) => {
+                if(res.status == 0) {
+                    let element = $('<div></div>');
+                    element.html(res.data.content);
+                    let members = parseInt(element.find('#u_0_0').html());
+
+                    let linkElementLength = element.find('a[href*="/join"]').length;
+
+                    observer.next({
+                        members,
+                        requested: linkElementLength ? false : true
+                    });
+                    observer.complete();
+                } else {
+                    //observer.error('error');
+                    observer.next({
+                        members: 0
+                    });
                     observer.complete();
                 }
             });

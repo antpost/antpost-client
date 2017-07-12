@@ -9,6 +9,8 @@ import {Group} from '../../../models/group.model';
 export class GroupSearchComponent implements OnInit {
     public groups: Array<any> = [];
     public term: string;
+    public searchAllowed: boolean = true;
+    private joinedGroups: Array<Group>;
 
     constructor(private facebookService: FacebookService) {
 
@@ -26,12 +28,30 @@ export class GroupSearchComponent implements OnInit {
             return;
         }
 
-        this.facebookService.searchGroup(this.term).subscribe((result) => {
-            this.groups = result;
-        });
+        if(!this.joinedGroups) {
+            this.facebookService.getJoinedGroups().subscribe(async (result: any) => {
+                this.joinedGroups = result.data;
+
+                this.loadGroup(this.term);
+            });
+        } else {
+             this.loadGroup(this.term);
+        }
     }
 
     public getGroups() {
         return this.groups;
+    }
+
+    public enableSearch(enable: boolean = true) {
+        this.searchAllowed = enable;
+    }
+
+    private loadGroup(term: string) {
+        this.facebookService.searchGroup(this.term).subscribe((result: any) => {
+            let joinedIds = this.joinedGroups.map(group => group.id);
+
+            this.groups = result.filter(g => joinedIds.indexOf(g.id) < 0);
+        });
     }
 }

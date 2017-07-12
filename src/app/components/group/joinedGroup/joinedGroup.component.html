@@ -18,10 +18,13 @@
 			</ng-template>
 		</kendo-grid-column>
 		<kendo-grid-column field="name" title="Nhóm" width="200">
-		</kendo-grid-column>
-		<kendo-grid-column field="members" title="Thành viên" width="80">
+			<ng-template kendoGridCellTemplate let-dataItem>
+				<a target="_blank" href="https://facebook.com/{{dataItem.id}}">{{dataItem.name}}</a>
+			</ng-template>
 		</kendo-grid-column>
 		<kendo-grid-column field="privacy" title="Trạng thái" width="80">
+		</kendo-grid-column>
+		<kendo-grid-column field="members" title="Thành viên" width="80">
 		</kendo-grid-column>
 	</kendo-grid>
 </div>

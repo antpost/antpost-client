@@ -135,6 +135,15 @@ export class FacebookService extends ProxyService{
     }
 
     /**
+     * View group info
+     * @param groupId
+     * @returns {any}
+     */
+    public viewGroupInfo(groupId: string): Observable<any> {
+        return this.automationService.viewGroupInfo(groupId);
+    }
+
+    /**
      *
      * @param groupId
      * @returns {Observable<any>}

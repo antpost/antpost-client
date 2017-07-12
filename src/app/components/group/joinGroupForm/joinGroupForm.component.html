@@ -61,14 +61,17 @@
 					</div>
 					<div class="form-group">
 						<div class="col-sm-offset-3 col-sm-9">
-							<button class="btn btn-primary btn-sm" (click)="start()"><i
+							<button class="btn btn-primary btn-sm" (click)="start()" *ngIf="status == 3"><i
 								class="material-icons">group_add</i> Gia nhập
 							</button>
-							<button class="btn btn-primary btn-sm" (click)="pause()"><i
-								class="material-icons">pause</i> Dừng
+							<button class="btn btn-info btn-sm" (click)="pause()" *ngIf="status != 2 && status != 3"><i
+								class="material-icons">pause</i> Tạm dừng
 							</button>
-							<button class="btn btn-primary btn-sm" (click)="stop()"><i
-								class="material-icons">pause</i> Dừng
+							<button class="btn btn-info btn-sm" (click)="resume()" *ngIf="status != 1 && status != 3"><i
+								class="material-icons">play_arrow</i> Tiếp tục
+							</button>
+							<button class="btn btn-sm" (click)="stop()" *ngIf="status != 3"><i
+								class="material-icons">stop</i> Kết thúc
 							</button>
 						</div>
 					</div>
