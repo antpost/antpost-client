@@ -66,7 +66,7 @@ $(document).ready(function(){
 
     $sidebar = $('.sidebar');
 
-    $.material.init();
+    //$.material.init();
 
     // We put modals out of wrapper to working properly
     $('.modal').appendTo("body");
