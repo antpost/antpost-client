@@ -5,6 +5,7 @@ import {AuthService} from '../../services/auth.service';
 import $ from 'jquery';
 import {FacebookService} from "../../services/facebook.service";
 import {AppManager} from "../../core/appManager";
+import {Toastr} from '../../core/helpers/toastr';
 
 @Component({
     selector: 'login',
@@ -41,12 +42,13 @@ export class LoginComponent implements OnInit, OnDestroy {
     public loginFb() {
         this.authService.loginfb(this.model.username, this.model.password)
             .subscribe((result) => {
-                if (result === true) {
+                if (result.status === true) {
                     this.router.navigate(['/']);
                     this.loadCookie();
                 } else {
-                    this.error = 'Username or password is incorrect';
+                    this.error = result.message;
                     this.loading = false;
+                    Toastr.error(result.message);
                 }
             });
     }

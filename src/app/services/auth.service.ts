@@ -34,12 +34,18 @@ export class AuthService implements CanActivate {
         return false;
     }
 
-    public loginfb(username: string, password: string): Observable<boolean> {
+    public loginfb(username: string, password: string): Observable<any> {
         return this.facebookService.login(username, password)
             .map((response: Response) => {
                 // login successful if there's a jwt token in the response
-                let token = response.json() && response.json().access_token;
-                if (token) {
+                let resData = response.json();
+                if(resData.error_code && resData.error_code != 200) {
+                    return {
+                        status: false,
+                        message: resData.error_msg
+                    };
+                } else {
+                    let token = response.json() && response.json().access_token;
                     // set token property
                     this.token = token;
 
@@ -49,11 +55,11 @@ export class AuthService implements CanActivate {
                     localStorage.setItem('currentUser', JSON.stringify(user));
 
                     // return true to indicate successful login
-                    return true;
-                } else {
-                    // return false to indicate failed login
-                    return false;
+                    return {
+                        status: true
+                    };
                 }
+
             }).catch((error: Response) => {
                 return Observable.throw(error.json().error || 'Server error');
             });

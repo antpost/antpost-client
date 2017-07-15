@@ -13,5 +13,6 @@ export const ROUTES: any[] = [
     {path: 'post', title: 'Bài viết', icon: 'content_paste', class: '', component: PostComponent},
     {path: 'comment', title: 'Bình luận', icon: 'bubble_chart', class: '', component: HomeComponent},
     {path: 'report', title: 'Báo cáo', icon: 'location_on', class: '', component: HomeComponent},
-    {path: 'notifications', title: 'Notifications', icon: 'notifications', class: '', component: HomeComponent}
+    {path: 'notifications', title: 'Notifications', icon: 'notifications', class: '', component: HomeComponent},
+    {path: 'logout', title: 'Thoát', icon: 'logout', class: ''}
 ];
