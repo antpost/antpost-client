@@ -8,8 +8,10 @@ import {AppManager} from "../../core/appManager";
 
 @Component({
     selector: 'login',
-    templateUrl: 'login.html',
-    styleUrls: []
+    templateUrl: 'login.component.html',
+    styleUrls: [
+        './login.component.css'
+    ]
 })
 export class LoginComponent implements OnInit, OnDestroy {
     public model: User = new User();
@@ -18,10 +20,10 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     constructor(private renderer: Renderer, private router: Router, private authService: AuthService, private facebookService: FacebookService,
                 private appManager: AppManager) {
-        this.renderer.setElementClass(document.body, 'login', true);
+        /*this.renderer.setElementClass(document.body, 'login', true);
         this.renderer.setElementClass(document.body, 'darken-1', true);
         this.renderer.setElementClass(document.body, 'white-text', true);
-        $('html').addClass('login');
+        $('html').addClass('login');*/
     }
 
     public ngOnInit() {
@@ -30,10 +32,10 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
 
     public ngOnDestroy() {
-        this.renderer.setElementClass(document.body, 'login', false);
+        /*this.renderer.setElementClass(document.body, 'login', false);
         this.renderer.setElementClass(document.body, 'darken-1', false);
         this.renderer.setElementClass(document.body, 'white-text', false);
-        $('html').removeClass('login');
+        $('html').removeClass('login');*/
     }
 
     public loginFb() {
