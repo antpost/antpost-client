@@ -10,6 +10,10 @@ export class BaseService<U, T> {
         this.table = this.db.table(tableName);
     }
 
+    public async get(key: T) {
+        return await this.table.get(key);
+    }
+
     public async add(data: U) {
         return await this.table.add(data);
     }
