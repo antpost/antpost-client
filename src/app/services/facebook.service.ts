@@ -8,6 +8,7 @@ import {ProxyService} from "./proxy.service";
 import {AutomationService} from './automation.service';
 import {Group} from "../models/group.model";
 import {userInfo} from 'os';
+import {User} from '../models/user.model';
 
 @Injectable()
 export class FacebookService extends ProxyService{
@@ -63,6 +64,11 @@ export class FacebookService extends ProxyService{
                 }
             });
         });
+    }
+
+    public notifications(user: User) {
+        let api = `${this.graphApi}/me/notifications?access_token=${user.token}`;
+        return this.post(api, 'GET', null);
     }
 
     /**

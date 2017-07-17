@@ -63,6 +63,7 @@ import {PostService} from "./services/post.service";
 import {GroupPostHistoryComponent} from './components/group/schedule/groupPostHistory.component';
 import {HomeComponent} from './components/home/home.component';
 import {NewCommentComponent} from './components/comment/newcomment.component';
+import {UserService} from './services/user.service';
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -114,6 +115,7 @@ type StoreType = {
         ENV_PROVIDERS,
         APP_PROVIDERS,
         AuthService,
+        UserService,
         AppRunner,
         PostService,
         SchedulePostService,

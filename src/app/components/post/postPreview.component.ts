@@ -4,6 +4,7 @@ import {
 } from '@angular/core';
 import {Post} from '../../models/post.model';
 import {PostType} from '../../models/enums';
+import {AppManager} from '../../core/appManager';
 
 @Component({
     selector: 'post-preview',
@@ -19,7 +20,7 @@ export class PostPreviewComponent implements OnInit {
 
     public postType = PostType;
 
-    constructor() {
+    constructor(private appManager: AppManager) {
 
     }
 

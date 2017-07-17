@@ -60,68 +60,18 @@
 								   cellpadding="0">
 								<tbody>
 								<tr class="_51mx">
-									<td class="_51m- pam removableItem">
-										<div class="uiContextualLayerParent _csi" data-userid="100016488426267">
-											<div><a class="_1gbd" href="#" title="Dương Kiều Trúc" role="button"
-													id="u_0_2"><img class="_s0 _4ooo _1gax img"
-																	src="https://scontent.fhan2-1.fna.fbcdn.net/v/t1.0-1/p160x160/17904526_106427816583499_1816499248059510359_n.jpg?oh=80a917222247c93f60568bb471d9aca3&amp;oe=5A10CCAF"
-																	alt="" aria-label="Dương Kiều Trúc" role="img"
-																	style="width:160px;height:160px">
-												<div class="_1gaz _c24 _50f6">Trúc</div>
-												<form action="/login/device-based/login/" method="post"
-													  onsubmit="return window.Event &amp;&amp; Event.__inlineSubmit &amp;&amp; Event.__inlineSubmit(this,event)"
-													  id="u_0_3"><input type="hidden" name="lsd" value="AVoeYXXb"
-																		autocomplete="off"><input type="hidden"
-																								  autocomplete="off"
-																								  name="uid"
-																								  value="100016488426267"><input
-													type="hidden" autocomplete="off" name="source" value="side_by_side"><input
-													type="hidden" autocomplete="off" name="next"></form>
+									<td class="_51m- pam removableItem"
+										*ngFor="let item of recentUsers; let i = index; trackBy: id">
+										<div class="uiContextualLayerParent _csi">
+											<div>
+												<a class="_1gbd" href="#" title="{{item.name}}" role="button" (click)="quickLogin(item.id)">
+													<img class="_s0 _4ooo _1gax img" src="https://graph.facebook.com/{{item.id}}/picture?width=160&height=160" style="width:160px;height:160px">
+												<div class="_1gaz _c24 _50f6">{{item.name}}</div>
 											</a><a data-hover="tooltip"
 												   data-tooltip-content="Remove account from this page"
 												   class="_42ft _2d4g _t7b" role="button" href="#"
-												   ajaxify="/login/device-based/async/remove/?cuid=AYgGht20uOoOlh177LT_TEM4QaMe_GsEvBLOXzQf2YKwNQIRZOCLU23b-6SpFsPdevKQEKRFe_iBf42dnTB3maJMEsif8XlyantpFjRs9kbZiQ&amp;flow=www_dbl_selector_remove"
-												   rel="async-post">×</a><span class="_51lp _1gb4"
-																			   title="8 new notifications">8</span>
-											</div>
-										</div>
-									</td>
-									<td class="_51m- pam removableItem">
-										<div class="uiContextualLayerParent _csi" data-userid="1700784279" id="u_0_u">
-											<div><a class="_1gbd"
-													href="/login/?cuid=AYgt8UgWoyWsxF9323Kn38NDl0ld1viYutVvrTwtkeElrBHZeZVOsTcvgchdv8VQapZNbusC-LqGUQ4UPfgagVQ0RK8HeSlBwh-7u8mHqruUmPsciebwm2q5MH89CdkypCaPbps5WNfi8ZYnczQDAOJW"
-													title="Nguyễn Mạnh Cường" id="u_0_0"><img
-												class="_s0 _4ooo _1gax img"
-												src="https://scontent.fhan2-1.fna.fbcdn.net/v/t1.0-1/p160x160/16387021_10203069533974849_5277601766593228560_n.jpg?oh=e17d56229d53daacd5d190ebafdf5a96&amp;oe=59C5838E"
-												alt="" aria-label="Nguyễn Mạnh Cường" role="img"
-												style="width:160px;height:160px">
-												<div class="_1gaz _c24 _50f6">Nguyen</div>
-											</a><a data-hover="tooltip"
-												   data-tooltip-content="Remove account from this page"
-												   class="_42ft _2d4g _t7b" role="button" href="#"
-												   ajaxify="/login/device-based/async/remove/?cuid=AYh7D3YcBDiN8XE15YH_zovHT-KYf5lSlKKMKJq5tPhN84hDDi3-8FucZQWtsPxhuyE9JnpauoAL-JAv9AZ9dT4SviXsQpEh0_v8Fnz4adg_D8tZIWKXDgexhxZvuw4kdSxISczcaFrbMAKkEUsXQp9L&amp;flow=www_dbl_selector_remove"
-												   rel="async-post">×</a><span class="_51lp _1gb4"
-																			   title="12 new notifications">12</span>
-											</div>
-										</div>
-									</td>
-									<td class="_51m- pam removableItem _51mw">
-										<div class="uiContextualLayerParent _csi" data-userid="100011787391202"
-											 id="u_0_v">
-											<div><a class="_1gbd"
-													href="/login/?cuid=AYimeH5kCc8b3b1m-3GJKGb40xgSLvy27lvH5giiCyyQSnveThLo6n6oDIYEmAOyoeHaRhFP8bwIXshbXXXAliW6SXUy7CwM88369Pnv40ZY6NvTCDL_wrmR15yPCJI509F6AV1T_OYjvOeSiMQV_DVv"
-													title="Lam Thái" id="u_0_1"><img class="_s0 _4ooo _1gax img"
-																					 src="https://scontent.fhan2-1.fna.fbcdn.net/v/t1.0-1/c27.0.160.160/p160x160/12920485_101547450248168_7350546504756199692_n.jpg?oh=827f1672d5ce7c837a53134c67ffd1b4&amp;oe=5A057829"
-																					 alt="" aria-label="Lam Thái"
-																					 role="img"
-																					 style="width:160px;height:160px">
-												<div class="_1gaz _c24 _50f6">Lam</div>
-											</a><a data-hover="tooltip"
-												   data-tooltip-content="Remove account from this page"
-												   class="_42ft _2d4g _t7b" role="button" href="#"
-												   ajaxify="/login/device-based/async/remove/?cuid=AYiZSGCCYphu5IZu2NapDyl18LSKImu8u6CmrTndZLOfzqr_FnOdTlncEmExgKwkBM-SVZk-dON-9N04A4oNp99dppc18GTCoBtF4c3nQGPkvCRvwf_GOwh2DneIbMVON08yFPv1-799w0AW1KqLwQNe&amp;flow=www_dbl_selector_remove"
-												   rel="async-post">×</a><span class="_51lp _1gb4"
-																			   title="30 new notifications">30</span>
+												   rel="async-post" (click)="removeUser(item.id)">×</a>
+												<span class="_51lp _1gb4" title="8 new notifications">{{item.unseenCount}}</span>
 											</div>
 										</div>
 									</td>

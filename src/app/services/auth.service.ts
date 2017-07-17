@@ -49,7 +49,7 @@ export class AuthService implements CanActivate {
                     // set token property
                     this.token = token;
 
-                    let user = {username, token} as User;
+                    let user = {username, token, id: resData.uid} as User;
                     this.appManager.currentUser = user;
                     // store username and jwt token in local storage to keep user logged in between page refreshes
                     localStorage.setItem('currentUser', JSON.stringify(user));
