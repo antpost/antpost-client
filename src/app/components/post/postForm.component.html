@@ -30,7 +30,7 @@
 				</div>
 				<div class="form-group" *ngIf="post.type == postType.Sale">
 					<label class="control-label">Giá bán</label>
-					<input class="form-control" type="text" [(ngModel)]="post.price">
+					<input class="form-control" type="number" [(ngModel)]="post.price">
 				</div>
 				<div class="form-group" *ngIf="post.type == postType.Sale">
 					<label class="control-label">Địa chỉ</label>
