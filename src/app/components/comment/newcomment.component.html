@@ -1,34 +1,3 @@
 <div>
-	<div class="search">
-		<div class="form-inline">
-			<div class="form-group">
-				<input type="text" class="form-control" placeholder="Tên nhóm" [disabled]="!searchAllowed" [(ngModel)]="term">
-			</div>
-			<button class="btn btn-primary btn-sm" [disabled]="!searchAllowed" (click)="search()"><i class="material-icons">search</i> Tìm kiếm</button>
-		</div>
-	</div>
-	<kendo-grid [data]="groups" [height]="410">
-		<kendo-grid-column field="checked" title="" width="25">
-			<ng-template kendoGridCellTemplate let-dataItem>
-				<i class="material-icons text-success" *ngIf="dataItem.status && !dataItem.requested" style="font-size: 12px" title="Gửi gia nhập thành công">done</i>
-				<i class="material-icons text-success" *ngIf="dataItem.requested" style="font-size: 12px" title="Đã gửi gia nhập">history</i>
-				<i class="material-icons text-muted" *ngIf="dataItem.status === false" style="font-size: 12px" title="Nhóm bị bỏ qua">error</i>
-			</ng-template>
-		</kendo-grid-column>
-		<kendo-grid-column field="name" title="Nhóm" width="200">
-			<ng-template kendoGridCellTemplate let-dataItem>
-				<a target="_blank" href="https://facebook.com/{{dataItem.id}}">{{dataItem.name}}</a>
-			</ng-template>
-		</kendo-grid-column>
-		<kendo-grid-column field="privacy" title="Trạng thái" width="80">
-		</kendo-grid-column>
-		<kendo-grid-column field="members" title="Thành viên" width="80">
-		</kendo-grid-column>
-		<kendo-grid-column field="hasPendingPost" title="Duyệt bài" width="80">
-		</kendo-grid-column>
-		<!--<kendo-grid-column field="locale" title="Ngôn ngữ" width="80">
-		</kendo-grid-column>
-		<kendo-grid-column field="location" title="Khu vực" width="100">
-		</kendo-grid-column>-->
-	</kendo-grid>
+	Hello
 </div>

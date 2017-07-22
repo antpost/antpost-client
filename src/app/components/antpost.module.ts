@@ -24,6 +24,7 @@ import {AutomationService} from "../services/automation.service";
 import {GroupPostScheduleComponent} from './group/schedule/groupPostSchedule.component';
 import {PostComponent} from './post/post.component';
 import {JoinGroupFormComponent} from './group/joinGroupForm/joinGroupForm.component';
+import {NewCommentComponent} from './comment/newcomment.component';
 
 @NgModule({
     imports: [
