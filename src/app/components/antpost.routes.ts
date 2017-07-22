@@ -23,7 +23,7 @@ export const MODULE_ROUTES: Route[] = [
     {path: 'post', component: PostComponent, canActivate: [AuthService]},
     {path: 'post-group', component: GroupPostScheduleComponent, canActivate: [AuthService]},
     {path: 'post-group-history', component: GroupPostHistoryComponent, canActivate: [AuthService]},
-    {path: 'join-group', component: JoinGroupFormComponent, canActivate: [AuthService]}
+    {path: 'join-group', component: JoinGroupFormComponent, canActivate: [AuthService]},
     {path: 'comment', component: NewCommentComponent, canActivate: [AuthService]}
 ];
 

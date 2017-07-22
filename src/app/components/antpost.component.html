@@ -1,7 +1,7 @@
 <!--<router-outlet></router-outlet>-->
 <span defaultOverlayTarget></span>
 <div [ngClass]="{'wrapper' : isLogin()}">
-	<div class="sidebar" data-active-color="rose" data-background-color="black" data-image="../assets/img/sidebar.jpg" *ngIf="isLogin()">
+	<div class="sidebar" data-active-color="rose" data-background-color="black" data-image="assets/img/sidebar.jpg" *ngIf="isLogin()">
 		<sidebar (onOpen)="openTab($event)"></sidebar>
 	</div>
 	<div [ngClass]="{'main-panel ps-container ps-theme-default ps-active-y' : isLogin()}">
