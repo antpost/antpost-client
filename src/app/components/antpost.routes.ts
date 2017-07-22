@@ -15,6 +15,7 @@ import {ScheduleStatusPipe} from '../pipes/scheduleStatus.pipe';
 import {GroupPostDetailComponent} from './group/schedule/groupPostDetail.component';
 import {GroupSearchComponent} from './group/groupSearch/groupSearch.component';
 import {JoinGroupFormComponent} from './group/joinGroupForm/joinGroupForm.component';
+import {NewCommentComponent} from './comment/newcomment.component';
 
 export const MODULE_ROUTES: Route[] = [
     {path: 'login', component: LoginComponent},
@@ -23,6 +24,7 @@ export const MODULE_ROUTES: Route[] = [
     {path: 'post-group', component: GroupPostScheduleComponent, canActivate: [AuthService]},
     {path: 'post-group-history', component: GroupPostHistoryComponent, canActivate: [AuthService]},
     {path: 'join-group', component: JoinGroupFormComponent, canActivate: [AuthService]}
+    {path: 'comment', component: NewCommentComponent, canActivate: [AuthService]}
 ];
 
 export const MODULE_COMPONENTS = [
@@ -37,7 +39,8 @@ export const MODULE_COMPONENTS = [
     GroupPostHistoryComponent,
     GroupPostDetailComponent,
     JoinGroupFormComponent,
-    GroupSearchComponent
+    GroupSearchComponent,
+    NewCommentComponent
 ];
 
 export const PIPES = [
