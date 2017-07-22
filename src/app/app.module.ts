@@ -62,7 +62,7 @@ import {SchedulePostService} from "./services/schedulePost.service";
 import {PostService} from "./services/post.service";
 import {GroupPostHistoryComponent} from './components/group/schedule/groupPostHistory.component';
 import {HomeComponent} from './components/home/home.component';
-import {NewCommentComponent} from './components/comment/newcomment.component';
+// import {NewCommentComponent} from './components/comment/newcomment.component';
 import {UserService} from './services/user.service';
 
 // Application wide providers
@@ -135,7 +135,7 @@ type StoreType = {
         }
     ],
     entryComponents: [PostFormComponent, PostSelectorComponent, PostSelectorComponent, GroupPostScheduleComponent, PostComponent,
-        JoinGroupFormComponent, GroupPostHistoryComponent, HomeComponent, NewCommentComponent]
+        JoinGroupFormComponent, GroupPostHistoryComponent, HomeComponent]
 })
 export class AppModule {
 
