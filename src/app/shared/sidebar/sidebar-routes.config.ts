@@ -8,13 +8,36 @@ import {NewCommentComponent} from "../../components/comment/newcomment.component
 
 
 export const ROUTES: any[] = [
-    {path: 'home', title: 'Home', icon: 'dashboard', class: '', component: HomeComponent},
-    {path: 'post-group', title: 'Đăng nhóm', icon: 'person', class: '', component: GroupPostScheduleComponent},
-    {path: 'post-group-history', title: 'Lịch sử đăng nhóm', icon: 'person', class: '', component: GroupPostHistoryComponent},
-    {path: 'join-group', title: 'Gia nhập nhóm', icon: 'library_books', class: '', component: JoinGroupFormComponent},
-    {path: 'post', title: 'Bài viết', icon: 'content_paste', class: '', component: PostComponent},
+    {path: 'home', title: 'Dashboard', icon: 'dashboard', class: '', component: HomeComponent},
+    {
+        path: 'group',
+        title: 'Nhóm',
+        icon: 'people',
+        subroutes: [
+            {path: 'post-group', title: 'Đăng nhóm', icon: 'send', class: '', component: GroupPostScheduleComponent},
+            {path: 'post-group-history', title: 'Lịch sử đăng nhóm', icon: 'history', class: '', component: GroupPostHistoryComponent},
+            {path: 'join-group', title: 'Gia nhập nhóm', icon: 'perm_contact_calendar', class: '', component: JoinGroupFormComponent},
+            {path: 'invite-friend', title: 'Mời bạn vào nhóm', icon: 'contacts', class: '', component: JoinGroupFormComponent},
+            {path: 'comment-up', title: 'Comment up', icon: 'call_merge', class: ''},
+        ]
+    },
+    {
+        path: 'personal',
+        title: 'Cá nhân',
+        icon: 'face',
+        subroutes: [
+            {path: 'post-feed', title: 'Đăng bài', icon: 'send', class: '', component: GroupPostScheduleComponent}
+        ]
+    },
+    {
+        path: 'fanpage',
+        title: 'Fanpage',
+        icon: 'web',
+        subroutes: [
+            {path: 'post-page', title: 'Đăng bài', icon: 'send', class: '', component: GroupPostScheduleComponent}
+        ]
+    },
+    {path: 'post', title: 'Bài đăng', icon: 'content_paste', class: '', component: PostComponent},
     {path: 'comment', title: 'Bình luận', icon: 'bubble_chart', class: '', component: NewCommentComponent},
-    {path: 'report', title: 'Báo cáo', icon: 'location_on', class: '', component: HomeComponent},
-    {path: 'notifications', title: 'Notifications', icon: 'notifications', class: '', component: HomeComponent},
     {path: 'logout', title: 'Thoát', icon: 'logout', class: ''}
 ];

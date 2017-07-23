@@ -335,3 +335,16 @@ nav {
 .checkbox label {
    color: inherit;
 }
+
+.sidebar .nav [data-toggle="collapse"] ~ div > ul > li > a, .off-canvas-sidebar .nav [data-toggle="collapse"] ~ div > ul > li > a {
+  padding-left: 40px;
+}
+.sidebar .nav li > a, .off-canvas-sidebar .nav li > a {
+  margin: 0px 0px 0;
+}
+.sidebar .nav li:first-child > a, .off-canvas-sidebar .nav li:first-child > a {
+  margin: 0 0px;
+}
+.sidebar .nav, .off-canvas-sidebar .nav {
+   margin-top: 0px;
+}

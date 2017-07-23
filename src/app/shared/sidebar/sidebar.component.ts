@@ -28,7 +28,16 @@ export class SidebarComponent implements OnInit {
             return;
         }
 
-        let item = ROUTES.find(r => r.path == path);
+        let route = ROUTES.find((r) => {
+            if(r.path == path) {
+                return true;
+            }
+
+            return r.subroutes ? !!r.subroutes.find(sr => sr.path == path) : false;
+        });
+
+        let item = route.path == path ? route : route.subroutes.find(sr => sr.path = path);
+
         this.onOpen.emit(item);
     }
 }
