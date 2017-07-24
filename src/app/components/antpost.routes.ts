@@ -16,6 +16,7 @@ import {GroupPostDetailComponent} from './group/schedule/groupPostDetail.compone
 import {GroupSearchComponent} from './group/groupSearch/groupSearch.component';
 import {JoinGroupFormComponent} from './group/joinGroupForm/joinGroupForm.component';
 import {NewCommentComponent} from './comment/newcomment.component';
+import {CommentUpComponent} from './group/commentUp/commentUp.component';
 
 export const MODULE_ROUTES: Route[] = [
     {path: 'login', component: LoginComponent},
@@ -40,7 +41,8 @@ export const MODULE_COMPONENTS = [
     GroupPostDetailComponent,
     JoinGroupFormComponent,
     GroupSearchComponent,
-    NewCommentComponent
+    NewCommentComponent,
+    CommentUpComponent
 ];
 
 export const PIPES = [

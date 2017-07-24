@@ -5,6 +5,7 @@ import {GroupPostHistoryComponent} from "../../components/group/schedule/groupPo
 import {JoinGroupFormComponent} from "../../components/group/joinGroupForm/joinGroupForm.component";
 import {PostComponent} from "../../components/post/post.component";
 import {NewCommentComponent} from "../../components/comment/newcomment.component";
+import {CommentUpComponent} from '../../components/group/commentUp/commentUp.component';
 
 
 export const ROUTES: any[] = [
@@ -18,7 +19,7 @@ export const ROUTES: any[] = [
             {path: 'post-group-history', title: 'Lịch sử đăng nhóm', icon: 'history', class: '', component: GroupPostHistoryComponent},
             {path: 'join-group', title: 'Gia nhập nhóm', icon: 'perm_contact_calendar', class: '', component: JoinGroupFormComponent},
             {path: 'invite-friend', title: 'Mời bạn vào nhóm', icon: 'contacts', class: '', component: JoinGroupFormComponent},
-            {path: 'comment-up', title: 'Comment up', icon: 'call_merge', class: ''},
+            {path: 'comment-up', title: 'Bình luận lên bài', icon: 'call_merge', class: '', component: CommentUpComponent},
         ]
     },
     {

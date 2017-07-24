@@ -64,6 +64,7 @@ import {GroupPostHistoryComponent} from './components/group/schedule/groupPostHi
 import {HomeComponent} from './components/home/home.component';
 import {NewCommentComponent} from './components/comment/newcomment.component';
 import {UserService} from './services/user.service';
+import {CommentUpComponent} from './components/group/commentUp/commentUp.component';
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -135,7 +136,7 @@ type StoreType = {
         }
     ],
     entryComponents: [PostFormComponent, PostSelectorComponent, PostSelectorComponent, GroupPostScheduleComponent, PostComponent,
-        JoinGroupFormComponent, GroupPostHistoryComponent, HomeComponent, NewCommentComponent]
+        JoinGroupFormComponent, GroupPostHistoryComponent, HomeComponent, NewCommentComponent, CommentUpComponent]
 })
 export class AppModule {
 
