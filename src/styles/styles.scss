@@ -348,3 +348,30 @@ nav {
 .sidebar .nav, .off-canvas-sidebar .nav {
    margin-top: 0px;
 }
+.custom-card {
+  border: 1px solid #ddd;
+  border-left: 3px solid #F44336;
+}
+.card .body {
+  font-size: 12px;
+  color: #555;
+  padding: 20px;
+}
+.mb0 {
+  margin-bottom: 0!important;
+}
+.mt15 {
+  margin-top: 12px!important;
+}
+.input-group {
+  width: 100%;
+  margin-bottom: 15px;
+}
+.input-group {
+  position: relative;
+  display: table;
+  border-collapse: separate;
+}
+.card .body .col-xs-6, .card .body .col-sm-6, .card .body .col-md-6, .card .body .col-lg-6 {
+  margin-bottom: 20px;
+}

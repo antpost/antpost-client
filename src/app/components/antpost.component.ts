@@ -3,6 +3,7 @@ import {PostComponent} from "./post/post.component";
 import {GroupPostScheduleComponent} from "./group/schedule/groupPostSchedule.component";
 import {HomeComponent} from './home/home.component';
 import {JoinGroupFormComponent} from './group/joinGroupForm/joinGroupForm.component';
+import {CommentUpComponent} from './group/commentUp/commentUp.component';
 
 @Component({
     selector: 'antpost',
@@ -12,16 +13,16 @@ import {JoinGroupFormComponent} from './group/joinGroupForm/joinGroupForm.compon
 export class AntPostComponent {
 
     public tabs: any[] = [
-        /*{
-            title: 'Gia nhập nhóm',
-            path: 'join-group',
+        {
+            title: 'Bình luận lên bài',
+            path: 'comment-up',
             removable: true,
             active: true,
             componentData: {
-                component: JoinGroupFormComponent,
+                component: CommentUpComponent,
                 inputs: {}
             }
-        }*/
+        }
     ];
 
     public openTab(option: any) {

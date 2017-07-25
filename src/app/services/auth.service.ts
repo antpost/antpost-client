@@ -6,7 +6,7 @@ import {Md5} from 'ts-md5/dist/md5';
 import {FacebookService} from './facebook.service';
 import {SharedService} from './shared.service';
 import {AppManager} from '../core/appManager';
-import {User} from '../models/user.model';
+import {FbAccount} from '../models/fbaccount.model';
 
 @Injectable()
 export class AuthService implements CanActivate {
@@ -49,7 +49,7 @@ export class AuthService implements CanActivate {
                     // set token property
                     this.token = token;
 
-                    let user = {username, token, id: resData.uid} as User;
+                    let user = {username, token, id: resData.uid} as FbAccount;
                     this.appManager.currentUser = user;
                     // store username and jwt token in local storage to keep user logged in between page refreshes
                     localStorage.setItem('currentUser', JSON.stringify(user));

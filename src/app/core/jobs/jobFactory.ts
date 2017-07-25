@@ -3,6 +3,7 @@ import {ScheduleType} from "../../models/enums";
 import {IScheduleEngine} from "../scheduleEngine/baseScheduleEngine";
 import {ScheduleJob} from "./scheduleJob";
 import {IJob} from "./iJob";
+import {CommentScheduleEngine} from '../scheduleEngine/commentScheduleEngine';
 
 export class JobFactory {
 
@@ -14,7 +15,8 @@ export class JobFactory {
      */
     public static createScheduleJob (schedule: any, type: number): IJob {
         let types = {
-            Post: PostScheduleEngine
+            Post: PostScheduleEngine,
+            Comment: CommentScheduleEngine
         };
 
         let key = ScheduleType[type];

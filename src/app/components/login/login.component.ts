@@ -1,12 +1,12 @@
 import {Component, OnInit, OnDestroy, Renderer} from '@angular/core';
 import {Router} from "@angular/router";
-import {User} from '../../models/user.model';
 import {AuthService} from '../../services/auth.service';
 import $ from 'jquery';
 import {FacebookService} from "../../services/facebook.service";
 import {AppManager} from "../../core/appManager";
 import {Toastr} from '../../core/helpers/toastr';
-import {UserService} from '../../services/user.service';
+import {FbAccount} from '../../models/fbaccount.model';
+import {FbAccountService} from '../../services/fbaccount.service';
 
 @Component({
     selector: 'login',
@@ -16,15 +16,15 @@ import {UserService} from '../../services/user.service';
     ]
 })
 export class LoginComponent implements OnInit, OnDestroy {
-    public model: User = new User();
+    public model: FbAccount = new FbAccount();
     public loading: boolean = false;
     public error: string = '';
 
-    public recentUsers: Array<User> = [];
+    public recentUsers: Array<FbAccount> = [];
 
     constructor(private renderer: Renderer, private router: Router,
                 private authService: AuthService,
-                private userService: UserService,
+                private fbAccountService: FbAccountService,
                 private facebookService: FacebookService,
                 private appManager: AppManager) {
         /*this.renderer.setElementClass(document.body, 'login', true);
@@ -38,7 +38,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.authService.logout();
 
         // load recent users
-        this.recentUsers = await this.userService.loadRecentUser();
+        this.recentUsers = await this.fbAccountService.loadRecentUser();
         this.recentUsers.forEach((user) => {
             this.facebookService.notifications(user).subscribe((data) => {
                 user.unseenCount = data.summary ? data.summary.unseen_count : 0
@@ -76,15 +76,15 @@ export class LoginComponent implements OnInit, OnDestroy {
     public async quickLogin(id: string) {
         let user = this.recentUsers.find(u => u.id == id);
         localStorage.setItem('currentUser', JSON.stringify(user));
-        await this.userService.update(user.id, {
+        await this.fbAccountService.update(user.id, {
             lastLogin: user.lastLogin
         });
         this.router.navigate(['/']);
     }
 
     public async removeUser(id: string) {
-        await this.userService.delete(id);
-        this.recentUsers = await this.userService.loadRecentUser();
+        await this.fbAccountService.delete(id);
+        this.recentUsers = await this.fbAccountService.loadRecentUser();
     }
 
     public loadCookie() {
@@ -98,16 +98,16 @@ export class LoginComponent implements OnInit, OnDestroy {
             localStorage.setItem('currentUser', JSON.stringify(user));
             // save to database
 
-            let savedUser = await this.userService.get(user.id);
+            let savedUser = await this.fbAccountService.get(user.id);
             if (savedUser) {
-                this.userService.update(user.id, {
+                this.fbAccountService.update(user.id, {
                     token: user.token,
                     cookies: user.cookies,
                     lastLogin: user.lastLogin,
                     name: user.name
                 });
             } else {
-                this.userService.add(user);
+                this.fbAccountService.add(user);
             }
 
         });

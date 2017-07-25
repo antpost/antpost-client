@@ -3,7 +3,7 @@
  * @since 11/29/2016
  */
 
-export class User {
+export class FbAccount {
     public id: string;
     public name: string;
     public username: string;

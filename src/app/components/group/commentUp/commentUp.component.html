@@ -5,7 +5,137 @@
 				<joined-group [hidden]="started"></joined-group>
 			</div>
 			<div class="col-sm-6">
+				<div>
+					<div class="form-group">
+						<label class="control-label">Nội dung bình luận</label>
+						<textarea name="message" rows="3" cols="50" class="form-control"
+								  placeholder="Awesome!"></textarea>
+					</div>
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">Số bài/nhóm muốn bình luận</label>
+								<kendo-dropdownlist
+									[data]="postNumbers"
+									[textField]="'text'"
+									[valueField]="'value'"
+									[(ngModel)]="commentForm.numberOfPosts"
+									class="form-control">
+								</kendo-dropdownlist>
 
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">Delay</label>
+								<kendo-dropdownlist
+									[data]="delayList"
+									[textField]="'text'"
+									[valueField]="'value'"
+									[valuePrimitive]="true"
+									[(ngModel)]="commentForm.delay"
+									class="form-control">
+								</kendo-dropdownlist>
+
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="checkbox">
+							<label>
+								<input type="checkbox" [(ngModel)]="commentForm.like">
+								<span class="checkbox-material"><span class="check"></span></span>
+								Like bài viết
+							</label>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="checkbox">
+							<label>
+								<input type="checkbox" [(ngModel)]="commentForm.commentOnTop">
+								<span class="checkbox-material"><span class="check"></span></span>
+								Trả lời vào bình luận mới nhất
+							</label>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-offset-3 col-sm-9">
+							<button class="btn btn-primary btn-sm" (click)="start()"><i class="material-icons">send</i> Bình luận ngay
+							</button>
+							<button class="btn btn-info btn-sm"><i class="material-icons">today</i> Đặt lịch</button>
+						</div>
+					</div>
+					<div class="row mt15 box-post-schedule" style="display: block;">
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb0">
+							<div class="custom-card">
+								<div class="body">
+									<div class="row">
+										<div class="col-md-6">
+											<b><i class="fa fa-clock-o" aria-hidden="true"></i> Bắt đầu</b>
+											<div class="input-group mb0">
+												<div class="form-line">
+													<kendo-datepicker
+														[(value)]="commentForm.startTime"
+													></kendo-datepicker>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-6 col-xs-6">
+											<b><i class="fa fa-bullseye" aria-hidden="true"></i> Delay</b>
+											<div class="input-group mb0">
+												<kendo-dropdownlist
+													[data]="delayList"
+													[textField]="'text'"
+													[valueField]="'value'"
+													[valuePrimitive]="true"
+													[(ngModel)]="commentForm.delay"
+													class="form-control">
+												</kendo-dropdownlist>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-6">
+											<b><i class="fa fa-repeat" aria-hidden="true"></i> Lặp lại sau</b>
+											<div class="input-group mb0">
+												<kendo-dropdownlist
+													[defaultItem]="{text:'Không lặp lại', value: null}"
+													[data]="repeatList"
+													[textField]="'text'"
+													[valueField]="'value'"
+													[valuePrimitive]="true"
+													[(ngModel)]="commentForm.repeat"
+													class="form-control">
+												</kendo-dropdownlist>
+											</div>
+										</div>
+										<div class="col-md-6">
+											<b><i class="fa fa-calendar" aria-hidden="true"></i> Kết thúc</b>
+											<div class="input-group mb0">
+												<div class="form-line">
+													<kendo-datepicker
+														[(value)]="commentForm.endTime"
+													></kendo-datepicker>
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<div class="row">
+										<div class="col-md-12 mb0">
+											<div class="btn-group" role="group">
+												<button class="btn btn-info btn-sm"><i class="material-icons">today</i>
+													Lưu đặt lịch
+												</button>
+											</div>
+										</div>
+									</div>
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

@@ -1,9 +1,9 @@
 
 import {Injectable} from '@angular/core';
-import {User} from '../models/user.model';
+import {FbAccount} from '../models/fbaccount.model';
 
 @Injectable()
 export class AppManager {
 
-    public currentUser: User;
+    public currentUser: FbAccount;
 }

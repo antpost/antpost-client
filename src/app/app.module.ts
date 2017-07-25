@@ -51,6 +51,7 @@ import {PostFormComponent} from "./components/post/postForm.component";
 import {GridModule} from "@progress/kendo-angular-grid";
 import {UploadModule} from "@progress/kendo-angular-upload";
 import {DropDownsModule} from "@progress/kendo-angular-dropdowns";
+import {DateInputsModule} from '@progress/kendo-angular-dateinputs';
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {NodePostService} from "./services/nodePost.service";
 import {LocalStorageService} from "./services/localStorage.service";
@@ -63,8 +64,8 @@ import {PostService} from "./services/post.service";
 import {GroupPostHistoryComponent} from './components/group/schedule/groupPostHistory.component';
 import {HomeComponent} from './components/home/home.component';
 import {NewCommentComponent} from './components/comment/newcomment.component';
-import {UserService} from './services/user.service';
 import {CommentUpComponent} from './components/group/commentUp/commentUp.component';
+import {FbAccountService} from './services/fbaccount.service';
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -99,6 +100,7 @@ type StoreType = {
         UploadModule,
         DropDownsModule,
         PopupModule,
+        DateInputsModule,
         NgbModule.forRoot(),
         TabsModule.forRoot(),
         BrowserAnimationsModule,
@@ -116,7 +118,7 @@ type StoreType = {
         ENV_PROVIDERS,
         APP_PROVIDERS,
         AuthService,
-        UserService,
+        FbAccountService,
         AppRunner,
         PostService,
         SchedulePostService,
@@ -131,7 +133,7 @@ type StoreType = {
             provide: POPUP_CONTAINER,
             useFactory: () => {
                 //return the container ElementRef, where the popup will be injected
-                return ({ nativeElement: document.body } as ElementRef);
+                return ({nativeElement: document.body} as ElementRef);
             }
         }
     ],

@@ -6,9 +6,7 @@ import {AppManager} from '../core/appManager';
 import {Post} from '../models/post.model';
 import {ProxyService} from "./proxy.service";
 import {AutomationService} from './automation.service';
-import {Group} from "../models/group.model";
-import {userInfo} from 'os';
-import {User} from '../models/user.model';
+import {FbAccount} from '../models/fbaccount.model';
 
 @Injectable()
 export class FacebookService extends ProxyService{
@@ -66,7 +64,7 @@ export class FacebookService extends ProxyService{
         });
     }
 
-    public notifications(user: User) {
+    public notifications(user: FbAccount) {
         let api = `${this.graphApi}/me/notifications?access_token=${user.token}`;
         return this.post(api, 'GET', null);
     }

@@ -7,7 +7,7 @@ export class DbService extends Dexie {
         super('antpost', {addons: [relationships]});
 
         this.version(1).stores({
-            users: `
+            fbaccounts: `
                 id,
                 name,
                 email,
