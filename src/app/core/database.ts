@@ -24,6 +24,11 @@ export class DbService extends Dexie {
                 name,
                 privacy,
                 administrator`,
+            schedules: `
+                ++id,
+                uid,
+                status,
+                scheduleType`,
             schedulePosts: `
                 ++id,
                 postId -> posts.id,
