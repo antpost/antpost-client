@@ -25,7 +25,7 @@ export const ROUTES: any[] = [
     {
         path: 'personal',
         title: 'Cá nhân',
-        icon: 'face',
+        icon: 'person_pin',
         subroutes: [
             {path: 'post-feed', title: 'Đăng bài', icon: 'send', class: '', component: GroupPostScheduleComponent}
         ]
@@ -37,6 +37,11 @@ export const ROUTES: any[] = [
         subroutes: [
             {path: 'post-page', title: 'Đăng bài', icon: 'send', class: '', component: GroupPostScheduleComponent}
         ]
+    },
+    {
+        path: 'account',
+        title: 'Tài khoản',
+        icon: 'recent_actors'
     },
     {path: 'post', title: 'Bài đăng', icon: 'content_paste', class: '', component: PostComponent},
     {path: 'comment', title: 'Bình luận', icon: 'bubble_chart', class: '', component: NewCommentComponent},

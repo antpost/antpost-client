@@ -12,7 +12,7 @@ import {JoinGroupFormComponent} from './group/joinGroupForm/joinGroupForm.compon
 export class AntPostComponent {
 
     public tabs: any[] = [
-        {
+        /*{
             title: 'Gia nhập nhóm',
             path: 'join-group',
             removable: true,
@@ -21,7 +21,7 @@ export class AntPostComponent {
                 component: JoinGroupFormComponent,
                 inputs: {}
             }
-        }
+        }*/
     ];
 
     public openTab(option: any) {
