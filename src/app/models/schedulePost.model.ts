@@ -1,9 +1,8 @@
-import {Schedule} from "./baseSchedule";
 import {NodePost} from "./nodePost.model";
 import {Group} from "./group.model";
 import {Post} from './post.model';
 
-export class SchedulePost extends Schedule {
+export class SchedulePost {
     public id: number;
     public postId: number;
     public nodes: string;
