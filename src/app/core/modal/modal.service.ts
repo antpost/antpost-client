@@ -8,7 +8,7 @@ export class ModalService {
     constructor(private modal: Modal) {
     }
 
-    public open(options: IModalOptions): Promise<DialogRef<any>> {
+    public open(options: IModalOptions): Promise<any> {
         options = Object.assign({
             showClose: true,
             size: 'lg',

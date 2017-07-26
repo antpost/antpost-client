@@ -7,6 +7,7 @@ export class Toastr {
             type: 'success',
             timer: 500,
             delay: 2000,
+            z_index: 2000,
             placement: {
                 from: 'bottom',
                 align: 'right'
@@ -22,6 +23,7 @@ export class Toastr {
             type: 'danger',
             timer: 500,
             delay: 2000,
+            z_index: 2000,
             placement: {
                 from: 'bottom',
                 align: 'right'
@@ -36,6 +38,7 @@ export class Toastr {
         }, {
             type: 'info',
             timer: 1000,
+            z_index: 2000,
             placement: {
                 from: 'bottom',
                 align: 'right'

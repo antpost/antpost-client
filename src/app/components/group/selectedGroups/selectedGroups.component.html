@@ -1,0 +1,14 @@
+<kendo-grid
+	[data]="groups" [height]="450"
+>
+	<kendo-grid-column field="name" title="Nhóm" [width]="250">
+	</kendo-grid-column>
+	<kendo-grid-column title="Kết quả">
+		<ng-template kendoGridCellTemplate let-dataItem>
+                <span *ngIf="dataItem.fbPostId"><a target="_blank" href="https://facebook.com/{{dataItem.fbPostId}}">
+                    <i class="fa fa-facebook-square"></i> Click xem
+                </a></span>
+			<span *ngIf="dataItem.error">{{dataItem.error}}</span>
+		</ng-template>
+	</kendo-grid-column>
+</kendo-grid>

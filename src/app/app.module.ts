@@ -18,7 +18,7 @@ import {
  * Platform and Environment providers/directives/pipes
  */
 import {ENV_PROVIDERS} from './environment';
-import {ROUTES} from './app.routes';
+import {ROUTES, MODULE_COMPONENTS, PIPES} from './app.routes';
 // App is our top level component
 import {AppComponent} from './app.component';
 import {APP_RESOLVER_PROVIDERS} from './app.resolver';
@@ -42,7 +42,6 @@ import {AppRunner} from './core/appRunner';
 import {TabsModule} from "ngx-bootstrap";
 import {CoreModule} from "./core/core.module";
 import {POPUP_CONTAINER, PopupModule} from '@progress/kendo-angular-popup';
-import {MODULE_COMPONENTS, PIPES} from './components/antpost.routes';
 import {JoinGroupFormComponent} from "./components/group/joinGroupForm/joinGroupForm.component";
 import {PostComponent} from "./components/post/post.component";
 import {GroupPostScheduleComponent} from "./components/group/schedule/groupPostSchedule.component";
@@ -66,6 +65,7 @@ import {HomeComponent} from './components/home/home.component';
 import {NewCommentComponent} from './components/comment/newcomment.component';
 import {CommentUpComponent} from './components/group/commentUp/commentUp.component';
 import {FbAccountService} from './services/fbaccount.service';
+import {GroupSelectionComponent} from './components/group/group-selection/group-selection.component';
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -137,8 +137,7 @@ type StoreType = {
             }
         }
     ],
-    entryComponents: [PostFormComponent, PostSelectorComponent, PostSelectorComponent, GroupPostScheduleComponent, PostComponent,
-        JoinGroupFormComponent, GroupPostHistoryComponent, HomeComponent, NewCommentComponent, CommentUpComponent]
+    entryComponents: [MODULE_COMPONENTS]
 })
 export class AppModule {
 

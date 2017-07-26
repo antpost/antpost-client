@@ -2,13 +2,11 @@
 	<div class="card no-header">
 		<div class="card-content">
 			<div class="col-sm-6">
-				<joined-group [hidden]="started"></joined-group>
-			</div>
-			<div class="col-sm-6">
-				<div>
+				<span class="account-switch">Tài khoản: <span class="account-name">{{selectedAccount.name}}</span> <a><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></span>
+				<div style="margin-top: 5px;">
 					<div class="form-group">
 						<label class="control-label">Nội dung bình luận</label>
-						<textarea name="message" rows="3" cols="50" class="form-control"
+						<textarea name="message" rows="3" cols="50" class="form-control" [(ngModel)]="commentForm.message"
 								  placeholder="Awesome!"></textarea>
 					</div>
 					<div class="row">
@@ -136,6 +134,14 @@
 						</div>
 					</div>
 				</div>
+			</div>
+			<div class="col-sm-6">
+				<div class="search">
+					<div class="form-inline">
+						<button class="btn btn-primary btn-sm" (click)="selectGroups()"><i class="material-icons">people</i> Chọn nhóm</button>
+					</div>
+				</div>
+				<selected-groups [groups]="groups"></selected-groups>
 			</div>
 		</div>
 	</div>

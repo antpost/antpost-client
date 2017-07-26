@@ -7,6 +7,10 @@ import {JobFactory} from '../../../core/jobs/jobFactory';
 import {ScheduleJob} from '../../../core/jobs/scheduleJob';
 import {Schedule} from '../../../models/schedule.model';
 import {AppManager} from '../../../core/appManager';
+import {ModalService} from '../../../core/modal/modal.service';
+import {IModalOptions} from '../../../core/modal/modalWrapper.component';
+import {GroupSelectionComponent} from '../group-selection/group-selection.component';
+import {FbAccount} from '../../../models/fbaccount.model';
 
 @Component({
     selector: 'comment-up',
@@ -19,8 +23,12 @@ export class CommentUpComponent implements OnInit {
     public delayList: Array<any>;
     public repeatList: Array<any>;
     public job: ScheduleJob;
+    public groups: Array<any> = [];
+    public selectedAccount: FbAccount;
 
-    constructor(private facebookService: FacebookService, private appManager: AppManager) {
+    constructor(private facebookService: FacebookService, public appManager: AppManager,
+                private modal: ModalService) {
+        this.selectedAccount = appManager.currentUser;
         this.commentForm = {
             numberOfPosts: 1,
             like: true,
@@ -53,9 +61,26 @@ export class CommentUpComponent implements OnInit {
 
     }
 
+    public selectGroups() {
+        let dialog = this.modal.open({
+            component: GroupSelectionComponent,
+            inputs: {},
+            title: 'Chọn nhóm'
+        } as IModalOptions);
+
+        dialog.then((result) => {
+            this.groups = result;
+        });
+    }
+
     public start() {
         if(!this.commentForm.message || !this.commentForm.message.trim()) {
             Toastr.error("Vui lòng nhập nội dung bình luận!");
+            return;
+        }
+
+        if(this.groups.length == 0) {
+            Toastr.error("Vui lòng chọn danh sách nhóm!");
             return;
         }
 
@@ -67,7 +92,8 @@ export class CommentUpComponent implements OnInit {
                 message: this.commentForm.message,
                 numberOfPosts: this.commentForm.numberOfPosts,
                 like: this.commentForm.like,
-                commentOnTop: this.commentForm.commentOnTop
+                commentOnTop: this.commentForm.commentOnTop,
+                groups: this.groups.map(g => g.id)
             }
         } as Schedule;
 

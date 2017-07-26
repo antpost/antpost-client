@@ -32,25 +32,12 @@ export class JoinedGroupComponent implements OnInit {
     }
 
     public async ngOnInit() {
-        /*if(localStorage.getItem('group')) {
-            this.groups = await this.groupService.all();
-            this.checkAll(true);
-        } else {
-            this.facebookService.getJoinedGroups().subscribe(async (result: any) => {
-                this.groups = result.data;
-
-                // save to db
-                await this.groupService.addAll(this.groups);
-                localStorage.setItem('group', '1');
-                this.checkAll(true);
-            });
-        }*/
         this.facebookService.getJoinedGroups().subscribe(async (result: any) => {
             this.groups = result.data;
 
             // save to db
-            await this.groupService.addAll(this.groups);
-            localStorage.setItem('group', '1');
+            // await this.groupService.addAll(this.groups);
+            // localStorage.setItem('group', '1');
             this.checkAll(true);
         });
     }
@@ -73,7 +60,7 @@ export class JoinedGroupComponent implements OnInit {
             this.groups = list;
 
             // update to db
-            this.groupService.addAll(this.groups);
+            //this.groupService.addAll(this.groups);
 
         });
     }
@@ -93,6 +80,7 @@ export class JoinedGroupComponent implements OnInit {
             let anyGroup = this.groups.find((item) => !item.checked);
             this.isCheckAll = !anyGroup;
         }
+        this.emit();
     }
 
     public getSelectedGroups() {
@@ -107,5 +95,6 @@ export class JoinedGroupComponent implements OnInit {
         this.groups.forEach((group: Group) => {
             group.checked = checked;
         });
+        this.emit();
     }
 }
