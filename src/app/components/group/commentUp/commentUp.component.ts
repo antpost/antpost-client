@@ -2,7 +2,7 @@ import {OnInit, Component, Input} from '@angular/core';
 import {FacebookService} from '../../../services/facebook.service';
 import {Group} from '../../../models/group.model';
 import {Toastr} from '../../../core/helpers/toastr';
-import {ScheduleType} from '../../../models/enums';
+import {ScheduleType, JobStatus} from '../../../models/enums';
 import {JobFactory} from '../../../core/jobs/jobFactory';
 import {ScheduleJob} from '../../../core/jobs/scheduleJob';
 import {Schedule} from '../../../models/schedule.model';
@@ -84,10 +84,11 @@ export class CommentUpComponent implements OnInit {
             return;
         }
 
-        let schedule = {
+        let schedule = Object.assign(Schedule.prototype, {
             uid: this.appManager.currentUser.id,
             delay: this.commentForm.delay,
             scheduleType: ScheduleType.Comment,
+            status: JobStatus.Stopped,
             meta: {
                 message: this.commentForm.message,
                 numberOfPosts: this.commentForm.numberOfPosts,
@@ -95,7 +96,7 @@ export class CommentUpComponent implements OnInit {
                 commentOnTop: this.commentForm.commentOnTop,
                 groups: this.groups.map(g => g.id)
             }
-        } as Schedule;
+        });
 
         this.job = <ScheduleJob>JobFactory.createScheduleJob(schedule, ScheduleType.Comment);
         this.job.observe().subscribe((result) => {

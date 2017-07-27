@@ -4,22 +4,16 @@ import {ServiceLocator} from "../serviceLocator";
 import {JobStatus, PostType} from '../../models/enums';
 import {AutomationService} from '../../services/automation.service';
 import {Schedule} from '../../models/schedule.model';
+import {FbAccount} from '../../models/fbaccount.model';
+import {FbAccountService} from '../../services/fbaccount.service';
 
 export class CommentScheduleEngine extends BaseScheduleEngine implements IScheduleEngine {
-    private schedule: Schedule;
     public static ENGINE_KEY = 'COMMENTENGINE';
-
-    private facebookService: FacebookService;
-    private automationService: AutomationService;
 
     private isFirst: boolean = true;
 
     constructor(schedule: Schedule) {
-        super();
-
-        this.schedule = schedule;
-
-        this.init();
+        super(schedule);
     }
 
     public getId() {
@@ -27,19 +21,20 @@ export class CommentScheduleEngine extends BaseScheduleEngine implements ISchedu
     }
 
     public hasNext(): boolean {
-        return this.schedule.status == JobStatus.Stopped;
+        return this.getNextGroupId();
     }
 
     public doNext(doneCallback: Function): void {
-        if(this.schedule.status != JobStatus.Running) {
+        if(!this.schedule.isStatus(JobStatus.Running)) {
             this.schedule.status = JobStatus.Running;
             doneCallback({
                 status: this.schedule.status
             });
+            return;
         }
 
         setTimeout(() => {
-            if(this.schedule.status == JobStatus.Running) {
+            if(this.schedule.isStatus(JobStatus.Running)) {
                 this.commentUp().then((data) => {
                     doneCallback({
                         data: data
@@ -73,14 +68,55 @@ export class CommentScheduleEngine extends BaseScheduleEngine implements ISchedu
         return null;
     }
 
-    private init() {
-        // get injectors
-        this.facebookService = ServiceLocator.injector.get(FacebookService);
+    private commentUp(): Promise<any> {
+        // find group to comment
+        let groupId = this.getNextGroupId();
+        let group = this.getGroupData(groupId);
+
+        return new Promise<any>(async (resolve, reject) => {
+            if(!group) {
+                let posts = await this.facebookService.getLastedPostsOfGroup(groupId, this.account, this.schedule.meta.numberOfPosts);
+                group = {
+                    id: groupId,
+                    posts: posts || []
+                }
+                this.schedule.results = this.schedule.results || [];
+                this.schedule.results.push(group);
+            }
+
+            let post = group.posts.find(p => !post.status);
+            if(post) {
+                // comment on this post
+                this.facebookService.comment(this.account, post, this.schedule.meta.message, this.schedule.meta.like, this.schedule.meta.commentOnTop);
+
+                resolve(group);
+            } else {
+                resolve(group);
+            }
+        });
     }
 
-    private commentUp(): Promise<any> {
-        return new Promise<any>((resolve, reject) => {
+    private getNextGroupId() {
+        if(!this.schedule.results) {
+            return this.schedule.meta.groups[0];
+        }
 
+        return this.schedule.meta.groups.find(id => {
+            let groupItem = this.schedule.results.find(g => g.id == id);
+            if(!groupItem) {
+                return true;
+            } else {
+                return !groupItem.posts || groupItem.posts.find(p => !p.status);
+            }
         });
+    }
+
+    private getGroupData(groupId: string) {
+        if(!this.schedule.results) {
+            return null;
+        }
+
+        let groupItem = this.schedule.results.find(g => g.id == groupId);
+        return groupItem;
     }
 }

@@ -214,6 +214,66 @@ export class FacebookService extends ProxyService{
     }
 
     /**
+     * Get lasted posts of group created by user
+     * @param groupId
+     * @param uid
+     * @param limit
+     */
+    public getLastedPostsOfGroup(groupId: string, account: FbAccount, limit: number): Promise<any> {
+        let size = 500;
+        let repeat = 2;
+
+        const getApi = (pageSize: number) => {
+            return this.createApi(`/${groupId}/feed`, {
+                fields: 'from.id,comments.limit(1){id}',
+                limit: pageSize
+            }, account);
+        };
+
+        const onNext = (result) => {
+            let posts = result.data.filter(p => p.from.id == account.id);
+            if(posts.length >= limit) {
+                return Observable.of({
+                    data: posts
+                });
+            } else {
+                return result.paging ? this.post(result.paging.next, 'GET') : Observable.of({
+                    data: []
+                });
+            }
+        };
+
+        return new Promise<any>((resolve, reject) => {
+            // load posts util find number of posts = limit or reach to max
+            let foundPosts = [];
+
+            let api = getApi(size);
+            let subscription = this.post(api, 'GET');
+
+            for(let i = 1; i <= repeat; i ++) {
+                subscription = subscription.flatMap(onNext);
+            }
+
+            subscription.subscribe((result) => {
+                let posts = result.data.filter(p => p.from.id == account.id);
+                resolve(posts.slice(0, limit));
+            });
+        });
+    }
+
+    /**
+     * Comment a post
+     * @param account
+     * @param post
+     * @param message
+     * @param like
+     * @param replyOnTop
+     */
+    public comment(account: FbAccount, post: any, message: string, like: boolean, replyOnTop: boolean) {
+
+    }
+
+    /**
      * Get title, description, image from url
      * @param url
      * @returns {Reducer}
@@ -236,12 +296,12 @@ export class FacebookService extends ProxyService{
      * @param params
      * @returns {string}
      */
-    private createApi(url: string, params?: any) {
+    private createApi(url: string, params?: any, account?: FbAccount) {
         let query = params ? Object.keys(params)
             .map(k => encodeURI(k) + '=' + encodeURI(params[k]))
             .join('&') : '';
 
-        let api = `${this.graphApi}${url}?access_token=${this.appManager.currentUser.token}`;
+        let api = `${this.graphApi}${url}?access_token=${account ? account.token : this.appManager.currentUser.token}`;
         if(query) {
             api += '&' + query;
         }

@@ -9,7 +9,7 @@ import {NodePostService} from '../../services/nodePost.service';
 import {JobStatus, PostType} from '../../models/enums';
 import {AutomationService} from '../../services/automation.service';
 
-export class PostScheduleEngine extends BaseScheduleEngine implements IScheduleEngine {
+export class PostScheduleEngine implements IScheduleEngine {
     private schedule: SchedulePost;
     public static ENGINE_KEY = 'POSTENGINE';
 
@@ -22,7 +22,6 @@ export class PostScheduleEngine extends BaseScheduleEngine implements IScheduleE
     private isFirst: boolean = true;
 
     constructor(schedule: SchedulePost) {
-        super();
 
         this.schedule = schedule;
 
@@ -80,7 +79,7 @@ export class PostScheduleEngine extends BaseScheduleEngine implements IScheduleE
         return null;
     }
 
-    private init() {
+    public init() {
         // get injectors
         this.facebookService = ServiceLocator.injector.get(FacebookService);
         this.schedulePostService = ServiceLocator.injector.get(SchedulePostService);

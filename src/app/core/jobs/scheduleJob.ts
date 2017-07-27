@@ -18,8 +18,9 @@ export class ScheduleJob implements IJob {
         return ScheduleJob.JOB_KEY + this.engine.getId();
     }
 
-    public start(onFinish: Function) {
+    public async start(onFinish: Function) {
         this.onFinish = onFinish;
+        await this.engine.init();
         this.process();
     }
 

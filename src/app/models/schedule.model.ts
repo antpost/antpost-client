@@ -13,4 +13,9 @@ export class Schedule {
     public updatedAt: Date;
     public scheduleType: number;
     public meta: any;
+    public results: Array<any>;
+
+    public isStatus(status: number) {
+        return this.status == status;
+    }
 }
