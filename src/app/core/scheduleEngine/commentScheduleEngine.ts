@@ -84,10 +84,10 @@ export class CommentScheduleEngine extends BaseScheduleEngine implements ISchedu
                 this.schedule.results.push(group);
             }
 
-            let post = group.posts.find(p => !post.status);
+            let post = group.posts.find(p => !p.status);
             if(post) {
                 // comment on this post
-                this.facebookService.comment(this.account, post, this.schedule.meta.message, this.schedule.meta.like, this.schedule.meta.commentOnTop);
+                post.status = await this.facebookService.comment(this.account, post, this.schedule.meta.message, this.schedule.meta.like, this.schedule.meta.commentOnTop);
 
                 resolve(group);
             } else {

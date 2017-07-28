@@ -269,8 +269,8 @@ export class FacebookService extends ProxyService{
      * @param like
      * @param replyOnTop
      */
-    public comment(account: FbAccount, post: any, message: string, like: boolean, replyOnTop: boolean) {
-
+    public comment(account: FbAccount, post: any, message: string, like: boolean, replyOnTop: boolean): Promise<any> {
+        return this.automationService.comment(account, post, message, like, replyOnTop).toPromise();
     }
 
     /**

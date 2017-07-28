@@ -14,10 +14,12 @@ import {AutomationRes} from "../core/automation/automationRes";
 import * as $ from 'jquery';
 import {PostType} from "../models/enums";
 import {link} from 'fs';
+import {FbAccount} from '../models/fbaccount.model';
 
 @Injectable()
 export class AutomationService extends ProxyService {
     private mbasicUrl: string = 'https://mbasic.facebook.com';
+    private mUrl: string = 'https://m.facebook.com';
 
     constructor(private http: Http, private appManager: AppManager) {
         super();
@@ -179,6 +181,44 @@ export class AutomationService extends ProxyService {
                 observer.complete();
             });
         });
+    }
+
+    public comment(account: FbAccount, post: any, message: string, like: boolean, replyOnTop: boolean) {
+        let ids = post.id.split('_');
+        let postId = ids[1];
+
+        //https://mbasic.facebook.com/groups/257702558042509?view=permalink&id=273147693164662&comment_id=279997012479730&_rdr
+        let procedure = new AutomationReq().access(`${this.mUrl}/${postId}`, this.appManager.currentUser.cookies);
+
+        // if has like action
+        if(like) {
+            procedure = procedure.click('a[data-sigil*="like-reaction-flyout like"]');
+        }
+
+        // if comment to last
+        if(!replyOnTop || !post.comments) {
+            procedure = procedure
+                .input('form[id*="comment_form"] #composerInput', message)
+                .click('form[id*="comment_form"] input[type="submit"]');
+        } else {
+            let comment = post.comments.data[0];
+            procedure = procedure
+                .click(`#${comment.id} a[data-uri*="/comment/replies/"]`)
+                .input('#${comment.id} textarea', message)
+                .click('#${comment.id} button');
+        }
+
+        return new Observable(observer => {
+            this.simulate(procedure).subscribe((res) => {
+                if(res.status == 0) {
+                    observer.next(true);
+                } else {
+                    observer.next(false);
+                }
+                observer.complete();
+            });
+        });
+
     }
 
     /**
