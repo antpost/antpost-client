@@ -32,7 +32,7 @@ export class CommentUpComponent implements OnInit {
         this.commentForm = {
             numberOfPosts: 1,
             like: true,
-            commentOnTop: true,
+            commentOnTop: false,
             delay: 5,
             startTime: new Date(),
             endTime: new Date(new Date().getTime() + 24 * 60 * 60 * 1000)
