@@ -10,10 +10,7 @@ export class DbService extends Dexie {
             fbaccounts: `
                 id,
                 name,
-                email,
-                token,
-                cookies,
-                lastLogin
+                email
             `,
             posts: `
                 ++id,

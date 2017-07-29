@@ -19,6 +19,9 @@ export class ScheduleActionsComponent implements OnInit {
     @Input()
     public account: FbAccount;
 
+    @Input()
+    public status: number;
+
     @Output()
     public onAction = new EventEmitter<number>();
 
@@ -26,7 +29,6 @@ export class ScheduleActionsComponent implements OnInit {
     public delayList: Array<any>;
     public repeatList: Array<any>;
     public enableSchedule: boolean = false;
-    public status: number = JobStatus.Stopped;
     public jobStatus;
 
     constructor() {
@@ -57,7 +59,7 @@ export class ScheduleActionsComponent implements OnInit {
     }
 
     public start() {
-        this.status = JobStatus.Running;
+        //this.status = JobStatus.Running;
         this.onAction.emit(ScheduleAction.Start);
     }
 

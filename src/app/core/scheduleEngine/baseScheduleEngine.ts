@@ -8,20 +8,18 @@ import {createNgZone} from '@angular/platform-browser/testing/src/browser_util';
 import {NgZone} from '@angular/core';
 
 export interface IScheduleEngine {
+    schedule: Schedule;
     getId(): string;
-    hasNext(): boolean;
-    doNext(doneCallback: Function): void;
-    stop(): Promise<any>;
-    pause(): Promise<any>;
+    getNext(): any;
+    doNext(): Promise<any>;
     delay(callback: Function): void;
     init(): void;
 }
 
 export class BaseScheduleEngine {
-    protected schedule: Schedule;
+    public schedule: Schedule;
     protected facebookService: FacebookService;
     protected fbAccountService: FbAccountService;
-    private zone: NgZone;
 
     protected account: FbAccount;
 

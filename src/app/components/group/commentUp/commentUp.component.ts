@@ -2,7 +2,7 @@ import {OnInit, Component, Input, ViewChild} from '@angular/core';
 import {FacebookService} from '../../../services/facebook.service';
 import {Group} from '../../../models/group.model';
 import {Toastr} from '../../../core/helpers/toastr';
-import {ScheduleType, JobStatus, ScheduleAction} from '../../../models/enums';
+import {ScheduleType, JobStatus, ScheduleAction, JobEmitType} from '../../../models/enums';
 import {JobFactory} from '../../../core/jobs/jobFactory';
 import {ScheduleJob} from '../../../core/jobs/scheduleJob';
 import {Schedule} from '../../../models/schedule.model';
@@ -12,6 +12,7 @@ import {IModalOptions} from '../../../core/modal/modalWrapper.component';
 import {GroupSelectionComponent} from '../group-selection/group-selection.component';
 import {FbAccount} from '../../../models/fbaccount.model';
 import {ScheduleProgressComponent} from '../../common/schedule-progress/schedule-progress.component';
+import {IJob} from '../../../core/jobs/iJob';
 
 @Component({
     selector: 'comment-up',
@@ -25,16 +26,18 @@ export class CommentUpComponent implements OnInit {
     public commentForm: any;
     public postNumbers: Array<any>;
     public delayList: Array<any>;
-    public job: ScheduleJob;
+    public job: IJob;
     public groups: Array<any> = [];
     public selectedAccount: FbAccount;
     public scheduleOptions: any;
     public progressOptions: any;
     public showProgress: boolean = false;
+    public status: number;
 
     constructor(private facebookService: FacebookService, public appManager: AppManager,
                 private modal: ModalService) {
         this.selectedAccount = appManager.currentUser;
+        this.status = JobStatus.Stopped;
         this.commentForm = {
             numberOfPosts: 1,
             like: true,
@@ -63,7 +66,7 @@ export class CommentUpComponent implements OnInit {
                 pause: 'Dừng',
                 resume: 'Tiếp tục'
             }
-        }
+        };
 
         this.progressOptions = {
             textSuccess: 'Số nhóm thực hiện bình luận'
@@ -83,14 +86,24 @@ export class CommentUpComponent implements OnInit {
 
         dialog.then((result) => {
             this.groups = result;
+            this.progress.reset();
+            this.progress.setTotal(this.groups.length);
         });
     }
 
     public onAction(action: number) {
         switch (action) {
             case ScheduleAction.Start:
-                this.showProgress = true;
-                //this.start();
+                this.start();
+                break;
+            case ScheduleAction.Pause:
+                this.job.pause();
+                break;
+            case ScheduleAction.Resume:
+                this.job.resume();
+                break;
+            case ScheduleAction.Stop:
+                this.job.stop();
                 break;
         }
     }
@@ -106,8 +119,10 @@ export class CommentUpComponent implements OnInit {
             return;
         }
 
+        this.showProgress = true;
+
         let schedule = Object.assign(new Schedule(), {
-            uid: this.appManager.currentUser.id,
+            uid: this.selectedAccount.id,
             delay: this.commentForm.delay,
             scheduleType: ScheduleType.Comment,
             status: JobStatus.Stopped,
@@ -122,14 +137,51 @@ export class CommentUpComponent implements OnInit {
 
         this.job = <ScheduleJob>JobFactory.createScheduleJob(schedule, ScheduleType.Comment);
         this.job.observe().subscribe((result) => {
-            console.log(result);
-            if(result.status == JobStatus.Stopped) {
-                Toastr.success("Kết thúc bình luận lên bài!");
+
+            if(result.type == JobEmitType.OnDone) {
+                let group = this.updateGroups(result.data);
+                if(group.done) {
+                    this.progress.setDoneNumber(this.progress.doneNumber + 1);
+                }
+            } else if(result.type == JobEmitType.OnProcessData) {
+                let group = this.groups.find(g => result.data.id == g.id);
+                this.progress.setProgressMessage('Đang xử lý nhóm ' + group.name + ' ...');
+            } else if(result.type == JobEmitType.OnUpdateStatus) {
+                this.status = result.status;
             }
 
         });
+
+        this.progress.reset();
+        this.resetGroups();
+
         this.job.start(() => {
             // on finish
+            Toastr.success("Kết thúc bình luận lên bài!");
+            this.progress.setProgressMessage('Kết thúc!');
+            this.status = JobStatus.Stopped;
+        });
+    }
+
+    private updateGroups(group) {
+        let item = this.groups.find(g => group.id == g.id);
+
+        if(group.posts && group.posts.length > 0) {
+            let commentedPosts = group.posts.filter(p => p.status);
+            item.message = `Thành công: ${commentedPosts.length}/${group.posts.length}`;
+            item.done = commentedPosts.length == group.posts.length;
+            return item;
+        } else {
+            item.message = 'Không tìm thấy bài viết';
+            item.done = true;
+            return item;
+        }
+    }
+
+    private resetGroups() {
+        this.groups.forEach(g => {
+            g.message = undefined;
+            g.done = undefined
         });
     }
 }

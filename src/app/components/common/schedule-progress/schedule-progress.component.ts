@@ -12,15 +12,15 @@ export class ScheduleProgressComponent implements OnInit {
     public message: string;
     public percentMessage: string;
     public total: number;
-    public doneNUmber: number;
+    public doneNumber: number;
     public percent: number;
 
     constructor() {
     }
 
     ngOnInit() {
-        this.doneNUmber = 0;
-        this.calculate();
+        this.total = 0;
+        this.reset();
     }
 
     public setProgressMessage(message: string) {
@@ -33,7 +33,13 @@ export class ScheduleProgressComponent implements OnInit {
     }
 
     public setDoneNumber(number: number) {
-        this.doneNUmber = number;
+        this.doneNumber = number;
+        this.calculate();
+    }
+
+    public reset() {
+        this.doneNumber = 0;
+        this.message = null;
         this.calculate();
     }
 
@@ -42,8 +48,8 @@ export class ScheduleProgressComponent implements OnInit {
             this.percent = 0;
             this.percentMessage = '0%';
         } else {
-            this.percent = this.doneNUmber/this.total * 100;
-            this.percentMessage = (Math.round(this.doneNUmber/this.total * 100)) + "%";
+            this.percent = this.doneNumber/this.total * 100;
+            this.percentMessage = (Math.round(this.doneNumber/this.total * 100)) + "%";
         }
     }
 }

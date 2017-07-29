@@ -205,7 +205,8 @@ export class AutomationService extends ProxyService {
             return true;
         } else {
             let comment = post.comments.data[0];
-            procedure = procedure
+            procedure = new AutomationReq()
+                .access(`${this.mbasicUrl}/${comment.id}`, account.cookies)
                 .responseContent(`div[id="${comment.id}"] a[href*="/comment/replies/"]`);
 
             let res = await this.simulateAsync(procedure);

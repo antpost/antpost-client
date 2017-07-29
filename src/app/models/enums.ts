@@ -13,6 +13,12 @@ export enum JobStatus {
     Stopped = 3
 }
 
+export enum JobEmitType {
+    OnUpdateStatus = 1,
+    OnProcessData = 2,
+    OnDone = 3
+}
+
 export enum ScheduleAction {
     Start = 1,
     Pause = 2,

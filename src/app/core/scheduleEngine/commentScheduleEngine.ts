@@ -20,48 +20,33 @@ export class CommentScheduleEngine extends BaseScheduleEngine implements ISchedu
         return CommentScheduleEngine.ENGINE_KEY + (this.schedule.id || 0);
     }
 
-    public hasNext(): boolean {
-        return this.getNextGroupId();
-    }
-
-    public doNext(doneCallback: Function): void {
-        if(!this.schedule.isStatus(JobStatus.Running)) {
-            this.schedule.status = JobStatus.Running;
-            doneCallback({
-                status: this.schedule.status
-            });
-            return;
+    public getNext(): any {
+        if(this.schedule.isStatus(JobStatus.Stopped)) {
+            return null;
         }
 
-        setTimeout(() => {
-            if(this.schedule.isStatus(JobStatus.Running)) {
-                this.commentUp().then((data) => {
-                    doneCallback({
+        let groupId = this.getNextGroupId();
+        return groupId ? {id: groupId} : null;
+    }
+
+    public doNext(): Promise<any> {
+        if(!this.schedule.isStatus(JobStatus.Running)) {
+            this.schedule.status = JobStatus.Running;
+            return Promise.resolve({
+                status: this.schedule.status
+            });
+        }
+
+        return new Promise<any>((resolve) => {
+            setTimeout(async () => {
+                if(this.schedule.isStatus(JobStatus.Running)) {
+                    let data = await this.commentUp();
+                    resolve({
                         data: data
                     });
-                })
-            }
-        }, this.isFirst ? 0 : this.schedule.delay * 1000);
-    }
-
-    public async stop() {
-        this.schedule.status = JobStatus.Stopped;
-
-        /*await this.schedulePostService.update(this.schedule.id, {
-            status: this.schedule.status
-        });*/
-
-        return true;
-    }
-
-    public async pause() {
-        this.schedule.status = JobStatus.Paused;
-
-        /*await this.schedulePostService.update(this.schedule.id, {
-            status: this.schedule.status
-        });*/
-
-        return true;
+                }
+            }, this.isFirst ? 0 : this.schedule.delay * 1000);
+        });
     }
 
     public delay(callback: Function): void {

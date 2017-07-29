@@ -10,7 +10,7 @@ import {JobStatus, PostType} from '../../models/enums';
 import {AutomationService} from '../../services/automation.service';
 
 export class PostScheduleEngine implements IScheduleEngine {
-    private schedule: SchedulePost;
+    public schedule: any;
     public static ENGINE_KEY = 'POSTENGINE';
 
     private facebookService: FacebookService;
@@ -32,27 +32,29 @@ export class PostScheduleEngine implements IScheduleEngine {
         return PostScheduleEngine.ENGINE_KEY + this.schedule.id;
     }
 
-    public hasNext(): boolean {
-        return this.schedule.status == JobStatus.Stopped || this.schedule.hasUnposted();
+    public getNext(): boolean {
+        return this.schedule.status == JobStatus.Stopped ? null : this.schedule.findUnposted();
     }
 
-    public doNext(doneCallback: Function): void {
-        if(this.schedule.status != JobStatus.Running) {
+    public doNext(): Promise<any> {
+        if(!this.schedule.isStatus(JobStatus.Running)) {
             this.schedule.status = JobStatus.Running;
-            doneCallback({
+            return Promise.resolve({
                 status: this.schedule.status
             });
         }
 
-        setTimeout(() => {
-            if(this.schedule.status == JobStatus.Running) {
-                this.postGroup().then((data) => {
-                    doneCallback({
-                        nodePost: data
-                    });
-                })
-            }
-        }, this.isFirst ? 0 : this.postSettings.delay * 1000);
+        return new Promise<any>((resolve) => {
+            setTimeout(() => {
+                if(this.schedule.status == JobStatus.Running) {
+                    this.postGroup().then((data) => {
+                        resolve({
+                            data: data
+                        });
+                    })
+                }
+            }, this.isFirst ? 0 : this.postSettings.delay * 1000);
+        });
     }
 
     public async stop() {
