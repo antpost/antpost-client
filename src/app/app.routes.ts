@@ -19,6 +19,8 @@ import {SelectedGroupsComponent} from './components/group/selectedGroups/selecte
 import {PostTypePipe} from './pipes/postType.pipe';
 import {ScheduleStatusPipe} from './pipes/scheduleStatus.pipe';
 import {GroupSelectionComponent} from './components/group/group-selection/group-selection.component';
+import {ScheduleActionsComponent} from './components/common/schedule-actions/schedule-actions.component';
+import {ScheduleProgressComponent} from './components/common/schedule-progress/schedule-progress.component';
 
 export const ROUTES: Routes = [
      {path: 'login', component: LoginComponent},
@@ -44,7 +46,9 @@ export const MODULE_COMPONENTS = [
     NewCommentComponent,
     CommentUpComponent,
     SelectedGroupsComponent,
-    GroupSelectionComponent
+    GroupSelectionComponent,
+    ScheduleActionsComponent,
+    ScheduleProgressComponent
 ];
 
 export const PIPES = [

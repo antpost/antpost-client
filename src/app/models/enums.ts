@@ -13,6 +13,13 @@ export enum JobStatus {
     Stopped = 3
 }
 
+export enum ScheduleAction {
+    Start = 1,
+    Pause = 2,
+    Resume = 3,
+    Stop = 4
+}
+
 export enum ScheduleType {
     Post = 1,
     Join = 2,

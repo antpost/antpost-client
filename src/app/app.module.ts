@@ -42,11 +42,6 @@ import {AppRunner} from './core/appRunner';
 import {TabsModule} from "ngx-bootstrap";
 import {CoreModule} from "./core/core.module";
 import {POPUP_CONTAINER, PopupModule} from '@progress/kendo-angular-popup';
-import {JoinGroupFormComponent} from "./components/group/joinGroupForm/joinGroupForm.component";
-import {PostComponent} from "./components/post/post.component";
-import {GroupPostScheduleComponent} from "./components/group/schedule/groupPostSchedule.component";
-import {PostSelectorComponent} from "./components/post/postSelector.component";
-import {PostFormComponent} from "./components/post/postForm.component";
 import {GridModule} from "@progress/kendo-angular-grid";
 import {UploadModule} from "@progress/kendo-angular-upload";
 import {DropDownsModule} from "@progress/kendo-angular-dropdowns";
@@ -60,12 +55,7 @@ import {AutomationService} from "./services/automation.service";
 import {FacebookService} from "./services/facebook.service";
 import {SchedulePostService} from "./services/schedulePost.service";
 import {PostService} from "./services/post.service";
-import {GroupPostHistoryComponent} from './components/group/schedule/groupPostHistory.component';
-import {HomeComponent} from './components/home/home.component';
-import {NewCommentComponent} from './components/comment/newcomment.component';
-import {CommentUpComponent} from './components/group/commentUp/commentUp.component';
 import {FbAccountService} from './services/fbaccount.service';
-import {GroupSelectionComponent} from './components/group/group-selection/group-selection.component';
 
 // Application wide providers
 const APP_PROVIDERS = [
