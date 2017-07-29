@@ -7,6 +7,7 @@ import {Post} from '../models/post.model';
 import {ProxyService} from "./proxy.service";
 import {AutomationService} from './automation.service';
 import {FbAccount} from '../models/fbaccount.model';
+import {post} from 'selenium-webdriver/http';
 
 @Injectable()
 export class FacebookService extends ProxyService{
@@ -269,8 +270,21 @@ export class FacebookService extends ProxyService{
      * @param like
      * @param replyOnTop
      */
-    public comment(account: FbAccount, post: any, message: string, like: boolean, replyOnTop: boolean): Promise<any> {
-        return this.automationService.comment(account, post, message, like, replyOnTop).toPromise();
+    public async comment(account: FbAccount, post: any, message: string, like: boolean, replyOnTop: boolean): Promise<any> {
+        if(like) {
+            await this.like(account, post.id);
+        }
+        return await this.automationService.comment(account, post, message, like, replyOnTop)
+    }
+
+    public like(account: FbAccount, objectId): Promise<any> {
+        let api = this.createApi(`/${objectId}/likes`, null, account);
+
+        let data = {
+            access_token: account.token,
+        };
+
+        return this.post(api, 'POST', data).toPromise();
     }
 
     /**

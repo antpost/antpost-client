@@ -183,41 +183,43 @@ export class AutomationService extends ProxyService {
         });
     }
 
-    public comment(account: FbAccount, post: any, message: string, like: boolean, replyOnTop: boolean) {
+    public async comment(account: FbAccount, post: any, message: string, like: boolean, replyOnTop: boolean) {
         let ids = post.id.split('_');
         let postId = ids[1];
 
         //https://mbasic.facebook.com/groups/257702558042509?view=permalink&id=273147693164662&comment_id=279997012479730&_rdr
-        let procedure = new AutomationReq().access(`${this.mUrl}/${postId}`, this.appManager.currentUser.cookies);
+        let procedure = new AutomationReq().access(`${this.mbasicUrl}/${postId}`, account.cookies);
 
         // if has like action
-        if(like) {
-            procedure = procedure.click('a[data-sigil*="like-reaction-flyout like"]');
-        }
+        // if(like) {
+        //     procedure = procedure.click('a[data-sigil*="like-reaction-flyout like"]');
+        // }
 
         // if comment to last
         if(!replyOnTop || !post.comments) {
             procedure = procedure
-                .input('form[id*="comment_form"] #composerInput', message)
-                .click('form[id*="comment_form"] input[type="submit"]');
+                .input('#composerInput', message)
+                .submit(`#composer-${postId} form`);
+
+            let res = await this.simulateAsync(procedure);
+            return true;
         } else {
             let comment = post.comments.data[0];
             procedure = procedure
-                .click(`#${comment.id} a[data-uri*="/comment/replies/"]`)
-                .input('#${comment.id} textarea', message)
-                .click('#${comment.id} button');
-        }
+                .responseContent(`div[id="${comment.id}"] a[href*="/comment/replies/"]`);
 
-        return new Observable(observer => {
-            this.simulate(procedure).subscribe((res) => {
-                if(res.status == 0) {
-                    observer.next(true);
-                } else {
-                    observer.next(false);
-                }
-                observer.complete();
-            });
-        });
+            let res = await this.simulateAsync(procedure);
+            let element = this.createElement(res.data.content);
+            let href = element.find('a').attr('href');
+
+            // create reply procedure
+            let reply = new AutomationReq().access(this.mbasicUrl + href, account.cookies)
+                .input('#composerInput', message)
+                .submit('form');
+
+            await this.simulateAsync(reply);
+            return true;
+        }
 
     }
 
@@ -233,5 +235,20 @@ export class AutomationService extends ProxyService {
             }).catch((error: Response) => {
                 return Observable.throw(error.json().error || 'Server error');
             });
+    }
+
+    protected simulateAsync(procedure: AutomationReq): Promise<any> {
+        return this.http.post(`${this.host}/simulate`, procedure)
+            .map((response: Response) => {
+                return response.json();
+            }).catch((error: Response) => {
+                return Observable.throw(error.json().error || 'Server error');
+            }).toPromise();
+    }
+
+    private createElement(content: string) {
+        let element = $('<div></div>');
+        element.html(content);
+        return element;
     }
 }

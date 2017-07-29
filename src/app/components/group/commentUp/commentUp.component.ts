@@ -84,7 +84,7 @@ export class CommentUpComponent implements OnInit {
             return;
         }
 
-        let schedule = Object.assign(Schedule.prototype, {
+        let schedule = Object.assign(new Schedule(), {
             uid: this.appManager.currentUser.id,
             delay: this.commentForm.delay,
             scheduleType: ScheduleType.Comment,
@@ -101,6 +101,9 @@ export class CommentUpComponent implements OnInit {
         this.job = <ScheduleJob>JobFactory.createScheduleJob(schedule, ScheduleType.Comment);
         this.job.observe().subscribe((result) => {
             console.log(result);
+            if(result.status == JobStatus.Stopped) {
+                Toastr.success("Kết thúc bình luận lên bài!");
+            }
 
         });
         this.job.start(() => {
