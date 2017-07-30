@@ -83,10 +83,10 @@ export class CommentScheduleEngine extends BaseScheduleEngine implements ISchedu
 
     private getNextGroupId() {
         if(!this.schedule.results) {
-            return this.schedule.meta.groups[0];
+            return this.schedule.meta.groupIds[0];
         }
 
-        return this.schedule.meta.groups.find(id => {
+        return this.schedule.meta.groupIds.find(id => {
             let groupItem = this.schedule.results.find(g => g.id == id);
             if(!groupItem) {
                 return true;

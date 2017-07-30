@@ -56,6 +56,7 @@ import {FacebookService} from "./services/facebook.service";
 import {SchedulePostService} from "./services/schedulePost.service";
 import {PostService} from "./services/post.service";
 import {FbAccountService} from './services/fbaccount.service';
+import {ScheduleService} from './services/schedule.service';
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -118,6 +119,7 @@ type StoreType = {
         AppManager,
         LocalStorageService,
         NodePostService,
+        ScheduleService,
         {provide: LocationStrategy, useClass: HashLocationStrategy},
         {
             provide: POPUP_CONTAINER,

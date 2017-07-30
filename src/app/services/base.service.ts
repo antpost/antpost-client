@@ -4,7 +4,7 @@ import {DbService} from '../core/database';
 
 export class BaseService<U, T> {
     protected apiPath: string = AppConfig.basePath + 'api/';
-    protected table: Dexie.Table<U, T>;
+    public table: Dexie.Table<U, T>;
 
     constructor(private db: DbService, tableName: string) {
         this.table = this.db.table(tableName);
@@ -24,6 +24,23 @@ export class BaseService<U, T> {
 
     public async all(): Promise<Array<U>> {
         return await this.table.toArray();
+    }
+
+    public async list(options: any): Promise<Array<U>> {
+        let query: any = this.table;
+
+        if(!options) {
+            options = {};
+        }
+
+        if(options.orderBy) {
+            query = query.orderBy(options.orderBy);
+        }
+        if(options.orderDirection === 'desc') {
+            query = query.reverse();
+        }
+
+        return await query.toArray();
     }
 
     public async delete(key: any) {

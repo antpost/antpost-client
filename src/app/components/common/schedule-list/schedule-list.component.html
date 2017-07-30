@@ -1,0 +1,44 @@
+<div class="row">
+	<kendo-grid
+		[data]="schedules" [height]="450"
+	>
+		<kendo-grid-column title="" width="30">
+			<ng-template kendoGridCellTemplate let-dataItem>
+				<span style="cursor: pointer" class="text-danger" (click)="remove(dataItem)"><i class="material-icons">clear</i></span>
+			</ng-template>
+		</kendo-grid-column>
+		<kendo-grid-column field="name" title="Tên lịch" [width]="250">
+		</kendo-grid-column>
+		<kendo-grid-column field="accountName" title="Tài khoản">
+		</kendo-grid-column>
+		<kendo-grid-column field="active" title="Trạng thái">
+			<ng-template kendoGridCellTemplate let-dataItem>
+				<span>{{dataItem.active ? 'Kích hoạt' : 'Ngừng hoạt động'}}</span>
+			</ng-template>
+		</kendo-grid-column>
+		<kendo-grid-column field="startTime" title="Bắt đầu">
+			<ng-template kendoGridCellTemplate let-dataItem>
+				{{dataItem.startTime | date: 'yMd' }}
+			</ng-template>
+		</kendo-grid-column>
+		<kendo-grid-column field="endTime" title="Kết thúc">
+			<ng-template kendoGridCellTemplate let-dataItem>
+				{{dataItem.endTime | date: 'yMd' }}
+			</ng-template>
+		</kendo-grid-column>
+		<kendo-grid-column field="repeatStr" title="Lặp lại">
+		</kendo-grid-column>
+		<kendo-grid-column field="lastRun" title="Lần chạy cuối">
+			<ng-template kendoGridCellTemplate let-dataItem>
+				{{dataItem.lastRun | date: 'yMd' }}
+			</ng-template>
+		</kendo-grid-column>
+		<kendo-grid-messages
+			noRecords="Chưa đặt lịch nào.">
+		</kendo-grid-messages>
+	</kendo-grid>
+
+</div>
+<div class="modal-footer">
+	<button class="btn btn-sm" (click)="cancel()"><i class="material-icons">cancel</i> Hủy bỏ</button>
+</div>

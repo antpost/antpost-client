@@ -6,7 +6,7 @@
 				<div style="margin-top: 5px;">
 					<div class="form-group">
 						<label class="control-label">Nội dung bình luận</label>
-						<textarea name="message" rows="3" cols="50" class="form-control" [(ngModel)]="commentForm.message"
+						<textarea name="message" rows="3" cols="50" class="form-control" [(ngModel)]="commentupMeta.message"
 								  placeholder="Awesome!"></textarea>
 					</div>
 					<div class="row">
@@ -18,7 +18,7 @@
 									[textField]="'text'"
 									[valueField]="'value'"
 									[valuePrimitive]="true"
-									[(ngModel)]="commentForm.numberOfPosts"
+									[(ngModel)]="commentupMeta.numberOfPosts"
 									class="form-control">
 								</kendo-dropdownlist>
 
@@ -26,13 +26,13 @@
 						</div>
 						<div class="col-md-6">
 							<div class="form-group">
-								<label class="control-label">Delay</label>
+								<label class="control-label">Thời gian tạm dừng giữa 2 bình luận</label>
 								<kendo-dropdownlist
 									[data]="delayList"
 									[textField]="'text'"
 									[valueField]="'value'"
 									[valuePrimitive]="true"
-									[(ngModel)]="commentForm.delay"
+									[(ngModel)]="commentupMeta.delay"
 									class="form-control">
 								</kendo-dropdownlist>
 
@@ -42,7 +42,7 @@
 					<div class="form-group">
 						<div class="checkbox">
 							<label>
-								<input type="checkbox" [(ngModel)]="commentForm.like">
+								<input type="checkbox" [(ngModel)]="commentupMeta.like">
 								<span class="checkbox-material"><span class="check"></span></span>
 								Like bài viết
 							</label>
@@ -51,7 +51,7 @@
 					<div class="form-group">
 						<div class="checkbox">
 							<label>
-								<input type="checkbox" [(ngModel)]="commentForm.commentOnTop">
+								<input type="checkbox" [(ngModel)]="commentupMeta.commentOnTop">
 								<span class="checkbox-material"><span class="check"></span></span>
 								Trả lời vào bình luận mới nhất
 							</label>
@@ -60,7 +60,7 @@
 					<schedule-progress [hidden]="!showProgress" [options]="progressOptions"></schedule-progress>
 					<schedule-actions
 						[options]="scheduleOptions"
-						[meta]="commentForm"
+						[meta]="commentupMeta"
 						[account]="selectedAccount"
 						[status]="status"
 						(onAction)="onAction($event)"></schedule-actions>

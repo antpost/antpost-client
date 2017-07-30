@@ -10,7 +10,8 @@ export class DbService extends Dexie {
             fbaccounts: `
                 id,
                 name,
-                email
+                email,
+                lastLogin
             `,
             posts: `
                 ++id,
@@ -25,7 +26,9 @@ export class DbService extends Dexie {
                 ++id,
                 uid,
                 status,
-                scheduleType`,
+                scheduleType,
+                active,
+                updatedAt`,
             schedulePosts: `
                 ++id,
                 postId -> posts.id,

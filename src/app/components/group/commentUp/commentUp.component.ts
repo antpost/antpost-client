@@ -13,6 +13,7 @@ import {GroupSelectionComponent} from '../group-selection/group-selection.compon
 import {FbAccount} from '../../../models/fbaccount.model';
 import {ScheduleProgressComponent} from '../../common/schedule-progress/schedule-progress.component';
 import {IJob} from '../../../core/jobs/iJob';
+import {CommentUpMeta} from '../../../core/scheduleEngine/meta/commentup.meta';
 
 @Component({
     selector: 'comment-up',
@@ -23,7 +24,7 @@ export class CommentUpComponent implements OnInit {
     @ViewChild(ScheduleProgressComponent)
     public progress: ScheduleProgressComponent;
 
-    public commentForm: any;
+    public commentupMeta: CommentUpMeta;
     public postNumbers: Array<any>;
     public delayList: Array<any>;
     public job: IJob;
@@ -38,12 +39,13 @@ export class CommentUpComponent implements OnInit {
                 private modal: ModalService) {
         this.selectedAccount = appManager.currentUser;
         this.status = JobStatus.Stopped;
-        this.commentForm = {
+
+        this.commentupMeta = Object.assign(CommentUpMeta.prototype, {
             numberOfPosts: 1,
             like: true,
             commentOnTop: false,
             delay: 5,
-        };
+        });
 
         this.postNumbers = [];
         for(let i = 1; i <= 5; i ++) {
@@ -88,6 +90,7 @@ export class CommentUpComponent implements OnInit {
             this.groups = result;
             this.progress.reset();
             this.progress.setTotal(this.groups.length);
+            this.commentupMeta.groupIds = this.groups.map(g => g.id);
         });
     }
 
@@ -109,13 +112,9 @@ export class CommentUpComponent implements OnInit {
     }
 
     private start() {
-        if(!this.commentForm.message || !this.commentForm.message.trim()) {
-            Toastr.error("Vui lòng nhập nội dung bình luận!");
-            return;
-        }
-
-        if(this.groups.length == 0) {
-            Toastr.error("Vui lòng chọn danh sách nhóm!");
+        let validationRes = this.commentupMeta.validate();
+        if(!validationRes.status) {
+            Toastr.error(validationRes.message);
             return;
         }
 
@@ -123,16 +122,10 @@ export class CommentUpComponent implements OnInit {
 
         let schedule = Object.assign(new Schedule(), {
             uid: this.selectedAccount.id,
-            delay: this.commentForm.delay,
+            delay: this.commentupMeta.delay,
             scheduleType: ScheduleType.Comment,
             status: JobStatus.Stopped,
-            meta: {
-                message: this.commentForm.message,
-                numberOfPosts: this.commentForm.numberOfPosts,
-                like: this.commentForm.like,
-                commentOnTop: this.commentForm.commentOnTop,
-                groups: this.groups.map(g => g.id)
-            }
+            meta: this.commentupMeta
         });
 
         this.job = <ScheduleJob>JobFactory.createScheduleJob(schedule, ScheduleType.Comment);

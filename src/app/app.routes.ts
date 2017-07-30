@@ -21,6 +21,7 @@ import {ScheduleStatusPipe} from './pipes/scheduleStatus.pipe';
 import {GroupSelectionComponent} from './components/group/group-selection/group-selection.component';
 import {ScheduleActionsComponent} from './components/common/schedule-actions/schedule-actions.component';
 import {ScheduleProgressComponent} from './components/common/schedule-progress/schedule-progress.component';
+import {ScheduleListComponent} from './components/common/schedule-list/schedule-list.component';
 
 export const ROUTES: Routes = [
      {path: 'login', component: LoginComponent},
@@ -48,7 +49,8 @@ export const MODULE_COMPONENTS = [
     SelectedGroupsComponent,
     GroupSelectionComponent,
     ScheduleActionsComponent,
-    ScheduleProgressComponent
+    ScheduleProgressComponent,
+    ScheduleListComponent
 ];
 
 export const PIPES = [
