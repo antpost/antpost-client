@@ -10,7 +10,7 @@ import {
 @Component({
     selector: 'dynamic-component',
     template: `
-    <div #dynamicComponentContainer></div>
+    <div #dynamicComponentContainer overlayTarget="demo-head"></div>
   `,
 })
 export class DynamicComponent {

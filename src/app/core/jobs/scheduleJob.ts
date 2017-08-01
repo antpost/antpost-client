@@ -8,6 +8,7 @@ export class ScheduleJob implements IJob {
     private engine: IScheduleEngine;
     private onFinish: Function;
     private subject: Subject<any>;
+    private status: number;
 
     constructor(engine: IScheduleEngine) {
         this.engine = engine;
@@ -21,7 +22,7 @@ export class ScheduleJob implements IJob {
     public async start(onFinish: Function) {
         this.onFinish = onFinish;
         await this.engine.init();
-        this.engine.schedule.status = JobStatus.Running;
+        this.status = JobStatus.Running;
         this.subject.next({
             data: JobStatus.Running,
             type: JobEmitType.OnUpdateStatus
@@ -30,7 +31,7 @@ export class ScheduleJob implements IJob {
     }
 
     public async pause() {
-        this.engine.schedule.status = JobStatus.Paused;
+        this.status = JobStatus.Paused;
         this.subject.next({
             data: JobStatus.Paused,
             type: JobEmitType.OnUpdateStatus
@@ -38,7 +39,7 @@ export class ScheduleJob implements IJob {
     }
 
     public async resume() {
-        this.engine.schedule.status = JobStatus.Running;
+        this.status = JobStatus.Running;
         this.subject.next({
             data: JobStatus.Running,
             type: JobEmitType.OnUpdateStatus
@@ -47,7 +48,7 @@ export class ScheduleJob implements IJob {
     }
 
     public async stop() {
-        this.engine.schedule.status = JobStatus.Stopped;
+        this.status = JobStatus.Stopped;
         this.subject.next({
             data: JobStatus.Stopped,
             type: JobEmitType.OnUpdateStatus
@@ -71,12 +72,12 @@ export class ScheduleJob implements IJob {
             });
             let res = await this.engine.doNext();
             this.subject.next({
-                type: res.status !== undefined ? JobEmitType.OnUpdateStatus : JobEmitType.OnDone,
-                data: res.status !== undefined ? res.status : res.data
+                type: JobEmitType.OnDone,
+                data: res.data
             });
             this.process();
         } else {
-            this.engine.schedule.status = JobStatus.Stopped;
+            this.status = JobStatus.Stopped;
             this.subject.next({
                 data: JobStatus.Stopped,
                 type: JobEmitType.OnUpdateStatus

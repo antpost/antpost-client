@@ -19,7 +19,7 @@
 					<template tabHeading>
 						{{tabz.title}} <a (click)="removeTabHandler(tabz)" style="color: #FFFFFF;" *ngIf="tabz.removable"><i class="material-icons">close</i></a>
 					</template>
-					<dynamic-component [componentData]="tabz.componentData" overlayTarget="demo-head"></dynamic-component>
+					<dynamic-component [componentData]="tabz.componentData"></dynamic-component>
 				</tab>
 			</tabset>
 		</div>

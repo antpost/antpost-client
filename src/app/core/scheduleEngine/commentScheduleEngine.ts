@@ -21,30 +21,16 @@ export class CommentScheduleEngine extends BaseScheduleEngine implements ISchedu
     }
 
     public getNext(): any {
-        if(this.schedule.isStatus(JobStatus.Stopped)) {
-            return null;
-        }
-
-        let group = this.getNextGroup();
-        return group;
+        return this.getNextGroup();
     }
 
     public doNext(): Promise<any> {
-        if(!this.schedule.isStatus(JobStatus.Running)) {
-            this.schedule.status = JobStatus.Running;
-            return Promise.resolve({
-                status: this.schedule.status
-            });
-        }
-
         return new Promise<any>((resolve) => {
             setTimeout(async () => {
-                if(this.schedule.isStatus(JobStatus.Running)) {
-                    let data = await this.commentUp();
-                    resolve({
-                        data: data
-                    });
-                }
+                let data = await this.commentUp();
+                resolve({
+                    data: data
+                });
             }, this.isFirst ? 0 : this.schedule.delay * 1000);
         });
     }
