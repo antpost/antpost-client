@@ -90,7 +90,9 @@ export class CommentUpComponent implements OnInit {
             this.groups = result;
             this.progress.reset();
             this.progress.setTotal(this.groups.length);
-            this.commentupMeta.groupIds = this.groups.map(g => g.id);
+            this.commentupMeta.groups = this.groups.map(g => {
+                return {id: g.id, name: g.name};
+            });
         });
     }
 
@@ -109,6 +111,15 @@ export class CommentUpComponent implements OnInit {
                 this.job.stop();
                 break;
         }
+    }
+
+    public onUpdateSchedule(schedule: Schedule) {
+        // update meta
+        this.commentupMeta = Object.assign(CommentUpMeta.prototype, schedule.meta);
+
+        // update group
+        this.groups = this.commentupMeta.groups;
+        this.progress.setTotal(this.groups.length);
     }
 
     private start() {

@@ -390,3 +390,30 @@ nav {
 .material-icons {
   font-size: 20px;
 }
+
+.swal2-container {
+  z-index: 3000;
+}
+.swal2-modal h2 {
+  font-size: 23px;
+  line-height: 40px;
+}
+.swal2-modal .swal2-content {
+  font-size: 15px;
+}
+/*.swal2-icon.swal2-warning {
+  font-size: 33px;
+  line-height: 66px;
+}
+.swal2-icon {
+  width: 60px;
+  height: 60px;
+}*/
+.cell-link {
+  margin: -8px -12px;
+  padding: 8px 12px;
+  line-height: inherit;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

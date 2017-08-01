@@ -25,8 +25,8 @@ export class CommentScheduleEngine extends BaseScheduleEngine implements ISchedu
             return null;
         }
 
-        let groupId = this.getNextGroupId();
-        return groupId ? {id: groupId} : null;
+        let group = this.getNextGroup();
+        return group;
     }
 
     public doNext(): Promise<any> {
@@ -55,7 +55,7 @@ export class CommentScheduleEngine extends BaseScheduleEngine implements ISchedu
 
     private commentUp(): Promise<any> {
         // find group to comment
-        let groupId = this.getNextGroupId();
+        let groupId = this.getNextGroup().id;
         let group = this.getGroupData(groupId);
 
         return new Promise<any>(async (resolve, reject) => {
@@ -81,13 +81,13 @@ export class CommentScheduleEngine extends BaseScheduleEngine implements ISchedu
         });
     }
 
-    private getNextGroupId() {
+    private getNextGroup() {
         if(!this.schedule.results) {
-            return this.schedule.meta.groupIds[0];
+            return this.schedule.meta.groups[0];
         }
 
-        return this.schedule.meta.groupIds.find(id => {
-            let groupItem = this.schedule.results.find(g => g.id == id);
+        return this.schedule.meta.groups.find(group => {
+            let groupItem = this.schedule.results.find(g => g.id == group.id);
             if(!groupItem) {
                 return true;
             } else {

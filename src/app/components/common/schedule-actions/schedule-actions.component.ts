@@ -16,20 +16,14 @@ import {ScheduleListComponent} from '../schedule-list/schedule-list.component';
 })
 export class ScheduleActionsComponent implements OnInit {
 
-    @Input()
-    public meta: IScheduleMeta;
+    @Input() public meta: IScheduleMeta;
+    @Input() public options: any;
+    @Input() public account: FbAccount;
+    @Input() public status: number;
 
-    @Input()
-    public options: any;
+    @Output() public onAction = new EventEmitter<number>();
 
-    @Input()
-    public account: FbAccount;
-
-    @Input()
-    public status: number;
-
-    @Output()
-    public onAction = new EventEmitter<number>();
+    @Output() public onUpdate = new EventEmitter<Schedule>();
 
     public schedule: Schedule;
     public delayList: Array<any>;
@@ -109,6 +103,15 @@ export class ScheduleActionsComponent implements OnInit {
         } as IModalOptions);
 
         dialog.then((result) => {
+            this.modal.confirm({
+                title: 'Bạn có muốn dừng tiến trình?',
+                text: "Lịch được chọn sẽ ảnh hưởng đến tiến trình đang chạy!",
+            }).then(() => {
+                this.onAction.emit(ScheduleAction.Stop);
+                this.schedule = result;
+                this.onUpdate.emit(this.schedule);
+            });
+
 
         });
     }
@@ -131,7 +134,14 @@ export class ScheduleActionsComponent implements OnInit {
         if(!this.schedule.id) {
             this.schedule.id = await this.scheduleService.add(this.schedule);
         } else {
-            await this.scheduleService.update(this.schedule.id, this.schedule);
+            // check exist
+            let existing = await this.scheduleService.get(this.schedule.id);
+            if(existing) {
+                await this.scheduleService.update(this.schedule.id, this.schedule);
+            } else {
+                this.schedule.id = null;
+                this.schedule.id = await this.scheduleService.add(this.schedule);
+            }
         }
         Toastr.success('Đặt lịch thành công!');
         this.schedule = null;

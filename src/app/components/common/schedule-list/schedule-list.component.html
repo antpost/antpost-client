@@ -1,6 +1,6 @@
 <div class="row">
 	<kendo-grid
-		[data]="schedules" [height]="450"
+		[data]="schedules" [height]="400"
 	>
 		<kendo-grid-column title="" width="30">
 			<ng-template kendoGridCellTemplate let-dataItem>
@@ -8,6 +8,9 @@
 			</ng-template>
 		</kendo-grid-column>
 		<kendo-grid-column field="name" title="Tên lịch" [width]="250">
+			<ng-template kendoGridCellTemplate let-dataItem>
+				<a class="cell-link" (click)="select(dataItem)"><b>{{dataItem.name}}</b></a>
+			</ng-template>
 		</kendo-grid-column>
 		<kendo-grid-column field="accountName" title="Tài khoản">
 		</kendo-grid-column>

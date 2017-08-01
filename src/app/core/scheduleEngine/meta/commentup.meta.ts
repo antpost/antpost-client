@@ -6,7 +6,7 @@ export class CommentUpMeta implements IScheduleMeta{
     public like: boolean;
     public commentOnTop: boolean;
     public delay: number;
-    public groupIds: Array<any>
+    public groups: Array<any>;
 
     public validate(): IScheduleMetaValidationResult {
         let res = {
@@ -16,7 +16,7 @@ export class CommentUpMeta implements IScheduleMeta{
         if(!this.message || !this.message.trim()) {
             res.message = 'Nội dung bình luận không được bỏ trống';
             res.status = false;
-        } else if(!this.groupIds || this.groupIds.length == 0) {
+        } else if(!this.groups || this.groups.length == 0) {
             res.message = 'Vui lòng chọn danh sách nhóm!';
             res.status = false;
         }
