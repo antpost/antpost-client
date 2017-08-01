@@ -17,10 +17,13 @@ export class ModalService {
         }, options);
 
         let context = new CustomModalContext(options);
+        context.inElement = true;
 
         return new Promise((resolve, reject) => {
             this.modal
-                .open(ModalWrapperComponent, overlayConfigFactory(context, BSModalContext))
+                .open(ModalWrapperComponent, overlayConfigFactory(context, BSModalContext, {
+                    viewContainer: 'demo-head'
+                }))
                 .then((resultPromise) => {
                     return resultPromise.result
                         .then(
