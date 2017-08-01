@@ -2,78 +2,82 @@
 	<div class="card no-header">
 		<div class="card-content">
 			<div class="col-sm-6">
-				<span class="account-switch">Tài khoản: <span class="account-name">{{selectedAccount.name}}</span> <a><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></span>
-				<div style="margin-top: 5px;">
-					<div class="form-group">
-						<label class="control-label">Nội dung bình luận</label>
-						<textarea name="message" rows="3" cols="50" class="form-control" [(ngModel)]="commentupMeta.message"
-								  placeholder="Awesome!"></textarea>
-					</div>
-					<div class="row">
-						<div class="col-md-6">
-							<div class="form-group">
-								<label class="control-label">Số bài/nhóm muốn bình luận</label>
-								<kendo-dropdownlist
-									[data]="postNumbers"
-									[textField]="'text'"
-									[valueField]="'value'"
-									[valuePrimitive]="true"
-									[(ngModel)]="commentupMeta.numberOfPosts"
-									class="form-control">
-								</kendo-dropdownlist>
-
-							</div>
-						</div>
-						<div class="col-md-6">
-							<div class="form-group">
-								<label class="control-label">Thời gian tạm dừng giữa 2 bình luận</label>
-								<kendo-dropdownlist
-									[data]="delayList"
-									[textField]="'text'"
-									[valueField]="'value'"
-									[valuePrimitive]="true"
-									[(ngModel)]="commentupMeta.delay"
-									class="form-control">
-								</kendo-dropdownlist>
-
-							</div>
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="checkbox">
-							<label>
-								<input type="checkbox" [(ngModel)]="commentupMeta.like">
-								<span class="checkbox-material"><span class="check"></span></span>
-								Like bài viết
-							</label>
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="checkbox">
-							<label>
-								<input type="checkbox" [(ngModel)]="commentupMeta.commentOnTop">
-								<span class="checkbox-material"><span class="check"></span></span>
-								Trả lời vào bình luận mới nhất
-							</label>
-						</div>
-					</div>
-					<schedule-progress [hidden]="!showProgress" [options]="progressOptions"></schedule-progress>
-					<schedule-actions
-						[options]="scheduleOptions"
-						[meta]="commentupMeta"
-						[account]="selectedAccount"
-						[status]="status"
-						(onAction)="onAction($event)"
-						(onUpdate)="onUpdateSchedule($event)"></schedule-actions>
+				<div class="form-group">
+					<span class="account-switch">Tài khoản: <span class="account-name">{{selectedAccount.name}}</span> <a><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></span>
 				</div>
+				<div class="form-group">
+					<label class="control-label">Nhóm: </label>
+					<span *ngIf="meta.groups.length == 0">Chưa có nhóm nào được chọn</span>
+					<span *ngIf="meta.groups.length > 0">{{meta.groups.length}} nhóm được chọn</span>
+					<a (click)="selectGroups()"><i aria-hidden="true" class="fa fa-group"></i></a>
+				</div>
+				<div class="form-group">
+					<label class="control-label">Nội dung bình luận</label>
+					<textarea name="message" rows="3" cols="50" class="form-control" [(ngModel)]="meta.message"
+							  placeholder="Awesome!"></textarea>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group">
+							<label class="control-label">Số bài/nhóm muốn bình luận</label>
+							<kendo-dropdownlist
+								[data]="postNumbers"
+								[textField]="'text'"
+								[valueField]="'value'"
+								[valuePrimitive]="true"
+								[(ngModel)]="meta.numberOfPosts"
+								class="form-control">
+							</kendo-dropdownlist>
+
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label class="control-label">Thời gian tạm dừng giữa 2 bình luận</label>
+							<kendo-dropdownlist
+								[data]="delayList"
+								[textField]="'text'"
+								[valueField]="'value'"
+								[valuePrimitive]="true"
+								[(ngModel)]="meta.delay"
+								class="form-control">
+							</kendo-dropdownlist>
+
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" [(ngModel)]="meta.like">
+							<span class="checkbox-material"><span class="check"></span></span>
+							Like bài viết
+						</label>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" [(ngModel)]="meta.commentOnTop">
+							<span class="checkbox-material"><span class="check"></span></span>
+							Trả lời vào bình luận mới nhất
+						</label>
+					</div>
+				</div>
+				<div class="form-group">
+					<button class="btn btn-primary btn-sm" (click)="startJob()"><i class="fa fa-paper-plane-o" aria-hidden="true"></i> Bình luận ngay</button>
+				</div>
+				<!--<schedule-progress [hidden]="!showProgress" [options]="progressOptions"></schedule-progress>
+                <schedule-actions
+                    [options]="scheduleOptions"
+                    [meta]="commentupMeta"
+                    [account]="selectedAccount"
+                    [status]="status"
+                    (onAction)="onAction($event)"
+                    (onUpdate)="onUpdateSchedule($event)"></schedule-actions>-->
 			</div>
 			<div class="col-sm-6">
-				<div class="search">
-					<div class="form-inline">
-						<button class="btn btn-primary btn-sm" (click)="selectGroups()"><i class="material-icons">people</i> Chọn nhóm</button>
-					</div>
-				</div>
-				<selected-groups [groups]="groups"></selected-groups>
+				<schedule-form [meta]="meta"></schedule-form>
 			</div>
 		</div>
 	</div>

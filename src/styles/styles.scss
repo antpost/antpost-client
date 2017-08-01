@@ -417,3 +417,9 @@ nav {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+.overlayTarget {
+  position: relative;
+  display: block;
+  min-height: calc(100vh - 123px);
+}

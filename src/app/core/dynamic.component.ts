@@ -10,20 +10,23 @@ import {
 @Component({
     selector: 'dynamic-component',
     template: `
-    <div #dynamicComponentContainer overlayTarget="demo-head"></div>
+    <div #dynamicComponentContainer overlayTarget="{{targetOverlay}}"></div>
   `,
 })
 export class DynamicComponent {
     private currentComponent = null;
+    public targetOverlay: string;
 
     @ViewChild('dynamicComponentContainer', {read: ViewContainerRef}) private dynamicComponentContainer: ViewContainerRef;
 
     // component: Class for the component you want to create
     // inputs: An object with key/value pairs mapped to input name/input value
-    @Input() set componentData(data: {component: any, inputs: any }) {
+    @Input() set componentData(data: {component: any, inputs: any, targetOverlay: string }) {
         if (!data) {
             return;
         }
+
+        this.targetOverlay = data.targetOverlay;
 
         // Inputs need to be in the following format to be resolved properly
         let inputProviders = Object.keys(data.inputs).map((inputName) => {

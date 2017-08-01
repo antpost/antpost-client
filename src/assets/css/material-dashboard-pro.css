@@ -5928,7 +5928,7 @@ h2.title {
   border-radius: 3px;
   position: relative;
   padding: 12px 30px;
-  margin: 10px 1px;
+  margin: 1px 1px;
   font-size: 12px;
   font-weight: 400;
   text-transform: uppercase;
@@ -6711,9 +6711,7 @@ h2.title {
 }
 .btn:not(.btn-just-icon):not(.btn-fab) .fa,
 .navbar .navbar-nav > li > a.btn:not(.btn-just-icon):not(.btn-fab) .fa {
-  font-size: 18px;
-  margin-top: -2px;
-  position: relative;
+  font-size: 13px;
   top: 2px;
 }
 .btn.btn-fab,

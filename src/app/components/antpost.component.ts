@@ -20,6 +20,7 @@ export class AntPostComponent {
             active: true,
             componentData: {
                 component: CommentUpComponent,
+                targetOverlay: 'comment-up',
                 inputs: {}
             }
         }
@@ -37,8 +38,9 @@ export class AntPostComponent {
             option.active = true;
             option.componentData = {
                 component: option.component,
+                targetOverlay: option.path,
                 inputs: {}
-            }
+            };
 
             this.tabs.push(option);
         }
