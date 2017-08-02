@@ -9,7 +9,7 @@ import {Toastr} from '../../core/helpers/toastr';
 import {ScheduleJob} from '../../core/jobs/scheduleJob';
 import {JobFactory} from '../../core/jobs/jobFactory';
 import { ServiceLocator } from '../../core/serviceLocator';
-import { Injector } from '@angular/core';
+import {ElementRef, Injector} from '@angular/core';
 
 export class AbstractScheduleComponent {
     public selectedAccount: FbAccount;
@@ -17,7 +17,8 @@ export class AbstractScheduleComponent {
     public appManager: AppManager;
     protected modal: ModalService;
 
-    constructor(private metaClass: Function,
+    constructor(protected elementRef: ElementRef,
+                private metaClass: Function,
                 private scheduleType: number) {
         this.appManager = ServiceLocator.injector.get(AppManager);
         this.modal = ServiceLocator.injector.get(ModalService);
@@ -29,7 +30,7 @@ export class AbstractScheduleComponent {
         this.meta = Object.assign(this.metaClass.prototype, schedule.meta);
     }
 
-    public startJob() {
+    public startJob(jobTitle: string) {
         let validationRes = this.meta.validate();
         if(!validationRes.status) {
             Toastr.error(validationRes.message);
@@ -45,7 +46,7 @@ export class AbstractScheduleComponent {
         });
 
         let job = <ScheduleJob>JobFactory.createScheduleJob(schedule, this.scheduleType);
-        this.openJobProgress(job);
+        this.openJobProgress(job, jobTitle);
 
         // this.job.observe().subscribe((result) => {
         //
@@ -73,13 +74,18 @@ export class AbstractScheduleComponent {
      *
      * @param {IJob} job
      */
-    private openJobProgress(job: IJob) {
+    private openJobProgress(job: IJob, jobTitle: string) {
         let dialog = this.modal.open({
             component: JobProgressComponent,
             inputs: {
                 job: job
             },
-            title: 'Bình luận lên bài'
+            title: jobTitle,
+            size: '',
+            viewContainer: this.elementRef.nativeElement.children[0].getAttribute('overlayTarget'),
+            isBlocking: true,
+            dialogClass: 'modal-dialog modal-progress',
+            showClose: false
         } as IModalOptions);
     }
 }

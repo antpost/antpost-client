@@ -73,3 +73,4 @@ dll/
 *.shim.ngstyle.ts
 release-builds/
 src/app/**/*.js
+package-lock.json

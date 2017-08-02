@@ -26,10 +26,11 @@ export class CommentUpComponent extends AbstractScheduleComponent {
     public postNumbers: Array<any>;
     public delayList: Array<any>;
 
-    constructor() {
-        super(CommentUpMeta, ScheduleType.Comment);
+    constructor(elementRef: ElementRef) {
+        super(elementRef, CommentUpMeta, ScheduleType.Comment);
 
         this.meta = Object.assign(CommentUpMeta.prototype, {
+            message: 'up',
             numberOfPosts: 1,
             like: true,
             commentOnTop: false,

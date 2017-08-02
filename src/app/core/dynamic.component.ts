@@ -43,7 +43,7 @@ export class DynamicComponent {
 
         // We insert the component into the dom container
         this.dynamicComponentContainer.insert(component.hostView);
-        this.dynamicComponentContainer.element.nativeElement.setAttribute('targetOverlay', factory.selector);
+        //this.dynamicComponentContainer.element.nativeElement.setAttribute('overlayTarget', factory.selector);
 
         // We can destroy the old component is we like by calling destroy
         if (this.currentComponent) {

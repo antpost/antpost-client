@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Injector, Input, OnInit} from '@angular/core';
 
 @Component({
     selector: 'job-progress',
@@ -7,10 +7,21 @@ import {Component, OnInit} from '@angular/core';
 })
 export class JobProgressComponent implements OnInit {
 
-    constructor() {
+    @Input()
+    public onClose: Function;
+
+    @Input()
+    public onDismiss: Function;
+
+    constructor(private injector: Injector) {
+        this.onClose = this.injector.get('onClose');
+        this.onDismiss = this.injector.get('onDismiss');
     }
 
     ngOnInit() {
     }
 
+    public close() {
+        this.onClose();
+    }
 }

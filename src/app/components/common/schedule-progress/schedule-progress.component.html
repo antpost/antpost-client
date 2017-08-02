@@ -1,7 +1,5 @@
 <div>
 	<span>{{message}}</span>
-	<p>
-		<ngb-progressbar type="info" [value]="percent">{{percentMessage}}</ngb-progressbar>
-	</p>
-	<span>{{options.textSuccess}}: {{doneNumber}}/{{total}}</span>
+	<ngb-progressbar type="info" [value]="percent">{{percentMessage}}</ngb-progressbar>
+	<div>Thành công: <span class="text-danger">{{doneNumber}}/{{total}}</span></div>
 </div>

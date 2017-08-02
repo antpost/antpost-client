@@ -21,6 +21,9 @@ export interface IModalOptions {
     showClose?: boolean;
     size?: string;
     actions?: IModalAction[];
+    viewContainer?: string;
+    isBlocking?: boolean;
+    dialogClass?: string;
 }
 
 export class CustomModalContext extends BSModalContext implements IModalOptions {
@@ -44,10 +47,6 @@ export class CustomModalContext extends BSModalContext implements IModalOptions 
     <div class="modal-body">
         <dynamic-component [componentData]="componentData"></dynamic-component>
     </div>
-    <!--<div class="modal-footer">
-        <button class="btn btn-primary" (click)="save()">Lưu</button>
-        <button class="btn" (click)="cancel()">Hủy bỏ</button>
-    </div>-->
         
       `,
 })
@@ -57,6 +56,8 @@ export default class ModalWrapperComponent implements OnInit, CloseGuard, ModalC
 
     @ViewChild(DynamicComponent)
     private dynamicComponent: DynamicComponent;
+
+    private forceClose: boolean = false;
 
     constructor(public dialog: DialogRef<CustomModalContext>) {
         this.componentData = {
@@ -80,28 +81,26 @@ export default class ModalWrapperComponent implements OnInit, CloseGuard, ModalC
         this.dialog.close();
     }
 
-    public save() {
-        this.dynamicComponent.getComponentInstance().save();
-    }
-
     public cancel() {
         this.dialog.dismiss();
     }
 
     public beforeDismiss(): boolean {
-        return false;
+        return this.context.options.showClose ? false : !this.forceClose;
     }
 
     public beforeClose(): boolean {
-        return false;
+        return this.context.options.showClose ? false : !this.forceClose;
     }
 
     private extendInput() {
         this.componentData.inputs.onClose = (data: any) => {
+            this.forceClose = true;
             this.dialog.close(data);
         };
 
         this.componentData.inputs.onDismiss = (data: any) => {
+            this.forceClose = true;
             this.dialog.dismiss();
         };
 

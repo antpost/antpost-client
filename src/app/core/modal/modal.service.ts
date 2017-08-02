@@ -16,14 +16,16 @@ export class ModalService {
             inputs: {}
         }, options);
 
+        let baseConfig = options.viewContainer ? {viewContainer: options.viewContainer} : undefined;
+
         let context = new CustomModalContext(options);
         context.inElement = true;
+        context.isBlocking = options.isBlocking;
+        context.dialogClass = options.dialogClass || '';
 
         return new Promise((resolve, reject) => {
             this.modal
-                .open(ModalWrapperComponent, overlayConfigFactory(context, BSModalContext, {
-                    viewContainer: 'demo-head'
-                }))
+                .open(ModalWrapperComponent, overlayConfigFactory(context, BSModalContext, baseConfig))
                 .then((resultPromise) => {
                     return resultPromise.result
                         .then(
