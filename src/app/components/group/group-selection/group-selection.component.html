@@ -1,4 +1,33 @@
-<joined-group (changeSelected)="onUpdateGroups($event)"></joined-group>
+<div>
+	<div class="search">
+		<div class="form-inline">
+			<div class="form-group">
+				<input type="text" class="form-control" placeholder="Tìm kiếm" (change)="search()">
+			</div>
+			<button class="btn btn-primary btn-sm" (click)="loadMembers()"><i class="material-icons">face</i> Thành viên</button>
+			<button class="btn btn-primary btn-sm" (click)="reload()"><i class="material-icons">update</i> Tải lại</button>
+		</div>
+	</div>
+	<kendo-grid [data]="groups" [height]="410">
+		<kendo-grid-column field="checked" title="" width="20">
+			<ng-template kendoGridHeaderTemplate let-column let-columnIndex="columnIndex">
+				<input type="checkbox" [(ngModel)]="isCheckAll" (change)="onCheckAll()"/>
+			</ng-template>
+			<ng-template kendoGridCellTemplate let-dataItem>
+				<input type="checkbox" [(ngModel)]="dataItem.checked" (change)="onCheckGroup(dataItem)"/>
+			</ng-template>
+		</kendo-grid-column>
+		<kendo-grid-column field="name" title="Nhóm" width="200">
+			<ng-template kendoGridCellTemplate let-dataItem>
+				<a target="_blank" href="https://facebook.com/{{dataItem.id}}">{{dataItem.name}}</a>
+			</ng-template>
+		</kendo-grid-column>
+		<kendo-grid-column field="privacy" title="Trạng thái" width="80">
+		</kendo-grid-column>
+		<kendo-grid-column field="members" title="Thành viên" width="80">
+		</kendo-grid-column>
+	</kendo-grid>
+</div>
 <div class="modal-footer">
 	<button class="btn btn-primary btn-sm" (click)="save()"><i class="material-icons">add</i> Chọn</button>
 	<button class="btn btn-sm" (click)="cancel()"><i class="material-icons">cancel</i> Hủy bỏ</button>

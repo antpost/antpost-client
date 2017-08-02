@@ -1,5 +1,6 @@
 import {Component, OnInit, Input, Injector} from '@angular/core';
 import {Toastr} from '../../../core/helpers/toastr';
+import { FacebookService } from '../../../services/facebook.service';
 
 @Component({
     selector: 'app-group-selection',
@@ -9,6 +10,8 @@ import {Toastr} from '../../../core/helpers/toastr';
 export class GroupSelectionComponent implements OnInit {
 
     public groups: Array<any> = [];
+    public selectedGroups: Array<any> = [];
+    public isCheckAll: boolean = false;
 
     @Input()
     public onClose: Function;
@@ -16,16 +19,22 @@ export class GroupSelectionComponent implements OnInit {
     @Input()
     public onDismiss: Function;
 
-    constructor(private injector: Injector) {
+    constructor(private injector: Injector, private facebookService: FacebookService) {
         this.onClose = this.injector.get('onClose');
         this.onDismiss = this.injector.get('onDismiss');
+        this.selectedGroups = this.injector.get('groups') || [];
     }
 
-    ngOnInit() {
-    }
+    public async ngOnInit() {
+        this.facebookService.getJoinedGroups().subscribe(async (result: any) => {
+            this.groups = result.data;
 
-    public onUpdateGroups(groups) {
-        this.groups = groups;
+            // update selected groups
+            this.groups.forEach(group => {
+                 group.checked = !!this.selectedGroups.find(g => g.id == group.id);
+            });
+
+        });
     }
 
     public save() {
@@ -34,10 +43,53 @@ export class GroupSelectionComponent implements OnInit {
             return;
         }
 
-        this.onClose(this.groups);
+        this.onClose(this.groups.filter((item) => item.checked));
     }
 
     public cancel() {
         this.onDismiss();
+    }
+
+    /**
+     * Get newest groups from facebook and reload table
+     */
+    public reload() {
+        this.facebookService.getJoinedGroups().subscribe(async (result: any) => {
+            let list = result.data as Array<any> || [];
+
+            // update members from old groups
+            list.forEach((item) => {
+                let existing =  this.groups.find((group) => group.id == item.id);
+                if(existing) {
+                    item.members = existing.members;
+                }
+            });
+
+            this.groups = list;
+
+        });
+    }
+
+    public loadMembers() {
+
+    }
+
+    public onCheckAll() {
+        this.checkAll(this.isCheckAll);
+    }
+
+    public onCheckGroup(group: any) {
+        if(!group.checked) {
+            this.isCheckAll = false;
+        } else {
+            let anyGroup = this.groups.find((item) => !item.checked);
+            this.isCheckAll = !anyGroup;
+        }
+    }
+
+    private checkAll(checked: boolean) {
+        this.groups.forEach((group: any) => {
+            group.checked = checked;
+        });
     }
 }
