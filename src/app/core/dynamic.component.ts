@@ -26,8 +26,6 @@ export class DynamicComponent {
             return;
         }
 
-        this.targetOverlay = data.targetOverlay;
-
         // Inputs need to be in the following format to be resolved properly
         let inputProviders = Object.keys(data.inputs).map((inputName) => {
             return {provide: inputName, useValue: data.inputs[inputName]};
@@ -45,6 +43,7 @@ export class DynamicComponent {
 
         // We insert the component into the dom container
         this.dynamicComponentContainer.insert(component.hostView);
+        this.dynamicComponentContainer.element.nativeElement.setAttribute('targetOverlay', factory.selector);
 
         // We can destroy the old component is we like by calling destroy
         if (this.currentComponent) {

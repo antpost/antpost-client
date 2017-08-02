@@ -8,16 +8,20 @@ import {Schedule} from '../../models/schedule.model';
 import {Toastr} from '../../core/helpers/toastr';
 import {ScheduleJob} from '../../core/jobs/scheduleJob';
 import {JobFactory} from '../../core/jobs/jobFactory';
+import { ServiceLocator } from '../../core/serviceLocator';
+import { Injector } from '@angular/core';
 
 export class AbstractScheduleComponent {
     public selectedAccount: FbAccount;
     public meta: any;
+    public appManager: AppManager;
+    protected modal: ModalService;
 
-    constructor(appManager: AppManager,
-                protected modal: ModalService,
-                private metaClass: Function,
+    constructor(private metaClass: Function,
                 private scheduleType: number) {
-        this.selectedAccount = appManager.currentUser;
+        this.appManager = ServiceLocator.injector.get(AppManager);
+        this.modal = ServiceLocator.injector.get(ModalService);
+        this.selectedAccount = this.appManager.currentUser;
     }
 
     public onUpdateSchedule(schedule: Schedule) {

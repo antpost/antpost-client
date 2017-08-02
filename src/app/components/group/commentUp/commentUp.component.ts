@@ -1,4 +1,4 @@
-import {OnInit, Component, Input, ViewChild} from '@angular/core';
+import { OnInit, Component, Input, ViewChild, ElementRef, Injector } from '@angular/core';
 import {FacebookService} from '../../../services/facebook.service';
 import {Group} from '../../../models/group.model';
 import {Toastr} from '../../../core/helpers/toastr';
@@ -26,8 +26,8 @@ export class CommentUpComponent extends AbstractScheduleComponent {
     public postNumbers: Array<any>;
     public delayList: Array<any>;
 
-    constructor(appManager: AppManager, modal: ModalService) {
-        super(appManager, modal, CommentUpMeta, ScheduleType.Comment);
+    constructor() {
+        super(CommentUpMeta, ScheduleType.Comment);
 
         this.meta = Object.assign(CommentUpMeta.prototype, {
             numberOfPosts: 1,
