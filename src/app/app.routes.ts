@@ -19,8 +19,6 @@ import {SelectedGroupsComponent} from './components/group/selectedGroups/selecte
 import {PostTypePipe} from './pipes/postType.pipe';
 import {ScheduleStatusPipe} from './pipes/scheduleStatus.pipe';
 import {GroupSelectionComponent} from './components/group/group-selection/group-selection.component';
-import {ScheduleActionsComponent} from './components/common/schedule-actions/schedule-actions.component';
-import {ScheduleProgressComponent} from './components/common/schedule-progress/schedule-progress.component';
 import {ScheduleListComponent} from './components/common/schedule-list/schedule-list.component';
 import {ScheduleFormComponent} from './components/common/schedule-form/schedule-form.component';
 import {JobProgressComponent} from './components/common/job-progress/job-progress.component';
@@ -50,8 +48,6 @@ export const MODULE_COMPONENTS = [
     CommentUpComponent,
     SelectedGroupsComponent,
     GroupSelectionComponent,
-    ScheduleActionsComponent,
-    ScheduleProgressComponent,
     ScheduleListComponent,
     ScheduleFormComponent,
     JobProgressComponent
