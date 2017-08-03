@@ -1,10 +1,30 @@
 <div class="row">
-	<schedule-progress></schedule-progress>
+	<div>
+		<span>{{message}}</span>
+		<ngb-progressbar type="info" [value]="percent">{{percentMessage}}</ngb-progressbar>
+		<div>Thành công: <span class="text-danger">{{job.doneCount}}/{{job.total}}</span></div>
+	</div>
+</div>
+<div class="row">
+	<kendo-grid
+		[data]="job.logs" [height]="250"
+	>
+		<kendo-grid-column field="name" title="Tên" [width]="250">
+		</kendo-grid-column>
+		<kendo-grid-column title="Kết quả">
+			<ng-template kendoGridCellTemplate let-dataItem>
+				<span *ngIf="dataItem.message">{{dataItem.message}}</span>
+			</ng-template>
+		</kendo-grid-column>
+		<kendo-grid-messages
+			noRecords="Chưa có kết quả.">
+		</kendo-grid-messages>
+	</kendo-grid>
 </div>
 <div class="modal-footer">
-	<button class="btn btn-primary btn-sm" (click)="start()"><i class="fa fa-play"></i> Bắt đầu</button>
-	<button class="btn btn-info btn-sm" (click)="pause()"><i class="fa fa-pause"></i> Tạm dừng</button>
-	<button class="btn btn-info btn-sm" (click)="resume()"><i class="fa fa-play"></i> Tiếp tục</button>
-	<button class="btn btn-danger btn-sm" (click)="stop()"><i class="fa fa-stop"></i> Kết thúc</button>
-	<button class="btn btn-sm" (click)="close()"><i class="fa fa-times"></i> Đóng</button>
+	<button class="btn btn-primary btn-sm" (click)="start()" *ngIf="job.status == jobStatus.Stopped"><i class="fa fa-play"></i> Bắt đầu</button>
+	<button class="btn btn-info btn-sm" (click)="pause()" *ngIf="job.status == jobStatus.Running"><i class="fa fa-pause"></i> Tạm dừng</button>
+	<button class="btn btn-info btn-sm" (click)="resume()" *ngIf="job.status == jobStatus.Paused"><i class="fa fa-play"></i> Tiếp tục</button>
+	<button class="btn btn-danger btn-sm" (click)="stop()" *ngIf="job.status != jobStatus.Stopped"><i class="fa fa-stop"></i> Kết thúc</button>
+	<button class="btn btn-sm" (click)="close()" *ngIf="job.status == jobStatus.Stopped"><i class="fa fa-times"></i> Đóng</button>
 </div>

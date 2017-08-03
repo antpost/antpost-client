@@ -6,14 +6,16 @@ import {FbAccount} from '../../models/fbaccount.model';
 import {__await} from 'tslib';
 import {createNgZone} from '@angular/platform-browser/testing/src/browser_util';
 import {NgZone} from '@angular/core';
+import {IResNextData} from '../jobs/iJob';
 
 export interface IScheduleEngine {
     schedule: Schedule;
     getId(): string;
-    getNext(): any;
-    doNext(): Promise<any>;
+    getNext(): IResNextData;
+    doNext(): Promise<IResNextData>;
     delay(callback: Function): void;
     init(): void;
+    getTotal(): number;
 }
 
 export class BaseScheduleEngine {

@@ -221,7 +221,7 @@ export class FacebookService extends ProxyService{
      * @param limit
      */
     public getLastedPostsOfGroup(groupId: string, account: FbAccount, limit: number): Promise<any> {
-        let size = 500;
+        let size = 200;
         let repeat = 2;
 
         const getApi = (pageSize: number) => {
@@ -258,6 +258,8 @@ export class FacebookService extends ProxyService{
             subscription.subscribe((result) => {
                 let posts = result.data.filter(p => p.from.id == account.id);
                 resolve(posts.slice(0, limit));
+            }, () => {
+                resolve([]);
             });
         });
     }

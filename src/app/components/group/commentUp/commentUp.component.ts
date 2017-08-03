@@ -44,6 +44,7 @@ export class CommentUpComponent extends AbstractScheduleComponent {
         }
 
         this.delayList = [
+            {text: 'Liên tục', value: 0},
             {text: '5 giây', value: 5},
             {text: '10 giây', value: 10},
             {text: '30 giây', value: 30},

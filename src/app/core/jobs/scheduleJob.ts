@@ -1,4 +1,4 @@
-import {IJob} from "./iJob";
+import {IJob, IResNextData} from "./iJob";
 import {IScheduleEngine} from "../scheduleEngine/baseScheduleEngine";
 import {Observable, Subject} from 'rxjs';
 import {JobEmitType, JobStatus} from "../../models/enums";
@@ -6,7 +6,9 @@ import {JobEmitType, JobStatus} from "../../models/enums";
 export class ScheduleJob implements IJob {
     public static JOB_KEY = 'SCHEDULE';
     public status: JobStatus;
-    public logs: Array<any>;
+    public logs: Array<IResNextData>;
+    public total: number = 0;
+    public doneCount: number = 0;
 
     private engine: IScheduleEngine;
     private onFinish: Function;
@@ -22,9 +24,15 @@ export class ScheduleJob implements IJob {
         return ScheduleJob.JOB_KEY + this.engine.getId();
     }
 
-    public async start(onFinish: Function) {
+    public async start(onFinish?: Function) {
         this.onFinish = onFinish;
+
         await this.engine.init();
+
+        this.total = this.engine.getTotal();
+        this.doneCount = 0;
+        this.logs = [];
+
         this.status = JobStatus.Running;
         this.subject.next({
             data: JobStatus.Running,
@@ -67,6 +75,9 @@ export class ScheduleJob implements IJob {
     }
 
     private async process() {
+        if(this.status != JobStatus.Running) {
+            return;
+        }
         // find next data to do action
         let nextData = this.engine.getNext();
 
@@ -78,11 +89,15 @@ export class ScheduleJob implements IJob {
 
             // execute
             let res = await this.engine.doNext();
+            if(res.done) {
+                this.doneCount ++;
+            }
 
             // finish next item
+            this.logs.push(res);
             this.subject.next({
                 type: JobEmitType.OnDone,
-                data: res.data
+                data: res
             });
 
             // call again to execute next data
@@ -101,9 +116,5 @@ export class ScheduleJob implements IJob {
                 type: JobEmitType.Finished
             });
         }
-    }
-
-    private next(event: any) {
-        this.subject.next(event);
     }
 }

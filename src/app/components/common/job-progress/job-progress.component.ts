@@ -1,15 +1,15 @@
-import {Component, Injector, Input, OnInit} from '@angular/core';
-import { IJob } from '../../../core/jobs/iJob';
-import { JobEmitType, JobStatus } from '../../../models/enums';
-import { Toastr } from '../../../core/helpers/toastr';
-import { Subscription } from 'rxjs/Subscription';
+import {Component, Injector, Input, OnDestroy, OnInit} from '@angular/core';
+import {IJob, IResNextData} from '../../../core/jobs/iJob';
+import {JobEmitType, JobStatus} from '../../../models/enums';
+import {Toastr} from '../../../core/helpers/toastr';
+import {Subscription} from 'rxjs/Subscription';
 
 @Component({
     selector: 'job-progress',
     templateUrl: './job-progress.component.html',
     styleUrls: ['./job-progress.component.css']
 })
-export class JobProgressComponent implements OnInit {
+export class JobProgressComponent implements OnInit, OnDestroy {
 
     @Input()
     public onClose: Function;
@@ -18,6 +18,10 @@ export class JobProgressComponent implements OnInit {
     public onDismiss: Function;
 
     public job: IJob;
+    public message: string;
+    public percent: number;
+    public percentMessage: string;
+    public jobStatus;
 
     private subscription: Subscription;
 
@@ -25,27 +29,19 @@ export class JobProgressComponent implements OnInit {
         this.onClose = this.injector.get('onClose');
         this.onDismiss = this.injector.get('onDismiss');
         this.job = this.injector.get('job');
+        this.jobStatus = JobStatus;
     }
 
     public ngOnInit() {
-        let subscription = this.job.observe().subscribe((result) => {
+        this.start();
+    }
 
-            switch (result.type) {
-                case JobEmitType.OnDone:
-                    // update progress percent
-                    break;
-                case JobEmitType.OnProcessData:
-                    // update progress message
-                    break;
-                case JobEmitType.Finished:
-                    // update progress message
-                    break;
-            }
-
-        });
+    public ngOnDestroy() {
+        this.stop();
     }
 
     public start() {
+        this.subscribe();
         this.job.start();
     }
 
@@ -67,21 +63,35 @@ export class JobProgressComponent implements OnInit {
     }
 
     private subscribe() {
-        this.subscription = this.job.observe().subscribe((result) => {
+        this.subscription = this.job.observe().subscribe((result: any) => {
 
             switch (result.type) {
+                case JobEmitType.OnUpdateStatus:
+                    this.updateProgress();
+                    break;
                 case JobEmitType.OnDone:
-                    // update progress percent
+                    this.updateProgress();
                     break;
                 case JobEmitType.OnProcessData:
-                    // update progress message
+                    this.message = 'Đang xử lý ' + result.data.name + ' ...';
                     break;
                 case JobEmitType.Finished:
                     // update progress message
+                    this.message = "Kết thúc!";
                     this.subscription.unsubscribe();
                     break;
             }
 
         });
+    }
+
+    private updateProgress() {
+        if (!this.job.total) {
+            this.percent = 0;
+            this.percentMessage = '0%';
+        } else {
+            this.percent = this.job.doneCount / this.job.total * 100;
+            this.percentMessage = (Math.round(this.job.doneCount / this.job.total * 100)) + "%";
+        }
     }
 }

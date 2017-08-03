@@ -32,7 +32,11 @@ export class PostScheduleEngine implements IScheduleEngine {
         return PostScheduleEngine.ENGINE_KEY + this.schedule.id;
     }
 
-    public getNext(): boolean {
+    public getTotal(): number {
+        return this.schedule.meta.groups.length;
+    }
+
+    public getNext(): any {
         return this.schedule.status == JobStatus.Stopped ? null : this.schedule.findUnposted();
     }
 

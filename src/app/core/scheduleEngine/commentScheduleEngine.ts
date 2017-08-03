@@ -1,11 +1,6 @@
 import {BaseScheduleEngine, IScheduleEngine} from "./baseScheduleEngine";
-import {FacebookService} from "../../services/facebook.service";
-import {ServiceLocator} from "../serviceLocator";
-import {JobStatus, PostType} from '../../models/enums';
-import {AutomationService} from '../../services/automation.service';
 import {Schedule} from '../../models/schedule.model';
-import {FbAccount} from '../../models/fbaccount.model';
-import {FbAccountService} from '../../services/fbaccount.service';
+import {IResNextData} from '../jobs/iJob';
 
 export class CommentScheduleEngine extends BaseScheduleEngine implements IScheduleEngine {
     public static ENGINE_KEY = 'COMMENTENGINE';
@@ -20,17 +15,48 @@ export class CommentScheduleEngine extends BaseScheduleEngine implements ISchedu
         return CommentScheduleEngine.ENGINE_KEY + (this.schedule.id || 0);
     }
 
-    public getNext(): any {
-        return this.getNextGroup();
+    public getTotal(): number {
+        return this.schedule.meta.groups.length;
     }
 
-    public doNext(): Promise<any> {
-        return new Promise<any>((resolve) => {
+    public getNext(): IResNextData {
+        let group = this.getNextGroup();
+        return group ? {
+            id: group.id,
+            name: group.name,
+        } as IResNextData : null;
+    }
+
+    public doNext(): Promise<IResNextData> {
+        return new Promise<IResNextData>((resolve) => {
             setTimeout(async () => {
-                let data = await this.commentUp();
+                this.isFirst = false;
+                let group = await this.commentUp();
+
+                const isDone = (group) => {
+                    return !group.posts || group.posts.length == 0 || !group.posts.find(p => !p.status)
+                };
+
+                const getMessage = (group) => {
+                    if(isDone(group)) {
+                        if(!group.posts || group.posts.length == 0) {
+                            this.isFirst = true;
+                            return 'Không tìm thấy bài viết';
+                        } else {
+                            return `Thành công: ${group.posts.length}/${group.posts.length}`
+                        }
+                    } else {
+                        let count = group.posts.filter(p => p.status).length;
+                        return `Thành công: ${count}/${group.posts.length}`
+                    }
+                };
+
                 resolve({
-                    data: data
-                });
+                    id: group.id,
+                    name: group.name,
+                    done: isDone(group),
+                    message: getMessage(group)
+                } as IResNextData);
             }, this.isFirst ? 0 : this.schedule.delay * 1000);
         });
     }
@@ -49,6 +75,7 @@ export class CommentScheduleEngine extends BaseScheduleEngine implements ISchedu
                 let posts = await this.facebookService.getLastedPostsOfGroup(groupId, this.account, this.schedule.meta.numberOfPosts);
                 group = {
                     id: groupId,
+                    name: this.schedule.meta.groups.find(g => g.id == groupId).name,
                     posts: posts || []
                 }
                 this.schedule.results = this.schedule.results || [];

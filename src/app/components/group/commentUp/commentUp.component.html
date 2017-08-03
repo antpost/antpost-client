@@ -1,83 +1,87 @@
 <div class="row" overlayTarget="comment-up">
-	<div class="card no-header">
-		<div class="card-content">
-			<div class="col-sm-6">
-				<div class="form-group">
-					<span class="account-switch">Tài khoản: <span class="account-name">{{selectedAccount.name}}</span> <a><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></span>
-				</div>
-				<div class="form-group">
-					<label class="control-label">Nhóm: </label>
-					<span *ngIf="meta.groups.length == 0">Chưa có nhóm nào được chọn</span>
-					<span *ngIf="meta.groups.length > 0">{{meta.groups.length}} nhóm được chọn</span>
-					<a (click)="selectGroups()"><i aria-hidden="true" class="fa fa-group"></i></a>
-				</div>
-				<div class="form-group">
-					<label class="control-label">Nội dung bình luận</label>
-					<textarea name="message" rows="3" cols="50" class="form-control" [(ngModel)]="meta.message"
-							  placeholder="Awesome!"></textarea>
-				</div>
-				<div class="row">
-					<div class="col-md-6">
+	<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+		<div class="ant-card">
+			<div class="body pt0">
+				<div class="row clearfix">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mb0">
 						<div class="form-group">
-							<label class="control-label">Số bài/nhóm muốn bình luận</label>
-							<kendo-dropdownlist
-								[data]="postNumbers"
-								[textField]="'text'"
-								[valueField]="'value'"
-								[valuePrimitive]="true"
-								[(ngModel)]="meta.numberOfPosts"
-								class="form-control">
-							</kendo-dropdownlist>
+							<span class="account-switch">Tài khoản: <span class="account-name">{{selectedAccount.name}}</span> <a><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></span>
+						</div>
+						<div class="form-group">
+							<label class="control-label">Nhóm: </label>
+							<span *ngIf="meta.groups.length == 0">Chưa có nhóm nào được chọn</span>
+							<span *ngIf="meta.groups.length > 0">{{meta.groups.length}} nhóm được chọn</span>
+							<a (click)="selectGroups()"><i aria-hidden="true" class="fa fa-group"></i></a>
+						</div>
+						<div class="form-group">
+							<label class="control-label">Nội dung bình luận</label>
+							<textarea name="message" rows="3" cols="50" class="form-control" [(ngModel)]="meta.message"
+									  placeholder="Awesome!"></textarea>
+						</div>
+						<div class="row">
+							<div class="col-md-6">
+								<div class="form-group">
+									<label class="control-label">Số bài/nhóm muốn bình luận</label>
+									<kendo-dropdownlist
+										[data]="postNumbers"
+										[textField]="'text'"
+										[valueField]="'value'"
+										[valuePrimitive]="true"
+										[(ngModel)]="meta.numberOfPosts"
+										class="form-control">
+									</kendo-dropdownlist>
 
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<label class="control-label">Thời gian tạm dừng giữa 2 bình luận</label>
+									<kendo-dropdownlist
+										[data]="delayList"
+										[textField]="'text'"
+										[valueField]="'value'"
+										[valuePrimitive]="true"
+										[(ngModel)]="meta.delay"
+										class="form-control">
+									</kendo-dropdownlist>
+
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="checkbox">
+								<label>
+									<input type="checkbox" [(ngModel)]="meta.like">
+									<span class="checkbox-material"><span class="check"></span></span>
+									Like bài viết
+								</label>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="checkbox">
+								<label>
+									<input type="checkbox" [(ngModel)]="meta.commentOnTop">
+									<span class="checkbox-material"><span class="check"></span></span>
+									Trả lời vào bình luận mới nhất
+								</label>
+							</div>
+						</div>
+						<div class="form-group">
+							<button class="btn btn-primary btn-sm" (click)="startJob('Bình luận lên bài')"><i class="fa fa-paper-plane-o" aria-hidden="true"></i> Bình luận ngay</button>
 						</div>
 					</div>
-					<div class="col-md-6">
-						<div class="form-group">
-							<label class="control-label">Thời gian tạm dừng giữa 2 bình luận</label>
-							<kendo-dropdownlist
-								[data]="delayList"
-								[textField]="'text'"
-								[valueField]="'value'"
-								[valuePrimitive]="true"
-								[(ngModel)]="meta.delay"
-								class="form-control">
-							</kendo-dropdownlist>
-
-						</div>
-					</div>
 				</div>
-				<div class="form-group">
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" [(ngModel)]="meta.like">
-							<span class="checkbox-material"><span class="check"></span></span>
-							Like bài viết
-						</label>
-					</div>
-				</div>
-				<div class="form-group">
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" [(ngModel)]="meta.commentOnTop">
-							<span class="checkbox-material"><span class="check"></span></span>
-							Trả lời vào bình luận mới nhất
-						</label>
-					</div>
-				</div>
-				<div class="form-group">
-					<button class="btn btn-primary btn-sm" (click)="startJob('Bình luận lên bài')"><i class="fa fa-paper-plane-o" aria-hidden="true"></i> Bình luận ngay</button>
-				</div>
-				<!--<schedule-progress [hidden]="!showProgress" [options]="progressOptions"></schedule-progress>
-                <schedule-actions
-                    [options]="scheduleOptions"
-                    [meta]="commentupMeta"
-                    [account]="selectedAccount"
-                    [status]="status"
-                    (onAction)="onAction($event)"
-                    (onUpdate)="onUpdateSchedule($event)"></schedule-actions>-->
 			</div>
-			<div class="col-sm-6">
-				<schedule-form [meta]="meta"></schedule-form>
+		</div>
+	</div>
+	<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+		<div class="ant-card">
+			<div class="body pt0">
+				<div class="row clearfix">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mb0">
+						<schedule-form [meta]="meta"></schedule-form>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
