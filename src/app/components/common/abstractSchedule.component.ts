@@ -47,27 +47,6 @@ export class AbstractScheduleComponent {
 
         let job = <ScheduleJob>JobFactory.createScheduleJob(schedule, this.scheduleType);
         this.openJobProgress(job, jobTitle);
-
-        // this.job.observe().subscribe((result) => {
-        //
-        //     if(result.type == JobEmitType.OnDone) {
-        //         let group = this.updateGroups(result.data);
-        //         if(group.done) {
-        //         }
-        //     } else if(result.type == JobEmitType.OnProcessData) {
-        //         let group = this.groups.find(g => result.data.id == g.id);
-        //         //this.progress.setProgressMessage('Đang xử lý nhóm ' + group.name + ' ...');
-        //     } else if(result.type == JobEmitType.OnUpdateStatus) {
-        //         this.status = result.status;
-        //     }
-        //
-        // });
-
-        // this.job.start(() => {
-        //     // on finish
-        //     Toastr.success("Kết thúc bình luận lên bài!");
-        //     this.status = JobStatus.Stopped;
-        // });
     }
 
     /**

@@ -1,7 +1,7 @@
 import {Observable} from 'rxjs';
 
 export interface IJob {
-    start(onFinish: Function);
+    start(onFinish?: Function);
     pause();
     resume();
     stop();

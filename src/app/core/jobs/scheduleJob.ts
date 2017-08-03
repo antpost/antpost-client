@@ -5,13 +5,16 @@ import {JobEmitType, JobStatus} from "../../models/enums";
 
 export class ScheduleJob implements IJob {
     public static JOB_KEY = 'SCHEDULE';
+    public status: JobStatus;
+    public logs: Array<any>;
+
     private engine: IScheduleEngine;
     private onFinish: Function;
     private subject: Subject<any>;
-    private status: number;
 
     constructor(engine: IScheduleEngine) {
         this.engine = engine;
+        this.logs = [];
         this.subject = new Subject();
     }
 
@@ -64,26 +67,39 @@ export class ScheduleJob implements IJob {
     }
 
     private async process() {
+        // find next data to do action
         let nextData = this.engine.getNext();
+
         if(nextData) {
             this.subject.next({
                 data: nextData,
                 type: JobEmitType.OnProcessData
             });
+
+            // execute
             let res = await this.engine.doNext();
+
+            // finish next item
             this.subject.next({
                 type: JobEmitType.OnDone,
                 data: res.data
             });
+
+            // call again to execute next data
             this.process();
         } else {
+            // there is nothing to do action, update job status to stop
             this.status = JobStatus.Stopped;
             this.subject.next({
                 data: JobStatus.Stopped,
                 type: JobEmitType.OnUpdateStatus
             });
 
-            this.onFinish();
+            // done job
+            this.subject.next({
+                data: JobStatus.Stopped,
+                type: JobEmitType.Finished
+            });
         }
     }
 

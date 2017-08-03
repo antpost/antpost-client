@@ -16,7 +16,8 @@ export enum JobStatus {
 export enum JobEmitType {
     OnUpdateStatus = 1,
     OnProcessData = 2,
-    OnDone = 3
+    OnDone = 3,
+    Finished = 4
 }
 
 export enum ScheduleAction {
