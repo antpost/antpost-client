@@ -19,7 +19,7 @@ export class AbstractScheduleComponent {
 
     constructor(protected elementRef: ElementRef,
                 private metaClass: Function,
-                private scheduleType: number) {
+                public scheduleType: number) {
         this.appManager = ServiceLocator.injector.get(AppManager);
         this.modal = ServiceLocator.injector.get(ModalService);
         this.selectedAccount = this.appManager.currentUser;
@@ -28,6 +28,9 @@ export class AbstractScheduleComponent {
     public onUpdateSchedule(schedule: Schedule) {
         // update meta
         this.meta = Object.assign(this.metaClass.prototype, schedule.meta);
+
+        // update selected account
+        
     }
 
     public startJob(jobTitle: string) {

@@ -439,7 +439,16 @@ nav {
   margin-bottom: 30px;
 }
 
+.ant-card.big-card {
+  min-height: 500px;
+}
+
 .ant-card .body {
-  color: #555;
+  color: #111;
   padding: 20px;
+}
+
+.form-group .control-label {
+  text-align: left;
+  font-weight: bold;
 }

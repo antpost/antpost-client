@@ -25,7 +25,6 @@ export class DbService extends Dexie {
             schedules: `
                 ++id,
                 uid,
-                status,
                 scheduleType,
                 active,
                 updatedAt`,

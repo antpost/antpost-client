@@ -8,6 +8,7 @@ export class Schedule {
     public uid: string;
     public accountName: string;
     public delay: number;
+    public repeat: number;
     public startTime: Date;
     public endTime: Date;
     public status: number;
@@ -18,8 +19,4 @@ export class Schedule {
     public meta: any;
     public lastRun: Date;
     public results: Array<any>;
-
-    public isStatus(status: number) {
-        return this.status == status;
-    }
 }

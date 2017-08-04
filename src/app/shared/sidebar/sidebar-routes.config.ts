@@ -9,7 +9,7 @@ import {CommentUpComponent} from '../../components/group/commentUp/commentUp.com
 
 
 export const ROUTES: any[] = [
-    {path: 'home', title: 'Dashboard', icon: 'dashboard', class: '', component: HomeComponent},
+    {path: 'home', title: 'Tổng quan', icon: 'dashboard', class: '', component: HomeComponent},
     {
         path: 'group',
         title: 'Nhóm',

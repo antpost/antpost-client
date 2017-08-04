@@ -17,9 +17,8 @@ import {ScheduleService} from '../../../services/schedule.service';
 export class ScheduleFormComponent implements OnInit {
 
     @Input() public meta: IScheduleMeta;
-    @Input() public options: any;
     @Input() public account: FbAccount;
-    @Input() public status: number;
+    @Input() public type: ScheduleType;
 
     @Output() public onUpdate = new EventEmitter<Schedule>();
 
@@ -27,13 +26,11 @@ export class ScheduleFormComponent implements OnInit {
     public delayList: Array<any>;
     public repeatList: Array<any>;
     public statusList: Array<any>;
-    public jobStatus;
 
     constructor(private modal: ModalService, private scheduleService: ScheduleService) {
     }
 
     async ngOnInit() {
-        this.jobStatus = JobStatus;
 
         this.delayList = [
             {text: 'Liên tục', value: 0},
@@ -54,7 +51,7 @@ export class ScheduleFormComponent implements OnInit {
             this.repeatList.push({text: `${i} giờ`, value: i * 60 * 60});
         }
 
-        this.schedule = new Schedule();
+        this.resetSchedule();
     }
 
     public showList() {
@@ -85,9 +82,12 @@ export class ScheduleFormComponent implements OnInit {
         }
 
         this.schedule.meta = JSON.parse(JSON.stringify(this.meta));
+        this.schedule.uid = this.account.id;
         this.schedule.accountName = this.account.name;
+        this.schedule.updatedAt = new Date();
 
         if(!this.schedule.id) {
+            this.schedule.createdAt = new Date();
             this.schedule.id = await this.scheduleService.add(this.schedule);
         } else {
             // check exist
@@ -96,10 +96,25 @@ export class ScheduleFormComponent implements OnInit {
                 await this.scheduleService.update(this.schedule.id, this.schedule);
             } else {
                 this.schedule.id = null;
+                this.schedule.createdAt = new Date();
                 this.schedule.id = await this.scheduleService.add(this.schedule);
             }
         }
         Toastr.success('Đặt lịch thành công!');
-        this.schedule = null;
+        this.resetSchedule();
+    }
+
+    private resetSchedule() {
+        this.schedule = Object.assign(Schedule.prototype, {
+            name: '',
+            uid: this.account.id,
+            scheduleType: this.type,
+            repeat: 0,
+            delay: 5,
+            startTime: new Date(),
+            endTime: new Date(),
+            active: true,
+            meta: {}
+        });
     }
 }
