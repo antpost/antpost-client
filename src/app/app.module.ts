@@ -65,6 +65,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { BookEffects } from './effects/book';
 import { CollectionEffects } from './effects/collection';
 import { GoogleBooksService } from './services/google-books';
+import { JoinedGroupEffects } from './effects/joined-group';
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -148,6 +149,7 @@ type StoreType = {
          */
         EffectsModule.run(BookEffects),
         EffectsModule.run(CollectionEffects),
+        EffectsModule.run(JoinedGroupEffects)
 
         /**
          * `provideDB` sets up @ngrx/db with the provided schema and makes the Database

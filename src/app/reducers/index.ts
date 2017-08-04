@@ -41,6 +41,8 @@ import * as fromSearch from './search';
 import * as fromBooks from './books';
 import * as fromCollection from './collection';
 import * as fromLayout from './layout';
+import * as fromJoinedGroups from './joined-group';
+import { getIsLoaded } from './joined-group';
 
 
 /**
@@ -48,11 +50,12 @@ import * as fromLayout from './layout';
  * our top level state interface is just a map of keys to inner state types.
  */
 export interface State {
-  search: fromSearch.State;
-  books: fromBooks.State;
-  collection: fromCollection.State;
-  layout: fromLayout.State;
-  router: fromRouter.RouterState;
+    search: fromSearch.State;
+    books: fromBooks.State;
+    collection: fromCollection.State;
+    layout: fromLayout.State;
+    router: fromRouter.RouterState;
+    joinedGroups: fromJoinedGroups.State
 }
 
 
@@ -64,22 +67,23 @@ export interface State {
  * the result from right to left.
  */
 const reducers = {
-  search: fromSearch.reducer,
-  books: fromBooks.reducer,
-  collection: fromCollection.reducer,
-  layout: fromLayout.reducer,
-  router: fromRouter.routerReducer,
+    search: fromSearch.reducer,
+    books: fromBooks.reducer,
+    collection: fromCollection.reducer,
+    layout: fromLayout.reducer,
+    router: fromRouter.routerReducer,
+    joinedGroups: fromJoinedGroups.reducer
 };
 
 const developmentReducer: ActionReducer<State> = compose(storeFreeze, combineReducers)(reducers);
 const productionReducer: ActionReducer<State> = combineReducers(reducers);
 
 export function reducer(state: any, action: any) {
-  if (environment.production) {
-    return productionReducer(state, action);
-  } else {
-    return developmentReducer(state, action);
-  }
+    if (environment.production) {
+        return productionReducer(state, action);
+    } else {
+        return developmentReducer(state, action);
+    }
 }
 
 
@@ -110,10 +114,10 @@ export const getBooksState = (state: State) => state.books;
  * The created selectors can also be composed together to select different
  * pieces of state.
  */
- export const getBookEntities = createSelector(getBooksState, fromBooks.getEntities);
- export const getBookIds = createSelector(getBooksState, fromBooks.getIds);
- export const getSelectedBookId = createSelector(getBooksState, fromBooks.getSelectedId);
- export const getSelectedBook = createSelector(getBooksState, fromBooks.getSelected);
+export const getBookEntities = createSelector(getBooksState, fromBooks.getEntities);
+export const getBookIds = createSelector(getBooksState, fromBooks.getIds);
+export const getSelectedBookId = createSelector(getBooksState, fromBooks.getSelectedId);
+export const getSelectedBook = createSelector(getBooksState, fromBooks.getSelected);
 
 
 /**
@@ -132,9 +136,8 @@ export const getSearchLoading = createSelector(getSearchState, fromSearch.getLoa
  * composes the search result IDs to return an array of books in the store.
  */
 export const getSearchResults = createSelector(getBookEntities, getSearchBookIds, (books, searchIds) => {
-  return searchIds.map(id => books[id]);
+    return searchIds.map(id => books[id]);
 });
-
 
 
 export const getCollectionState = (state: State) => state.collection;
@@ -144,11 +147,11 @@ export const getCollectionLoading = createSelector(getCollectionState, fromColle
 export const getCollectionBookIds = createSelector(getCollectionState, fromCollection.getIds);
 
 export const getBookCollection = createSelector(getBookEntities, getCollectionBookIds, (entities, ids) => {
-  return ids.map(id => entities[id]);
+    return ids.map(id => entities[id]);
 });
 
 export const isSelectedBookInCollection = createSelector(getCollectionBookIds, getSelectedBookId, (ids, selected) => {
-  return ids.indexOf(selected) > -1;
+    return ids.indexOf(selected) > -1;
 });
 
 /**
@@ -157,3 +160,10 @@ export const isSelectedBookInCollection = createSelector(getCollectionBookIds, g
 export const getLayoutState = (state: State) => state.layout;
 
 export const getShowSidenav = createSelector(getLayoutState, fromLayout.getShowSidenav);
+
+/**
+ * Joined Groups
+ */
+export const getJoinedGroupState = (state: State) => state.joinedGroups;
+export const getJoinedGroupsLoaded = createSelector(getJoinedGroupState, fromJoinedGroups.getIsLoaded);
+export const getJoinedGroups = createSelector(getJoinedGroupState, fromJoinedGroups.getJoinedGroups);

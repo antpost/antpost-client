@@ -1,6 +1,9 @@
 import {Component, OnInit, Input, Injector} from '@angular/core';
 import {Toastr} from '../../../core/helpers/toastr';
+import { Store } from '@ngrx/store';
 import { FacebookService } from '../../../services/facebook.service';
+import * as fromRoot from '../../../reducers';
+import * as joinedGroup from '../../../actions/joined-group';
 
 @Component({
     selector: 'app-group-selection',
@@ -19,14 +22,14 @@ export class GroupSelectionComponent implements OnInit {
     @Input()
     public onDismiss: Function;
 
-    constructor(private injector: Injector, private facebookService: FacebookService) {
+    constructor(private injector: Injector, private store: Store<fromRoot.State>, private facebookService: FacebookService) {
         this.onClose = this.injector.get('onClose');
         this.onDismiss = this.injector.get('onDismiss');
         this.selectedGroups = this.injector.get('groups') || [];
     }
 
     public async ngOnInit() {
-        this.facebookService.getJoinedGroups().subscribe(async (result: any) => {
+        /*this.facebookService.getJoinedGroups().subscribe(async (result: any) => {
             this.groups = result.data;
 
             // update selected groups
@@ -34,6 +37,20 @@ export class GroupSelectionComponent implements OnInit {
                  group.checked = !!this.selectedGroups.find(g => g.id == group.id);
             });
 
+        });*/
+        this.store.select(fromRoot.getJoinedGroupsLoaded)
+            .filter(s => !s).
+            subscribe((loaded) => {
+                this.store.dispatch(new joinedGroup.LoadAction());
+            });
+
+        this.store.select(fromRoot.getJoinedGroups).subscribe(groups => {
+            this.groups = groups;
+
+            // update selected groups
+            this.groups.forEach(group => {
+                group.checked = !!this.selectedGroups.find(g => g.id == group.id);
+            });
         });
     }
 
