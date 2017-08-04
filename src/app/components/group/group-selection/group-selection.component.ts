@@ -45,7 +45,7 @@ export class GroupSelectionComponent implements OnInit {
             });
 
         this.store.select(fromRoot.getJoinedGroups).subscribe(groups => {
-            this.groups = groups;
+            this.groups = groups.map(g => Object.assign({}, g));
 
             // update selected groups
             this.groups.forEach(group => {

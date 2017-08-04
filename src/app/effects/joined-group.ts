@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Actions, toPayload } from '@ngrx/effects';
+import {Actions, Effect, toPayload} from '@ngrx/effects';
 import { Observable } from 'rxjs/Observable';
 import { Action } from '@ngrx/store';
 import * as joinedGroup from '../actions/joined-group';
@@ -8,11 +8,12 @@ import { of } from 'rxjs/observable/of';
 
 @Injectable()
 export class JoinedGroupEffects {
+    @Effect()
     load$: Observable<Action> = this.actions$
         .ofType(joinedGroup.LOAD)
         .switchMap(() =>
             this.facebookService.getJoinedGroups()
-                .map(groups => new joinedGroup.LoadCompleteAction(groups))
+                .map(result => new joinedGroup.LoadCompleteAction(result.data))
                 .catch(error => of(new joinedGroup.LoadCompleteAction([])))
         );
 

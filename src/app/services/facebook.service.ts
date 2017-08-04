@@ -74,7 +74,7 @@ export class FacebookService extends ProxyService{
      * Get groups that joined by current user
      * @returns {Observable<any>}
      */
-    public getJoinedGroups(): Observable<boolean> {
+    public getJoinedGroups(): Observable<any> {
         let api = this.createApi('/me/groups');
         return this.post(api, 'GET', null);
     }

@@ -62,9 +62,6 @@ import { reducer } from './reducers';
 import { RouterStoreModule } from '@ngrx/router-store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
-import { BookEffects } from './effects/book';
-import { CollectionEffects } from './effects/collection';
-import { GoogleBooksService } from './services/google-books';
 import { JoinedGroupEffects } from './effects/joined-group';
 
 // Application wide providers
@@ -147,8 +144,6 @@ type StoreType = {
          *
          * See: https://github.com/ngrx/effects/blob/master/docs/api.md#run
          */
-        EffectsModule.run(BookEffects),
-        EffectsModule.run(CollectionEffects),
         EffectsModule.run(JoinedGroupEffects)
 
         /**
@@ -171,7 +166,6 @@ type StoreType = {
         LocalStorageService,
         NodePostService,
         ScheduleService,
-        GoogleBooksService,
         {provide: LocationStrategy, useClass: HashLocationStrategy},
         {
             provide: POPUP_CONTAINER,
