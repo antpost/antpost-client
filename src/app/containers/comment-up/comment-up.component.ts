@@ -15,7 +15,7 @@ import {ScheduleProgressComponent} from '../../common/schedule-progress/schedule
 import {IJob} from '../../core/jobs/iJob';
 import {CommentUpMeta} from '../../core/engine/meta/commentup.meta';
 import {AbstractScheduleComponent} from '../base/abstractSchedule.component';
-import {JobProgressComponent} from '../../components/common/job-progress/job-progress.component';
+import {JobProgressComponent} from '../../components/job/job-progress/job-progress.component';
 
 @Component({
     selector: 'comment-up',

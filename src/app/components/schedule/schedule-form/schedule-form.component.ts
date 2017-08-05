@@ -11,8 +11,8 @@ import {ScheduleService} from '../../../services/schedule.service';
 
 @Component({
     selector: 'schedule-form',
-    templateUrl: './schedule-form.component.html',
-    styleUrls: ['./schedule-form.component.css']
+    templateUrl: 'schedule-form.component.html',
+    styleUrls: ['schedule-form.component.css']
 })
 export class ScheduleFormComponent implements OnInit {
 

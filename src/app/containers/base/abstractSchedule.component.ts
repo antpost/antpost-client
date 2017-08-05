@@ -2,7 +2,7 @@ import {AppManager} from '../../core/appManager';
 import {FbAccount} from '../../models/fbaccount.model';
 import {IJob} from '../../core/jobs/iJob';
 import {ModalService} from '../../core/modal/modal.service';
-import {JobProgressComponent} from '../../components/common/job-progress/job-progress.component';
+import {JobProgressComponent} from '../../components/job/job-progress/job-progress.component';
 import {IModalOptions} from '../../core/modal/modalWrapper.component';
 import {Schedule} from '../../models/schedule.model';
 import {Toastr} from '../../core/helpers/toastr';
