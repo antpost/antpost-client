@@ -17,9 +17,9 @@ export function reducer(state = initialState, action: joinedGroup.Actions): Stat
             return state;
         case joinedGroup.LOAD_COMPLETE:
             return {
-                groups: action.playload,
+                groups: action.payload,
                 loaded: true
-            }
+            };
 
         default:
             return state;

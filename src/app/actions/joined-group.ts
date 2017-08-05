@@ -11,7 +11,7 @@ export class LoadAction implements Action {
 export class LoadCompleteAction implements Action {
     readonly type = LOAD_COMPLETE;
 
-    constructor(public playload: any) {
+    constructor(public payload: any) {
     }
 }
 

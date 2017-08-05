@@ -63,6 +63,7 @@ import { RouterStoreModule } from '@ngrx/router-store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
 import { JoinedGroupEffects } from './effects/joined-group';
+import {AccountEffects} from './effects/account';
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -144,7 +145,8 @@ type StoreType = {
          *
          * See: https://github.com/ngrx/effects/blob/master/docs/api.md#run
          */
-        EffectsModule.run(JoinedGroupEffects)
+        EffectsModule.run(JoinedGroupEffects),
+        EffectsModule.run(AccountEffects)
 
         /**
          * `provideDB` sets up @ngrx/db with the provided schema and makes the Database

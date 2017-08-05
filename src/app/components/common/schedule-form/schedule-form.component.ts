@@ -107,7 +107,7 @@ export class ScheduleFormComponent implements OnInit {
     private resetSchedule() {
         this.schedule = Object.assign(Schedule.prototype, {
             name: '',
-            uid: this.account.id,
+            //uid: this.account.id,
             scheduleType: this.type,
             repeat: 0,
             delay: 5,

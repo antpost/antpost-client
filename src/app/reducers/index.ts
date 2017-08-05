@@ -38,6 +38,7 @@ import { combineReducers } from '@ngrx/store';
  * notation packages up all of the exports into a single object.
  */
 import * as fromJoinedGroups from './joined-group';
+import * as fromAccount from './account';
 
 
 /**
@@ -45,7 +46,8 @@ import * as fromJoinedGroups from './joined-group';
  * our top level state interface is just a map of keys to inner state types.
  */
 export interface State {
-    joinedGroups: fromJoinedGroups.State
+    joinedGroups: fromJoinedGroups.State;
+    account: fromAccount.State;
 }
 
 
@@ -57,7 +59,8 @@ export interface State {
  * the result from right to left.
  */
 const reducers = {
-    joinedGroups: fromJoinedGroups.reducer
+    joinedGroups: fromJoinedGroups.reducer,
+    account: fromAccount.reducer
 };
 
 const developmentReducer: ActionReducer<State> = compose(storeFreeze, combineReducers)(reducers);
@@ -70,6 +73,10 @@ export function reducer(state: any, action: any) {
         return developmentReducer(state, action);
     }
 }
+
+export const getAccountState = (state: State) => state.account;
+export const getAccounts = createSelector(getAccountState, fromAccount.getAccounts);
+export const getDefaultAccount = createSelector(getAccountState, fromAccount.getDefault);
 
 /**
  * Joined Groups
