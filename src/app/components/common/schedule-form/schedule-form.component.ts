@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {IScheduleMeta} from '../../../core/scheduleEngine/meta/meta';
+import {IScheduleMeta} from '../../../core/engine/meta/meta';
 import {FbAccount} from '../../../models/fbaccount.model';
 import {Schedule} from '../../../models/schedule.model';
 import {JobStatus, ScheduleAction, ScheduleType} from '../../../models/enums';

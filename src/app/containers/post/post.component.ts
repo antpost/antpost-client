@@ -3,12 +3,12 @@ import {
     OnInit, ViewChild, ViewEncapsulation
 } from '@angular/core';
 import {PostService} from '../../services/post.service';
-import {PostFormComponent} from './postForm.component';
 import {ModalService} from '../../core/modal/modal.service';
 import {IModalOptions} from '../../core/modal/modalWrapper.component';
 import {Post} from '../../models/post.model';
 import {PostType} from '../../models/enums';
 import {Toastr} from '../../core/helpers/toastr';
+import {PostFormComponent} from '../../components/post/post-form/post-form.component';
 
 @Component({
     selector: 'post',

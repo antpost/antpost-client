@@ -1,8 +1,8 @@
-import {BaseScheduleEngine, IScheduleEngine} from "./baseScheduleEngine";
+import {IScheduleEngine, BaseEngine} from "./baseEngine";
 import {Schedule} from '../../models/schedule.model';
 import {IResNextData} from '../jobs/iJob';
 
-export class CommentScheduleEngine extends BaseScheduleEngine implements IScheduleEngine {
+export class CommentEngine extends BaseEngine implements IScheduleEngine {
     public static ENGINE_KEY = 'COMMENTENGINE';
 
     private isFirst: boolean = true;
@@ -12,7 +12,7 @@ export class CommentScheduleEngine extends BaseScheduleEngine implements ISchedu
     }
 
     public getId() {
-        return CommentScheduleEngine.ENGINE_KEY + (this.schedule.id || 0);
+        return CommentEngine.ENGINE_KEY + (this.schedule.id || 0);
     }
 
     public getTotal(): number {

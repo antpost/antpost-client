@@ -2,7 +2,7 @@ import {AppManager} from '../../core/appManager';
 import {FbAccount} from '../../models/fbaccount.model';
 import {IJob} from '../../core/jobs/iJob';
 import {ModalService} from '../../core/modal/modal.service';
-import {JobProgressComponent} from './job-progress/job-progress.component';
+import {JobProgressComponent} from '../../components/common/job-progress/job-progress.component';
 import {IModalOptions} from '../../core/modal/modalWrapper.component';
 import {Schedule} from '../../models/schedule.model';
 import {Toastr} from '../../core/helpers/toastr';
@@ -11,8 +11,7 @@ import {JobFactory} from '../../core/jobs/jobFactory';
 import {ServiceLocator} from '../../core/serviceLocator';
 import {ElementRef, Injector} from '@angular/core';
 import {Store} from '@ngrx/store';
-import * as fromRoot from '../../reducers';
-import {getDefaultAccount} from '../../reducers/index';
+import * as fromRoot from '../../reducers/index';
 
 export class AbstractScheduleComponent {
     public selectedAccount: FbAccount;
@@ -28,7 +27,7 @@ export class AbstractScheduleComponent {
         this.modal = ServiceLocator.injector.get(ModalService);
         this.store = ServiceLocator.injector.get(Store);
 
-        this.store.select(getDefaultAccount).subscribe((account) => {
+        this.store.select(fromRoot.getDefaultAccount).subscribe((account) => {
             this.selectedAccount = account;
         });
     }

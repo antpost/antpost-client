@@ -29,7 +29,7 @@ import {AuthService} from './services/auth.service';
 import '../styles/styles.scss';
 import '../styles/headings.css';
 import {AntPostModule} from './components/antpost.module';
-import {AntPostComponent} from './components/antpost.component';
+import {AntPostComponent} from './containers/antpost/antpost.component';
 import {SidebarModule} from './shared/sidebar/sidebar.module';
 import {HashLocationStrategy, LocationStrategy, CommonModule} from '@angular/common';
 import {NavbarModule} from './shared/navbar/navbar.module';

@@ -2,19 +2,19 @@ import {
     Component,
     OnInit, ViewChild, ViewEncapsulation, ElementRef, Input, Injector
 } from '@angular/core';
-import {PostService} from '../../services/post.service';
-import {Post} from '../../models/post.model';
-import {PostType} from '../../models/enums';
+import {PostService} from '../../../services/post.service';
+import {Post} from '../../../models/post.model';
+import {PostType} from '../../../models/enums';
 import {NotificationsService} from 'angular2-notifications/dist';
-import {Toastr} from '../../core/helpers/toastr';
-import {FacebookService} from '../../services/facebook.service';
+import {Toastr} from '../../../core/helpers/toastr';
+import {FacebookService} from '../../../services/facebook.service';
 import {FileRestrictions, SuccessEvent, FileInfo} from '@progress/kendo-angular-upload';
 
 @Component({
     selector: 'post-form',
     providers: [],
     styleUrls: [],
-    templateUrl: 'postForm.component.html',
+    templateUrl: 'post-form.component.html',
     encapsulation: ViewEncapsulation.None
 })
 export class PostFormComponent implements OnInit {

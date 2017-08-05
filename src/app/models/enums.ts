@@ -28,7 +28,7 @@ export enum ScheduleAction {
 }
 
 export enum ScheduleType {
-    Post = 1,
-    Join = 2,
+    PostGroup = 1,
+    JoinGroup = 2,
     Comment = 3
 }

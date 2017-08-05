@@ -22,7 +22,7 @@ export class AppRunner {
         let schedules = await this.schedulePostService.getActiveSchedules();
         if(schedules) {
             schedules.forEach((schedule) => {
-                let job = JobFactory.createScheduleJob(schedule, ScheduleType.Post);
+                let job = JobFactory.createScheduleJob(schedule, ScheduleType.PostGroup);
                 this.jobQueue.push(job);
             });
         }

@@ -4,7 +4,7 @@ import {
 } from '@angular/core';
 import {PostService} from '../../../services/post.service';
 import {ModalService} from '../../../core/modal/modal.service';
-import {PostSelectorComponent} from '../../post/postSelector.component';
+import {PostSelectorComponent} from '../../post/post-selector/post-selector.component';
 import {Post} from '../../../models/post.model';
 import {Toastr} from '../../../core/helpers/toastr';
 import {Group} from '../../../models/group.model';
@@ -89,7 +89,7 @@ export class GroupPostScheduleComponent implements OnInit {
         this.schedule.groups = groups;
         this.groupPostDetailComponent.refresh();
 
-        this.job = <ScheduleJob>JobFactory.createScheduleJob(this.schedule, ScheduleType.Post);
+        this.job = <ScheduleJob>JobFactory.createScheduleJob(this.schedule, ScheduleType.PostGroup);
 
         this.jobQueue.push(this.job);
 

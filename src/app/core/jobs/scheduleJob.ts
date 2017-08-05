@@ -1,5 +1,5 @@
 import {IJob, IResNextData} from "./iJob";
-import {IScheduleEngine} from "../scheduleEngine/baseScheduleEngine";
+import {IScheduleEngine} from "../engine/baseEngine";
 import {Observable, Subject} from 'rxjs';
 import {JobEmitType, JobStatus} from "../../models/enums";
 

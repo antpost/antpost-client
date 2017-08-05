@@ -1,37 +1,24 @@
-import {Component} from '@angular/core';
-import {PostComponent} from "./post/post.component";
-import {GroupPostScheduleComponent} from "./group/schedule/groupPostSchedule.component";
-import {HomeComponent} from './home/home.component';
-import {JoinGroupFormComponent} from './group/joinGroupForm/joinGroupForm.component';
-import {CommentUpComponent} from './group/commentUp/commentUp.component';
+import {Component, OnInit} from '@angular/core';
+import {CommentUpComponent} from '../comment-up/comment-up.component';
 
 @Component({
     selector: 'antpost',
     templateUrl: 'antpost.component.html'
 })
 
-export class AntPostComponent {
+export class AntPostComponent implements OnInit {
 
-    public tabs: any[] = [
-        {
-            title: 'Bình luận lên bài',
-            path: 'comment-up',
-            removable: true,
-            active: true,
-            componentData: {
-                component: CommentUpComponent,
-                inputs: {
-                    targetOverlay: 'comment-up',
-                }
-            }
-        }
-    ];
+    public tabs: any[] = [];
+
+    public ngOnInit() {
+
+    }
 
     public openTab(option: any) {
         // check tab opened
         let tab = this.tabs.find((item) => item.path == option.path);
         this.tabs.forEach((item) => item.active = false);
-        if(tab) {
+        if (tab) {
             // active tab
             tab.active = true;
         } else {
@@ -52,7 +39,7 @@ export class AntPostComponent {
         let active = tab.active;
         this.tabs.splice(this.tabs.indexOf(tab), 1);
 
-        if(this.tabs.length > 0 && active) {
+        if (this.tabs.length > 0 && active) {
             this.tabs[this.tabs.length - 1].active = true;
         }
     }

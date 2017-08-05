@@ -20,6 +20,10 @@ export class SidebarComponent implements OnInit {
     public ngOnInit() {
         $.getScript('assets/js/material-dashboard.js');
         this.menuItems = ROUTES.filter((menuItem) => menuItem);
+
+        // hard
+        this.goTo('comment-up');
+        this.goTo('post-group');
     }
 
     public goTo(path: string) {

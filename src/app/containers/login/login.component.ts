@@ -12,7 +12,7 @@ import {FbAccountService} from '../../services/fbaccount.service';
     selector: 'login',
     templateUrl: 'login.component.html',
     styleUrls: [
-        './login.component.css'
+        'login.component.css'
     ]
 })
 export class LoginComponent implements OnInit, OnDestroy {

@@ -2,14 +2,14 @@ import {
     Component,
     OnInit, ViewChild, ViewEncapsulation, Input, Injector
 } from '@angular/core';
-import {PostService} from '../../services/post.service';
-import {Post} from '../../models/post.model';
+import {PostService} from '../../../services/post.service';
+import {Post} from '../../../models/post.model';
 
 @Component({
     selector: 'post-selector',
     providers: [],
     styleUrls: [],
-    templateUrl: 'postSelector.component.html',
+    templateUrl: 'post-selector.component.html',
     encapsulation: ViewEncapsulation.None
 })
 export class PostSelectorComponent implements OnInit {

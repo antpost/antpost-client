@@ -3,9 +3,6 @@ import {FbAccountService} from '../../services/fbaccount.service';
 import {ServiceLocator} from '../serviceLocator';
 import {Schedule} from '../../models/schedule.model';
 import {FbAccount} from '../../models/fbaccount.model';
-import {__await} from 'tslib';
-import {createNgZone} from '@angular/platform-browser/testing/src/browser_util';
-import {NgZone} from '@angular/core';
 import {IResNextData} from '../jobs/iJob';
 
 export interface IScheduleEngine {
@@ -13,12 +10,11 @@ export interface IScheduleEngine {
     getId(): string;
     getNext(): IResNextData;
     doNext(): Promise<IResNextData>;
-    delay(callback: Function): void;
     init(): void;
     getTotal(): number;
 }
 
-export class BaseScheduleEngine {
+export class BaseEngine {
     public schedule: Schedule;
     protected facebookService: FacebookService;
     protected fbAccountService: FbAccountService;
