@@ -17,15 +17,15 @@ export const ROUTES: any[] = [
         icon: 'people',
         subroutes: [
             {path: 'post-group', title: 'Đăng nhóm', icon: 'send', class: '', component: GroupPostingComponent},
-            {path: 'post-group-history', title: 'Lịch sử đăng nhóm', icon: 'history', class: '', component: GroupPostHistoryComponent},
+            //{path: 'post-group-history', title: 'Lịch sử đăng nhóm', icon: 'history', class: '', component: GroupPostHistoryComponent},
             {path: 'join-group', title: 'Gia nhập nhóm', icon: 'perm_contact_calendar', class: '', component: GroupJoiningComponent},
-            {path: 'invite-friend', title: 'Mời bạn vào nhóm', icon: 'contacts', class: '', component: JoinGroupFormComponent},
+            //{path: 'invite-friend', title: 'Mời bạn vào nhóm', icon: 'contacts', class: '', component: JoinGroupFormComponent},
             {path: 'comment-up', title: 'Bình luận lên bài', icon: 'call_merge', class: '', component: CommentUpComponent},
         ]
     },
     {
         path: 'personal',
-        title: 'Cá nhân',
+        title: 'Nuôi Nick',
         icon: 'person_pin',
         subroutes: [
             {path: 'post-feed', title: 'Đăng bài', icon: 'send', class: '', component: GroupPostScheduleComponent}
@@ -44,6 +44,6 @@ export const ROUTES: any[] = [
         title: 'Tài khoản',
         icon: 'recent_actors'
     },
-    {path: 'post', title: 'Bài đăng', icon: 'content_paste', class: '', component: PostComponent},
+    {path: 'post', title: 'Bài đăng mẫu', icon: 'content_paste', class: '', component: PostComponent},
     {path: 'logout', title: 'Thoát', icon: 'logout', class: ''}
 ];

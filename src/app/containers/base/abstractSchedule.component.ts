@@ -12,20 +12,22 @@ import {ServiceLocator} from '../../core/serviceLocator';
 import {ElementRef, Injector} from '@angular/core';
 import {Store} from '@ngrx/store';
 import * as fromRoot from '../../reducers/index';
+import {FbAccountService} from '../../services/fbaccount.service';
 
 export class AbstractScheduleComponent {
     public selectedAccount: FbAccount;
     public meta: any;
-    public appManager: AppManager;
     protected modal: ModalService;
     protected store: Store<fromRoot.State>;
+
+    private fbAccountService: FbAccountService;
 
     constructor(protected elementRef: ElementRef,
                 private metaClass: Function,
                 public scheduleType: number) {
-        this.appManager = ServiceLocator.injector.get(AppManager);
         this.modal = ServiceLocator.injector.get(ModalService);
         this.store = ServiceLocator.injector.get(Store);
+        this.fbAccountService = ServiceLocator.injector.get(FbAccountService);
 
         this.store.select(fromRoot.getDefaultAccount).subscribe((account) => {
             this.selectedAccount = account;
@@ -35,9 +37,7 @@ export class AbstractScheduleComponent {
     public onUpdateSchedule(schedule: Schedule) {
         // update meta
         this.meta = Object.assign(this.metaClass.prototype, schedule.meta);
-
-        // update selected account
-
+        this.selectAccount(schedule.uid);
     }
 
     public startJob(jobTitle: string) {
@@ -49,14 +49,18 @@ export class AbstractScheduleComponent {
 
         let schedule = Object.assign(new Schedule(), {
             uid: this.selectedAccount.id,
-            delay: this.meta.delay,
+            delay: 0,
             scheduleType: this.scheduleType,
-            status: true,
             meta: this.meta
         });
 
         let job = <ScheduleJob>JobFactory.createScheduleJob(schedule, this.scheduleType);
         this.openJobProgress(job, jobTitle);
+    }
+
+    protected async selectAccount(uid: string) {
+        // update selected account
+        this.selectedAccount = await this.fbAccountService.get(uid);
     }
 
     /**

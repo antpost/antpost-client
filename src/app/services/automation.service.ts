@@ -47,10 +47,10 @@ export class AutomationService extends ProxyService {
      * @param post
      * @returns {Observable<any>}
      */
-    public publishPost(post: Post, nodeId: string) {
-        let procedure = AutomationUtils.createPostProcedure(post, nodeId, this.appManager.currentUser.cookies);
+    public publishPost(account: FbAccount, post: Post, nodeId: string): Promise<any> {
+        let procedure = AutomationUtils.createPostProcedure(post, nodeId, account.cookies);
 
-        return new Observable(observer => {
+        return new Promise<any>((resolve) => {
             this.simulate(procedure).subscribe((res) => {
                 if(res.status == 0) {
                     // parse post id
@@ -64,17 +64,16 @@ export class AutomationService extends ProxyService {
                         fbPostId = obj.mf_story_key;
                     }
 
-                    observer.next({
+                    resolve({
                         id: fbPostId,
                     });
-                    observer.complete();
                 } else {
                     let error = null;
                     if(post.type == PostType.Sale) {
                         error = 'Không phải nhóm bán hàng'
                     }
 
-                    observer.next({
+                    resolve({
                         error
                     });
                 }

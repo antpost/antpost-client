@@ -6,6 +6,8 @@ import {GroupSelectionComponent} from '../../components/group/group-selection/gr
 import {IModalOptions} from '../../core/modal/modalWrapper.component';
 import {Post} from '../../models/post.model';
 import {PostSelectorComponent} from '../../components/post/post-selector/post-selector.component';
+import {Schedule} from '../../models/schedule.model';
+import {PostService} from '../../services/post.service';
 
 @Component({
     selector: 'app-group-posting',
@@ -16,12 +18,20 @@ export class GroupPostingComponent extends AbstractScheduleComponent{
 
     public post: Post = new Post();
 
-    constructor(elementRef: ElementRef) {
+    constructor(elementRef: ElementRef, private postService: PostService) {
         super(elementRef, GroupPostingMeta, ScheduleType.PostGroup);
 
         this.meta = Object.assign(GroupPostingMeta.prototype, {
             groups: []
         });
+    }
+
+    public async onSelectSchedule(schedule: Schedule) {
+        this.onUpdateSchedule(schedule);
+        this.post = await this.postService.get(this.meta.postId);
+        if(!this.post) {
+            this.post = new Post();
+        }
     }
 
     public selectGroups() {
@@ -48,6 +58,7 @@ export class GroupPostingComponent extends AbstractScheduleComponent{
 
         dialog.then((result: any) => {
             this.post = result;
+            this.meta.postId = this.post.id;
         });
     }
 }

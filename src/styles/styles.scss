@@ -1,12 +1,10 @@
 /* this file will be extracted to main dist folder and is imported in index.html */
 /* This file is for setting global styles  */
 @import 'variables';
-
 // override fonts path to prevent build errors (or use resolve-url loader)
 //$roboto-font-path: "../../node_modules/materialize-css/fonts/roboto/";
 //
 //@import "~materialize-css/sass/materialize";
-
 @import "kendo.modify.css";
 
 html {
@@ -75,6 +73,12 @@ nav {
 .row {
   margin-bottom: 0px;
 }
+.w50 {
+  width: 50%;
+}
+.w25 {
+  width: 25%;
+}
 
 .sidebar .logo-img,
 .off-canvas-sidebar .logo-img {
@@ -131,12 +135,13 @@ nav {
 }
 
 .card.no-header {
-   margin: 0 0;
+  margin: 0 0;
 }
 
 .modal .modal-dialog {
   margin-top: 30px;
 }
+
 .modal-content {
   border-radius: 0px;
 }
@@ -164,6 +169,62 @@ nav {
 
 .close {
   font-size: 21px;
+}
+
+/* Post preview */
+.post-preview {
+  padding: 10px;
+}
+.post-preview .preview-header img {
+  width: 45px;
+  float: left;
+  border: 1px solid #ddd;
+}
+.post-preview .preview-header .box-info {
+  float: left;
+  margin-left: 7px;
+}
+.post-preview .preview-header .box-info .title {
+  font-weight: bold;
+}
+.post-preview .preview-header .box-info .desc {
+  color: #e3e3e3;
+}
+.post-preview .preview-content {
+  margin-top: 15px;
+}
+.post-preview .preview-content .text-message{
+  white-space: pre-line;
+}
+.post-preview .preview-content .line-no-text {
+  margin-bottom: 3px;
+  height: 13px;
+  background: #eee;
+}
+.post-preview .preview-content .box-preview-link {
+  border: 1px solid #ddd;
+}
+.post-preview .preview-content .box-preview-link {
+  margin-top: 15px;
+}
+.post-preview .preview-content .preview-box-image, .post-preview .preview-content .preview-box-video {
+  height: 350px;
+  background-size: cover;
+  background-position: center center;
+}
+.post-preview .preview-content .preview-footer-link {
+  padding: 10px;
+}
+.post-preview .preview-content .preview-box-caption {
+  margin-top: 10px;
+  display: block;
+}
+.post-preview .preview-content .preview-box-video {
+  width: 100%;
+  /*background-image: url(../images/bnt-play.png);*/
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: inherit;
 }
 
 /* POST */
@@ -201,6 +262,7 @@ nav {
   color: #9197a3;
   font-size: 12px;
 }
+
 .PreviewContent {
   max-height: 400px;
   overflow-y: scroll;
@@ -232,11 +294,26 @@ nav {
   margin: 0px;
 }
 
-.post .productname {font-weight: bold;height: 25px; width: 100%; display: inline-block;}
-.post .price {color: #71a830;height: 25px;
-  width: 100%; display: inline-block;}
-.post .location {color: #90949c;height: 25px;
-  width: 100%; display: inline-block;}
+.post .productname {
+  font-weight: bold;
+  height: 25px;
+  width: 100%;
+  display: inline-block;
+}
+
+.post .price {
+  color: #71a830;
+  height: 25px;
+  width: 100%;
+  display: inline-block;
+}
+
+.post .location {
+  color: #90949c;
+  height: 25px;
+  width: 100%;
+  display: inline-block;
+}
 
 .defaultName {
   background-color: #ededed;
@@ -324,7 +401,7 @@ nav {
 }
 
 .alert {
-   padding: 10px;
+  padding: 10px;
 }
 
 .progress {
@@ -332,49 +409,59 @@ nav {
 }
 
 .main-panel > .content {
-   margin-top: 0px;
+  margin-top: 0px;
 }
 
 .checkbox label {
-   color: inherit;
+  color: inherit;
 }
 
 .sidebar .nav [data-toggle="collapse"] ~ div > ul > li > a, .off-canvas-sidebar .nav [data-toggle="collapse"] ~ div > ul > li > a {
   padding-left: 40px;
 }
+
 .sidebar .nav li > a, .off-canvas-sidebar .nav li > a {
   margin: 0px 0px 0;
 }
+
 .sidebar .nav li:first-child > a, .off-canvas-sidebar .nav li:first-child > a {
   margin: 0 0px;
 }
+
 .sidebar .nav, .off-canvas-sidebar .nav {
-   margin-top: 0px;
+  margin-top: 0px;
 }
+
 .custom-card {
   border: 1px solid #ddd;
   border-left: 3px solid #F44336;
 }
+
 .card .body {
   font-size: 12px;
   color: #555;
   padding: 20px;
 }
+
 .mb0 {
-  margin-bottom: 0!important;
+  margin-bottom: 0 !important;
 }
+
 .mt15 {
-  margin-top: 12px!important;
+  margin-top: 12px !important;
 }
+
 .input-group {
   width: 100%;
   margin-bottom: 15px;
 }
+
 .input-group {
   position: relative;
   display: table;
   border-collapse: separate;
 }
+
 .card .body .col-xs-6, .card .body .col-sm-6, .card .body .col-md-6, .card .body .col-lg-6 {
   margin-bottom: 20px;
 }
@@ -397,13 +484,16 @@ nav {
 .swal2-container {
   z-index: 3000;
 }
+
 .swal2-modal h2 {
   font-size: 23px;
   line-height: 40px;
 }
+
 .swal2-modal .swal2-content {
   font-size: 15px;
 }
+
 /*.swal2-icon.swal2-warning {
   font-size: 33px;
   line-height: 66px;
@@ -427,6 +517,7 @@ nav {
   min-height: calc(100vh - 123px);
   padding-top: 20px;
 }
+
 .progress {
   margin-bottom: 10px;
 }

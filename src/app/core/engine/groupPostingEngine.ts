@@ -5,14 +5,21 @@ import {JobStatus, PostType} from '../../models/enums';
 import {Schedule} from '../../models/schedule.model';
 import {IResNextData} from '../jobs/iJob';
 import {Post} from '../../models/post.model';
+import {PostService} from '../../services/post.service';
+import {ServiceLocator} from '../serviceLocator';
 
 export class GroupPostingEngine extends BaseEngine implements IScheduleEngine {
     public static ENGINE_KEY = 'POSTENGINE';
 
+    public post: Post;
     private isFirst: boolean = true;
+
+    private postService: PostService;
 
     constructor(schedule: Schedule) {
         super(schedule);
+
+        this.postService = ServiceLocator.injector.get(PostService);
     }
 
     public getId() {
@@ -24,7 +31,7 @@ export class GroupPostingEngine extends BaseEngine implements IScheduleEngine {
     }
 
     public getNext(): any {
-        let group = null;
+        let group = this.getNextGroup();
         return group ? {
             id: group.id,
             name: group.name,
@@ -40,7 +47,7 @@ export class GroupPostingEngine extends BaseEngine implements IScheduleEngine {
                     id: group.id,
                     name: group.name,
                     done: true,
-                    message: "ok"
+                    message: group.fbPostId ? 'Thành công' : group.error
                 } as IResNextData);
 
             }, this.isFirst ? 0 : this.schedule.delay * 1000);
@@ -52,43 +59,36 @@ export class GroupPostingEngine extends BaseEngine implements IScheduleEngine {
      * @returns {Promise<void>}
      */
     private postGroup(): Promise<any> {
-        return new Promise<any>((resolve, reject) => {
-            //let group = this.schedule.findUnposted();
-            let group;
+        return new Promise<any>(async (resolve, reject) => {
+            let group = this.getNextGroup();
 
-            if(group) {
-                let post: Post;
-                let observable = null;
-                switch (post.type) {
-                    case PostType.Message, PostType.Link:
-                        observable = this.facebookService.postToNode(group.id, post);
-                        break;
-
-                    case PostType.Sale:
-                        //observable = this.facebookService.publishPost(post, group.id);
-                        break;
-                }
-
-                observable.subscribe(async (result) => {
-                    this.isFirst = false;
-
-                    let nodePost = {
-                        scheduleId: this.schedule.id,
-                        nodeId: group.id,
-                        postId: this.schedule.meta.postId,
-                        fbPostId: result.id,
-                        error: result.error,
-                        timePosted: new Date()
-                    } as NodePost;
-
-                    //this.schedule.nodePosts = this.schedule.nodePosts || [];
-                    //this.schedule.nodePosts.push(nodePost);
-
-                    //await this.nodePostService.add(nodePost);
-
-                    resolve(nodePost);
-                });
+            if(!this.post) {
+                this.post = await this.postService.get(this.schedule.meta.postId);
             }
+
+            let promise = null;
+            switch (this.post.type) {
+                case PostType.Message:
+                case PostType.Link:
+                    promise = this.facebookService.postToNode(this.account, this.post, group.id);
+                    break;
+
+                case PostType.Sale:
+                    promise = this.facebookService.publishPost(this.account, this.post, group.id);
+                    break;
+            }
+
+            promise.then(async (result) => {
+                group.status = 1;
+                group.fbPostId = result.id;
+                group.error = result.error;
+
+                resolve(group);
+            });
         });
+    }
+
+    private getNextGroup() {
+        return this.schedule.meta.groups.find(group => !group.status);
     }
 }

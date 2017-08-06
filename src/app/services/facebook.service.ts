@@ -85,16 +85,27 @@ export class FacebookService extends ProxyService{
      * @param post
      * @returns {Observable<any>}
      */
-    public postToNode(nodeId: string, post: Post): Observable<any> {
-        let api = this.createApi(`/${nodeId}/feed`);
+    public postToNode(account: FbAccount, post: Post, nodeId: string): Promise<any> {
+        let api = this.createApi(`/${nodeId}/feed`, null, account);
 
         let data = {
-            access_token: this.getAcessToken(),
+            access_token: account.token,
             message: post.message,
             link: post.linkUrl
         };
 
-        return this.post(api, 'POST', data);
+        return this.postAsync(api, 'POST', data);
+    }
+
+    /**
+     *
+     * @param {FbAccount} account
+     * @param {Post} post
+     * @param {string} nodeId
+     * @returns {Promise<any>}
+     */
+    public publishPost(account: FbAccount, post: Post, nodeId: string): Promise<any> {
+        return this.automationService.publishPost(account, post, nodeId);
     }
 
     /**
@@ -378,6 +389,10 @@ export class FacebookService extends ProxyService{
             }).catch((error: Response) => {
                 return Observable.throw(error.json().error || 'Server error');
             });
+    }
+
+    private postAsync(api: string, method: string, data?: any): Promise<any> {
+        return this.post(api, method, data).toPromise();
     }
 
     /**

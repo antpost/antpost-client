@@ -1,4 +1,4 @@
-<div class="row" overlayTarget="comment-up">
+<div class="row" overlayTarget="group-posting">
 	<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 		<div class="ant-card big-card">
 			<div class="body pt0">
@@ -17,8 +17,8 @@
 							</button>
 						</div>
 						<div class="row ">
-							<button class="btn btn-info btn-sm pull-right" (click)="selectPost()"><i class="material-icons">content_paste</i>
-								Chọn bài viết
+							<button class="btn btn-success btn-xs pull-right" (click)="selectPost()" style="margin-top: 15px; margin-right: 10px;">
+								<i class="fa fa-file-text-o"></i> Chọn bài viết
 							</button>
 							<post-preview [post]="post" [account]="selectedAccount"></post-preview>
 						</div>
@@ -40,7 +40,7 @@
 						<schedule-form [meta]="meta"
 									   [account]="selectedAccount"
 									   [type]="scheduleType"
-									   (onUpdate)="onUpdateSchedule($event)"></schedule-form>
+									   (onUpdate)="onSelectSchedule($event)"></schedule-form>
 					</div>
 				</div>
 			</div>

@@ -58,7 +58,7 @@ export class ScheduleFormComponent implements OnInit {
         let dialog = this.modal.open({
             component: ScheduleListComponent,
             inputs: {
-                scheduleType: ScheduleType.Comment
+                scheduleType: this.type
             },
             title: 'Chọn lịch đăng'
         } as IModalOptions);

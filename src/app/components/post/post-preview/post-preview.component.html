@@ -1,17 +1,56 @@
 <div class="post-preview">
+	<div class="preview-header">
+		<img src="http://graph.facebook.com/{{account?.id}}/picture?redirect=1&amp;height=40&amp;width=40&amp;type=normal" data-pin-nopin="true">
+		<div class="box-info">
+			<div class="title">{{account?.name}}</div>
+			<div class="desc">Just now <i class="fa fa-globe" aria-hidden="true"></i></div>
+		</div>
+		<div class="clearfix"></div>
+	</div>
+	<div class="preview-content">
+		<div *ngIf="post.type == postType.Message || !post.type">
+			<div class="data-message">
+				<span class="text-message">{{post.message}}</span>
+				<div class="line-no-text" *ngIf="!post.message"></div>
+				<div class="line-no-text" *ngIf="!post.message"></div>
+				<div class="line-no-text w50" *ngIf="!post.message"></div>
+			</div>
+		</div>
+
+		<div class="preview-box preview-box-2 box-hide" style="display: none;">
+			<div class="box-preview-link">
+				<div class="bg-grey preview-box-image"></div>
+				<div class="preview-footer-link">
+					<div class="description-block">
+						<h5 class="description-header preview-box-title"><div class="line-no-text"></div></h5>
+						<span class="description-text preview-box-desc"><div class="line-no-text"></div><div class="line-no-text w50"></div></span>
+						<span class="description-caption preview-box-caption"><div class="line-no-text w25"></div></span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="preview-box preview-box-3 box-hide" style="display: none;">
+			<div class="box-preview-link">
+				<div class="bg-grey preview-box-image"></div>
+			</div>
+		</div>
+		<div class="preview-box preview-box-4 box-hide" style="display: none;">
+			<div class="box-preview-link">
+				<div class="bg-grey preview-box-video">
+
+				</div>
+			</div>
+		</div>
+		<div class="preview-box preview-box-5 box-hide" style="display: none;">
+			<div class="box-preview-link">
+				<img src="skins/news/images/preview5.png" style="width: 100%;">
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="post-preview">
 	<div class="post">
-		<div class="PreviewPoster">
-			<img
-				src="http://graph.facebook.com/{{account?.id}}/picture?redirect=1&amp;height=40&amp;width=40&amp;type=normal"
-				style="vertical-align:top;" onerror="this.src = 'theme/default/images/facebookUser.jpg'">
-			<span class="userFullName">{{account?.name}}</span>
-			<span class="postPreviewDetails">
-					vừa xong				</span>
-			<div class="clear"></div>
-		</div>
-		<div *ngIf="post.type == postType.Message" class="PreviewContent">
-			<p class="message line-breaker"><span class="defaultMessage" *ngIf="!post.message"></span>{{post.message}}</p>
-		</div>
 
 		<div *ngIf="post.type == postType.Link" class="PreviewContent">
 			<p class="message line-breaker"><span class="defaultMessage" *ngIf="!post.message"></span>{{post.message}}</p>
