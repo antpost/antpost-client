@@ -39,6 +39,7 @@ import { combineReducers } from '@ngrx/store';
  */
 import * as fromJoinedGroups from './joined-group';
 import * as fromAccount from './account';
+import * as fromGroupSearch from './group-search';
 
 
 /**
@@ -46,8 +47,9 @@ import * as fromAccount from './account';
  * our top level state interface is just a map of keys to inner state types.
  */
 export interface State {
-    joinedGroups: fromJoinedGroups.State;
     account: fromAccount.State;
+    joinedGroups: fromJoinedGroups.State;
+    groupSearch: fromGroupSearch.State;
 }
 
 
@@ -60,7 +62,8 @@ export interface State {
  */
 const reducers = {
     joinedGroups: fromJoinedGroups.reducer,
-    account: fromAccount.reducer
+    account: fromAccount.reducer,
+    groupSearch: fromGroupSearch.reducer
 };
 
 const developmentReducer: ActionReducer<State> = compose(storeFreeze, combineReducers)(reducers);
@@ -82,5 +85,11 @@ export const getDefaultAccount = createSelector(getAccountState, fromAccount.get
  * Joined Groups
  */
 export const getJoinedGroupState = (state: State) => state.joinedGroups;
-export const getJoinedGroupsLoaded = createSelector(getJoinedGroupState, fromJoinedGroups.getIsLoaded);
-export const getJoinedGroups = createSelector(getJoinedGroupState, fromJoinedGroups.getJoinedGroups);
+export const getJoinedGroups = (uid: string) => {
+    return createSelector(getJoinedGroupState, fromJoinedGroups.getJoinedGroups(uid));
+};
+
+
+export const getGroupSearchState = (state: State) => state.groupSearch;
+export const getGroupSearchQuery = createSelector(getGroupSearchState, fromGroupSearch.getQuery);
+export const getGroupSearchResult = createSelector(getGroupSearchState, fromGroupSearch.getGroups);

@@ -1,0 +1,40 @@
+<div class="row">
+	<div class="col-md-8">
+		<div class="search form-group">
+			<div class="form-inline">
+				<div class="form-group">
+					<input type="text" class="form-control" placeholder="Tên nhóm" [(ngModel)]="term">
+				</div>
+				<button class="btn btn-primary btn-sm" (click)="search()"><i class="material-icons">search</i> Tìm kiếm</button>
+			</div>
+		</div>
+		<kendo-grid [data]="groups" [height]="420">
+			<kendo-grid-column field="name" title="Nhóm" width="200">
+				<ng-template kendoGridCellTemplate let-dataItem>
+					<a target="_blank" href="https://facebook.com/{{dataItem.id}}">{{dataItem.name}}</a>
+				</ng-template>
+			</kendo-grid-column>
+			<kendo-grid-column field="privacy" title="Trạng thái" width="80">
+			</kendo-grid-column>
+			<kendo-grid-column field="members" title="Thành viên" width="80">
+			</kendo-grid-column>
+			<kendo-grid-column field="hasPendingPost" title="Duyệt bài" width="80">
+			</kendo-grid-column>
+			<kendo-grid-column field="checked" title="" width="25">
+				<ng-template kendoGridCellTemplate let-dataItem>
+					<a class="text-primary" (click)="selectGroup(dataItem)"><i class="fa fa-sign-in" aria-hidden="true"></i></a>
+				</ng-template>
+			</kendo-grid-column>
+			<kendo-grid-messages
+				noRecords="Không tìm thấy nhóm nào.">
+			</kendo-grid-messages>
+		</kendo-grid>
+	</div>
+	<div class="col-md-4">
+		<selected-groups [groups]="selectedGroups"></selected-groups>
+	</div>
+</div>
+<div class="modal-footer">
+	<button class="btn btn-primary btn-sm" (click)="save()"><i class="fa fa-thumbs-o-up"></i> Xong</button>
+	<button class="btn btn-sm" (click)="cancel()"><i class="fa fa-window-close-o"></i> Hủy bỏ</button>
+</div>

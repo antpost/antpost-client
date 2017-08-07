@@ -15,6 +15,13 @@ a {
   cursor: pointer;
 }
 
+a.text-primary {
+  color: #286090;
+}
+a.text-danger {
+  color: #f44336;
+}
+
 html.login {
   display: table;
   margin: auto;
@@ -514,8 +521,8 @@ nav {
 .overlayTarget {
   position: relative;
   display: block;
-  min-height: calc(100vh - 123px);
-  padding-top: 20px;
+  min-height: calc(100vh - 100px);
+  padding-top: 15px;
 }
 
 .progress {
@@ -527,11 +534,10 @@ nav {
   min-height: 50px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
   position: relative;
-  margin-bottom: 30px;
 }
 
 .ant-card.big-card {
-  min-height: 500px;
+  min-height: calc(100vh - 80px);
 }
 
 .ant-card .body {

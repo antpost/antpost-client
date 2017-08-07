@@ -1,0 +1,19 @@
+<div class="search form-group">
+	<div class="form-inline">
+		<button class="btn btn-success btn-simple btn-sm" (click)="clear()"><i class="fa fa-times"></i> Xóa tất cả</button>
+	</div>
+</div>
+<kendo-grid
+	[data]="groups" [height]="420"
+>
+	<kendo-grid-column field="name" title="Nhóm được chọn">
+	</kendo-grid-column>
+	<kendo-grid-column title="" [width]="40">
+		<ng-template kendoGridCellTemplate let-dataItem>
+			<a class="text-danger" (click)="removeGroup(dataItem)"><i class="fa fa-close"></i></a>
+		</ng-template>
+	</kendo-grid-column>
+	<kendo-grid-messages
+		noRecords="Bạn chưa chọn nhóm nào.">
+	</kendo-grid-messages>
+</kendo-grid>

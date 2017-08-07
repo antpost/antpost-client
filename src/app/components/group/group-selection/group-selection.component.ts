@@ -4,6 +4,7 @@ import { Store } from '@ngrx/store';
 import { FacebookService } from '../../../services/facebook.service';
 import * as fromRoot from '../../../reducers';
 import * as joinedGroup from '../../../actions/joined-group';
+import {FbAccount} from '../../../models/fbaccount.model';
 
 @Component({
     selector: 'app-group-selection',
@@ -13,6 +14,7 @@ import * as joinedGroup from '../../../actions/joined-group';
 export class GroupSelectionComponent implements OnInit {
 
     public groups: Array<any> = [];
+    public account: FbAccount;
     public selectedGroups: Array<any> = [];
     public isCheckAll: boolean = false;
 
@@ -26,31 +28,27 @@ export class GroupSelectionComponent implements OnInit {
         this.onClose = this.injector.get('onClose');
         this.onDismiss = this.injector.get('onDismiss');
         this.selectedGroups = this.injector.get('groups') || [];
+        this.account = this.injector.get('account') || [];
     }
 
     public async ngOnInit() {
-        /*this.facebookService.getJoinedGroups().subscribe(async (result: any) => {
-            this.groups = result.data;
-
-            // update selected groups
-            this.groups.forEach(group => {
-                 group.checked = !!this.selectedGroups.find(g => g.id == group.id);
-            });
-
-        });*/
-        this.store.select(fromRoot.getJoinedGroupsLoaded)
+        /*this.store.select(fromRoot.getJoinedGroupsLoaded)
             .filter(s => !s).
             subscribe((loaded) => {
                 this.store.dispatch(new joinedGroup.LoadAction());
-            });
+            });*/
 
-        this.store.select(fromRoot.getJoinedGroups).subscribe(groups => {
-            this.groups = groups.map(g => Object.assign({}, g));
+        this.store.select(fromRoot.getJoinedGroups(this.account.id)).subscribe(groups => {
+            if(!groups) {
+                this.store.dispatch(new joinedGroup.LoadAction(this.account));
+            } else {
+                this.groups = groups.map(g => Object.assign({}, g));
 
-            // update selected groups
-            this.groups.forEach(group => {
-                group.checked = !!this.selectedGroups.find(g => g.id == group.id);
-            });
+                // update selected groups
+                this.groups.forEach(group => {
+                    group.checked = !!this.selectedGroups.find(g => g.id == group.id);
+                });
+            }
         });
     }
 
@@ -71,20 +69,7 @@ export class GroupSelectionComponent implements OnInit {
      * Get newest groups from facebook and reload table
      */
     public reload() {
-        this.facebookService.getJoinedGroups().subscribe(async (result: any) => {
-            let list = result.data as Array<any> || [];
-
-            // update members from old groups
-            list.forEach((item) => {
-                let existing =  this.groups.find((group) => group.id == item.id);
-                if(existing) {
-                    item.members = existing.members;
-                }
-            });
-
-            this.groups = list;
-
-        });
+        this.store.dispatch(new joinedGroup.LoadAction(this.account));
     }
 
     public loadMembers() {

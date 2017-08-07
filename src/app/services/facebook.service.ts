@@ -74,9 +74,9 @@ export class FacebookService extends ProxyService{
      * Get groups that joined by current user
      * @returns {Observable<any>}
      */
-    public getJoinedGroups(): Observable<any> {
-        let api = this.createApi('/me/groups');
-        return this.post(api, 'GET', null);
+    public getJoinedGroups(account: FbAccount): Promise<any> {
+        let api = this.createApi('/me/groups', null, account);
+        return this.postAsync(api, 'GET', null);
     }
 
     /**
@@ -125,20 +125,15 @@ export class FacebookService extends ProxyService{
      * @param keyword
      * @returns
      */
-    public searchGroup(keyword: string): Observable<any> {
-        return new Observable(observer => {
-            let params = {
-                type: 'group',
-                limit: 5000,
-                offset: 0,
-                q: keyword
-            };
-            // simulate login facebook
-            this.searchGraph(params).subscribe((res) => {
-                observer.next(res.data);
-                observer.complete();
-            });
-        });
+    public searchGroup(account: FbAccount, keyword: string): Promise<any> {
+        let params = {
+            type: 'group',
+            limit: 5000,
+            offset: 0,
+            q: keyword
+        };
+        // simulate login facebook
+        return this.searchGraph(account, params);
     }
 
     /**
@@ -400,8 +395,8 @@ export class FacebookService extends ProxyService{
      * @param params
      * @returns {Observable<any>}
      */
-    private searchGraph(params: any): Observable<any> {
-        let api = this.createApi('/search', params);
-        return this.post(api, 'GET', null);
+    private searchGraph(account: FbAccount, params: any): Promise<any> {
+        let api = this.createApi('/search', params, account);
+        return this.postAsync(api, 'GET', null);
     }
 }

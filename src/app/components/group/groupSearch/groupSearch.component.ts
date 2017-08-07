@@ -28,15 +28,15 @@ export class GroupSearchComponent implements OnInit {
             return;
         }
 
-        if(!this.joinedGroups) {
-            this.facebookService.getJoinedGroups().subscribe(async (result: any) => {
-                this.joinedGroups = result.data;
-
-                this.loadGroup(this.term);
-            });
-        } else {
-             this.loadGroup(this.term);
-        }
+        // if(!this.joinedGroups) {
+        //     this.facebookService.getJoinedGroups(null).subscribe(async (result: any) => {
+        //         this.joinedGroups = result.data;
+        //
+        //         this.loadGroup(this.term);
+        //     });
+        // } else {
+        //      this.loadGroup(this.term);
+        // }
     }
 
     public getGroups() {
@@ -48,10 +48,10 @@ export class GroupSearchComponent implements OnInit {
     }
 
     private loadGroup(term: string) {
-        this.facebookService.searchGroup(this.term).subscribe((result: any) => {
-            let joinedIds = this.joinedGroups.map(group => group.id);
-
-            this.groups = result.filter(g => joinedIds.indexOf(g.id) < 0);
-        });
+        // this.facebookService.searchGroup(null, this.term).subscribe((result: any) => {
+        //     let joinedIds = this.joinedGroups.map(group => group.id);
+        //
+        //     this.groups = result.filter(g => joinedIds.indexOf(g.id) < 0);
+        // });
     }
 }

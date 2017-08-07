@@ -14,7 +14,7 @@ import {GroupPostDetailComponent} from './components/group/schedule/groupPostDet
 import {JoinGroupFormComponent} from './components/group/joinGroupForm/joinGroupForm.component';
 import {GroupSearchComponent} from './components/group/groupSearch/groupSearch.component';
 import {CommentUpComponent} from './containers/comment-up/comment-up.component';
-import {SelectedGroupsComponent} from './components/group/selectedGroups/selectedGroups.component';
+import {SelectedGroupsComponent} from './components/group/selected-groups/selected-groups.component';
 import {PostTypePipe} from './pipes/postType.pipe';
 import {ScheduleStatusPipe} from './pipes/scheduleStatus.pipe';
 import {GroupSelectionComponent} from './components/group/group-selection/group-selection.component';
@@ -23,6 +23,7 @@ import {ScheduleFormComponent} from './components/schedule/schedule-form/schedul
 import {JobProgressComponent} from './components/job/job-progress/job-progress.component';
 import {GroupPostingComponent} from './containers/group-posting/group-posting.component';
 import {GroupJoiningComponent} from './containers/group-joining/group-joining.component';
+import {GroupFilterComponent} from './components/group/group-filter/group-filter.component';
 
 export const ROUTES: Routes = [
      {path: 'login', component: LoginComponent},
@@ -55,7 +56,8 @@ export const MODULE_COMPONENTS = [
     GroupSelectionComponent,
     ScheduleListComponent,
     ScheduleFormComponent,
-    JobProgressComponent
+    JobProgressComponent,
+    GroupFilterComponent
 ];
 
 export const PIPES = [

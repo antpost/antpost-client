@@ -1,15 +1,47 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, ElementRef, OnInit} from '@angular/core';
+import {ScheduleType} from '../../models/enums';
+import {GroupJoiningMeta} from '../../core/engine/meta/group-joining.meta';
+import {AbstractScheduleComponent} from '../base/abstractSchedule.component';
+import {IModalOptions} from '../../core/modal/modalWrapper.component';
+import {GroupFilterComponent} from '../../components/group/group-filter/group-filter.component';
 
 @Component({
-  selector: 'app-group-joining',
-  templateUrl: './group-joining.component.html',
-  styleUrls: ['./group-joining.component.css']
+    selector: 'group-joining',
+    templateUrl: './group-joining.component.html',
+    styleUrls: ['./group-joining.component.css']
 })
-export class GroupJoiningComponent implements OnInit {
+export class GroupJoiningComponent extends AbstractScheduleComponent{
 
-  constructor() { }
+    public privacyList: Array<any> = [
+        { text: "Nhóm công khai", value: 'OPEN' },
+        { text: "Nhóm kín", value: 'CLOSED' },
+        { text: "Nhóm bí mật", value: 'SECRET' }
+    ];
+    public joinForm: any;
+    public locales: Array<any>;
 
-  ngOnInit() {
-  }
+    constructor(elementRef: ElementRef) {
+        super(elementRef, GroupJoiningMeta, ScheduleType.JoinGroup);
 
+        this.meta = Object.assign(GroupJoiningMeta.prototype, {
+            groups: []
+        });
+    }
+
+    public selectGroups() {
+        let dialog = this.modal.open({
+            component: GroupFilterComponent,
+            inputs: {
+                groups: this.meta.groups.map(g => Object.assign({}, g)),
+                account: this.selectedAccount
+            },
+            title: 'Chọn nhóm'
+        } as IModalOptions);
+
+        dialog.then((result) => {
+            this.meta.groups = result.map(g => {
+                return {id: g.id, name: g.name};
+            });
+        });
+    }
 }

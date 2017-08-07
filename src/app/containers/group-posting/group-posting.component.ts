@@ -38,7 +38,8 @@ export class GroupPostingComponent extends AbstractScheduleComponent{
         let dialog = this.modal.open({
             component: GroupSelectionComponent,
             inputs: {
-                groups: this.meta.groups
+                groups: this.meta.groups,
+                account: this.selectedAccount
             },
             title: 'Chọn nhóm'
         } as IModalOptions);

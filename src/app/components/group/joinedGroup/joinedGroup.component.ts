@@ -32,37 +32,37 @@ export class JoinedGroupComponent implements OnInit {
     }
 
     public async ngOnInit() {
-        this.facebookService.getJoinedGroups().subscribe(async (result: any) => {
-            this.groups = result.data;
-
-            // save to db
-            // await this.groupService.addAll(this.groups);
-            // localStorage.setItem('group', '1');
-            this.checkAll(true);
-        });
+        // this.facebookService.getJoinedGroups(null).subscribe(async (result: any) => {
+        //     this.groups = result.data;
+        //
+        //     // save to db
+        //     // await this.groupService.addAll(this.groups);
+        //     // localStorage.setItem('group', '1');
+        //     this.checkAll(true);
+        // });
     }
 
     /**
      * Get newest groups from facebook and reload table
      */
     public reload() {
-        this.facebookService.getJoinedGroups().subscribe(async (result: any) => {
-            let list = result.data as Array<Group> || [];
-
-            // update members from old groups
-            list.forEach((item) => {
-                let existing =  this.groups.find((group) => group.id == item.id);
-                if(existing) {
-                    item.members = existing.members;
-                }
-            });
-
-            this.groups = list;
-
-            // update to db
-            //this.groupService.addAll(this.groups);
-
-        });
+        // this.facebookService.getJoinedGroups(null).subscribe(async (result: any) => {
+        //     let list = result.data as Array<Group> || [];
+        //
+        //     // update members from old groups
+        //     list.forEach((item) => {
+        //         let existing =  this.groups.find((group) => group.id == item.id);
+        //         if(existing) {
+        //             item.members = existing.members;
+        //         }
+        //     });
+        //
+        //     this.groups = list;
+        //
+        //     // update to db
+        //     //this.groupService.addAll(this.groups);
+        //
+        // });
     }
 
     public loadMembers() {
