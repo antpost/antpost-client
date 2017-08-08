@@ -107,9 +107,9 @@ export class AutomationService extends ProxyService {
         });
     }
 
-    public viewGroupInfo(groupId: string): Observable<any> {
+    public viewGroupInfo(account: FbAccount, groupId: string): Promise<any> {
         let procedure = new AutomationReq()
-            .access(`${this.mbasicUrl}/groups/${groupId}?view=info`, this.appManager.currentUser.cookies)
+            .access(`${this.mbasicUrl}/groups/${groupId}?view=info`, account.cookies)
             .responseContent('#root');
 
         return new Observable(observer => {
@@ -134,7 +134,7 @@ export class AutomationService extends ProxyService {
                     observer.complete();
                 }
             });
-        });
+        }).toPromise();
     }
 
     /**
@@ -142,9 +142,9 @@ export class AutomationService extends ProxyService {
      * @param groupId
      * @returns {Observable<any>}
      */
-    public checkPendingPost(groupId: string): Observable<any> {
+    public checkPendingPost(account: FbAccount, groupId: string): Promise<any> {
         let procedure = new AutomationReq()
-            .access(`${this.mbasicUrl}/groups/${groupId}/madminpanel`, this.appManager.currentUser.cookies)
+            .access(`${this.mbasicUrl}/groups/${groupId}/madminpanel`, account.cookies)
             .responseContent('.bz');
 
         return new Observable(observer => {
@@ -157,7 +157,7 @@ export class AutomationService extends ProxyService {
                 observer.next(pendingPost);
                 observer.complete();
             });
-        });
+        }).toPromise();
     }
 
     /**
@@ -165,9 +165,9 @@ export class AutomationService extends ProxyService {
      * @param groupId
      * @returns {Observable<any>}
      */
-    public joinGroup(groupId: string) {
+    public joinGroup(account: FbAccount, groupId: string): Promise<any> {
         let procedure = new AutomationReq()
-            .access(`${this.mbasicUrl}/groups/${groupId}?view=info`, this.appManager.currentUser.cookies)
+            .access(`${this.mbasicUrl}/groups/${groupId}?view=info`, account.cookies)
             .click('a[href*="join"]');
 
         return new Observable(observer => {
@@ -179,7 +179,7 @@ export class AutomationService extends ProxyService {
                 }
                 observer.complete();
             });
-        });
+        }).toPromise();
     }
 
     public async comment(account: FbAccount, post: any, message: string, like: boolean, replyOnTop: boolean) {

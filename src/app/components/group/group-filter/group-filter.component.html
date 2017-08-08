@@ -3,7 +3,7 @@
 		<div class="search form-group">
 			<div class="form-inline">
 				<div class="form-group">
-					<input type="text" class="form-control" placeholder="Tên nhóm" [value]="searchQuery$ | async" [(ngModel)]="term">
+					<input type="text" class="form-control" placeholder="Tên nhóm" [(ngModel)]="term">
 				</div>
 				<button class="btn btn-primary btn-sm" (click)="search()"><i class="material-icons">search</i> Tìm kiếm</button>
 			</div>
@@ -15,6 +15,9 @@
 				</ng-template>
 			</kendo-grid-column>
 			<kendo-grid-column field="privacy" title="Trạng thái" width="80">
+				<ng-template kendoGridCellTemplate let-dataItem>
+					{{dataItem.privacy | groupPrivacy}}
+				</ng-template>
 			</kendo-grid-column>
 			<kendo-grid-column field="members" title="Thành viên" width="80">
 			</kendo-grid-column>

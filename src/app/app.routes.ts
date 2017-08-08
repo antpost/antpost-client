@@ -11,8 +11,6 @@ import {GroupPostScheduleComponent} from './components/group/schedule/groupPostS
 import {JoinedGroupComponent} from './components/group/joinedGroup/joinedGroup.component';
 import {GroupPostHistoryComponent} from './components/group/schedule/groupPostHistory.component';
 import {GroupPostDetailComponent} from './components/group/schedule/groupPostDetail.component';
-import {JoinGroupFormComponent} from './components/group/joinGroupForm/joinGroupForm.component';
-import {GroupSearchComponent} from './components/group/groupSearch/groupSearch.component';
 import {CommentUpComponent} from './containers/comment-up/comment-up.component';
 import {SelectedGroupsComponent} from './components/group/selected-groups/selected-groups.component';
 import {PostTypePipe} from './pipes/postType.pipe';
@@ -24,6 +22,7 @@ import {JobProgressComponent} from './components/job/job-progress/job-progress.c
 import {GroupPostingComponent} from './containers/group-posting/group-posting.component';
 import {GroupJoiningComponent} from './containers/group-joining/group-joining.component';
 import {GroupFilterComponent} from './components/group/group-filter/group-filter.component';
+import {GroupPrivacyPipe} from './pipes/group-privacy.pipe';
 
 export const ROUTES: Routes = [
      {path: 'login', component: LoginComponent},
@@ -50,8 +49,6 @@ export const MODULE_COMPONENTS = [
     JoinedGroupComponent,
     GroupPostHistoryComponent,
     GroupPostDetailComponent,
-    JoinGroupFormComponent,
-    GroupSearchComponent,
     SelectedGroupsComponent,
     GroupSelectionComponent,
     ScheduleListComponent,
@@ -62,5 +59,6 @@ export const MODULE_COMPONENTS = [
 
 export const PIPES = [
     PostTypePipe,
-    ScheduleStatusPipe
+    ScheduleStatusPipe,
+    GroupPrivacyPipe
 ];

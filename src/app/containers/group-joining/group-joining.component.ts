@@ -24,7 +24,10 @@ export class GroupJoiningComponent extends AbstractScheduleComponent{
         super(elementRef, GroupJoiningMeta, ScheduleType.JoinGroup);
 
         this.meta = Object.assign(GroupJoiningMeta.prototype, {
-            groups: []
+            groups: [],
+            members: 5000,
+            privacy: ['OPEN', 'CLOSED', 'SECRET'],
+            noPendingPost: false
         });
     }
 
@@ -40,7 +43,7 @@ export class GroupJoiningComponent extends AbstractScheduleComponent{
 
         dialog.then((result) => {
             this.meta.groups = result.map(g => {
-                return {id: g.id, name: g.name};
+                return {id: g.id, name: g.name, privacy: g.privacy};
             });
         });
     }

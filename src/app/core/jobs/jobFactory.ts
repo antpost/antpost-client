@@ -4,6 +4,7 @@ import {ScheduleJob} from "./scheduleJob";
 import {IJob} from "./iJob";
 import {GroupPostingEngine} from '../engine/groupPostingEngine';
 import {CommentEngine} from '../engine/commentEngine';
+import {GroupJoiningEngine} from '../engine/groupJoiningEngine';
 
 export class JobFactory {
 
@@ -16,6 +17,7 @@ export class JobFactory {
     public static createScheduleJob (schedule: any, type: number): IJob {
         let types = {
             PostGroup: GroupPostingEngine,
+            JoinGroup: GroupJoiningEngine,
             Comment: CommentEngine
         };
 

@@ -150,8 +150,8 @@ export class FacebookService extends ProxyService{
      * @param groupId
      * @returns {any}
      */
-    public viewGroupInfo(groupId: string): Observable<any> {
-        return this.automationService.viewGroupInfo(groupId);
+    public viewGroupInfo(account: FbAccount, groupId: string): Promise<any> {
+        return this.automationService.viewGroupInfo(account, groupId);
     }
 
     /**
@@ -159,8 +159,8 @@ export class FacebookService extends ProxyService{
      * @param groupId
      * @returns {Observable<any>}
      */
-    public checkPendingPost(groupId: string): Observable<any> {
-        return this.automationService.checkPendingPost(groupId);
+    public checkPendingPost(account: FbAccount, groupId: string): Promise<any> {
+        return this.automationService.checkPendingPost(account, groupId);
     }
 
     /**
@@ -216,8 +216,8 @@ export class FacebookService extends ProxyService{
      * Join group
      * @param groupId
      */
-    public joinGroup(groupId): Observable<any> {
-        return this.automationService.joinGroup(groupId);
+    public joinGroup(account: FbAccount, groupId): Promise<any> {
+        return this.automationService.joinGroup(account, groupId);
     }
 
     /**

@@ -21,7 +21,6 @@ export class GroupFilterComponent implements OnInit {
     private joinedGroups: Array<Group>;
     public account: FbAccount;
     public term: string;
-    public searchQuery$: Observable<string>;
     public groups$: Observable<Array<Group>>;
 
     @Input()
@@ -38,7 +37,7 @@ export class GroupFilterComponent implements OnInit {
     }
 
     public ngOnInit() {
-        this.searchQuery$ = this.store.select(fromRoot.getGroupSearchQuery);
+        this.store.select(fromRoot.getGroupSearchQuery).subscribe(query => this.term = query);
         this.groups$ = this.store.select(fromRoot.getGroupSearchResult);
 
         this.store.select(fromRoot.getJoinedGroups(this.account.id)).subscribe(groups => {
@@ -54,17 +53,6 @@ export class GroupFilterComponent implements OnInit {
      * Seach groups
      */
     public async search() {
-        /*if(!this.term || !this.term.trim()) {
-            return;
-        }
-
-        if(!this.joinedGroups) {
-            this.joinedGroups = await this.facebookService.getJoinedGroups(this.account);
-            this.loadGroup(this.term);
-        } else {
-            this.loadGroup(this.term);
-        }*/
-
         if(!this.term || !this.term.trim()) {
             return;
         }

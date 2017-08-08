@@ -1,6 +1,4 @@
 import {IScheduleEngine, BaseEngine} from "./baseEngine";
-import {PostSettings} from '../settings/postSettings';
-import {NodePost} from '../../models/nodePost.model';
 import {JobStatus, PostType} from '../../models/enums';
 import {Schedule} from '../../models/schedule.model';
 import {IResNextData} from '../jobs/iJob';
