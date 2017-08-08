@@ -3,12 +3,12 @@
 		<div class="search form-group">
 			<div class="form-inline">
 				<div class="form-group">
-					<input type="text" class="form-control" placeholder="Tên nhóm" [(ngModel)]="term">
+					<input type="text" class="form-control" placeholder="Tên nhóm" [value]="searchQuery$ | async" [(ngModel)]="term">
 				</div>
 				<button class="btn btn-primary btn-sm" (click)="search()"><i class="material-icons">search</i> Tìm kiếm</button>
 			</div>
 		</div>
-		<kendo-grid [data]="groups" [height]="420">
+		<kendo-grid [data]="groups$ | async" [height]="420">
 			<kendo-grid-column field="name" title="Nhóm" width="200">
 				<ng-template kendoGridCellTemplate let-dataItem>
 					<a target="_blank" href="https://facebook.com/{{dataItem.id}}">{{dataItem.name}}</a>

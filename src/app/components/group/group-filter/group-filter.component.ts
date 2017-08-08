@@ -4,6 +4,7 @@ import {Store} from '@ngrx/store';
 import {FbAccount} from '../../../models/fbaccount.model';
 import {Group} from '../../../models/group.model';
 import * as joinedGroup from '../../../actions/joined-group';
+import * as groupSearch from '../../../actions/group-search';
 import {Toastr} from '../../../core/helpers/toastr';
 import {Observable} from 'rxjs/Observable';
 import * as fromRoot from '../../../reducers/index';
@@ -20,7 +21,7 @@ export class GroupFilterComponent implements OnInit {
     private joinedGroups: Array<Group>;
     public account: FbAccount;
     public term: string;
-    public search$: Observable<string>;
+    public searchQuery$: Observable<string>;
     public groups$: Observable<Array<Group>>;
 
     @Input()
@@ -37,7 +38,7 @@ export class GroupFilterComponent implements OnInit {
     }
 
     public ngOnInit() {
-        this.search$ = this.store.select(fromRoot.getGroupSearchQuery);
+        this.searchQuery$ = this.store.select(fromRoot.getGroupSearchQuery);
         this.groups$ = this.store.select(fromRoot.getGroupSearchResult);
 
         this.store.select(fromRoot.getJoinedGroups(this.account.id)).subscribe(groups => {
@@ -53,7 +54,7 @@ export class GroupFilterComponent implements OnInit {
      * Seach groups
      */
     public async search() {
-        if(!this.term || !this.term.trim()) {
+        /*if(!this.term || !this.term.trim()) {
             return;
         }
 
@@ -62,7 +63,13 @@ export class GroupFilterComponent implements OnInit {
             this.loadGroup(this.term);
         } else {
             this.loadGroup(this.term);
+        }*/
+
+        if(!this.term || !this.term.trim()) {
+            return;
         }
+
+        this.store.dispatch(new groupSearch.SearchAction(this.term));
     }
 
     public selectGroup(group: any) {
