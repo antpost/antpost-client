@@ -1,0 +1,16 @@
+<div class="row">
+	<div class="col-md-6"></div>
+	<div class="col-md-6">
+		<kendo-grid [data]="accounts" [height]="410">
+			<kendo-grid-column field="id" title="ID" width="150">
+			</kendo-grid-column>
+			<kendo-grid-column field="name" title="Tên">
+			</kendo-grid-column>
+		</kendo-grid>
+	</div>
+</div>
+<div class="modal-footer">
+	<button class="btn btn-success btn-sm" (click)="selectMethod()"><i class="fa fa-search"></i> Tìm kiếm</button>
+	<button class="btn btn-primary btn-sm" (click)="save()"><i class="fa fa-thumbs-o-up"></i> Lưu</button>
+	<button class="btn btn-sm" (click)="cancel()"><i class="fa fa-window-close-o"></i> Hủy bỏ</button>
+</div>

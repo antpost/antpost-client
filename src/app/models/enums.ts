@@ -32,3 +32,8 @@ export enum ScheduleType {
     JoinGroup = 2,
     Comment = 3
 }
+
+export enum AccountSearchingMethod {
+    FriendsOfFriends = 1,
+    FriendsOfAccount = 2
+}

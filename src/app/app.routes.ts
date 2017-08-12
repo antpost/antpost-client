@@ -23,6 +23,10 @@ import {GroupPostingComponent} from './containers/group-posting/group-posting.co
 import {GroupJoiningComponent} from './containers/group-joining/group-joining.component';
 import {GroupFilterComponent} from './components/group/group-filter/group-filter.component';
 import {GroupPrivacyPipe} from './pipes/group-privacy.pipe';
+import {StoreAccountsComponent} from './containers/store-accounts/store-accounts.component';
+import {AccountSearchingMethodComponent} from './components/account/account-searching-method/account-searching-method.component';
+import {AccountFriendsSearchingComponent} from './components/account/account-friends-searching/account-friends-searching.component';
+import {StoreAccountsFormComponent} from './components/account/store-accounts-form/store-accounts-form.component';
 
 export const ROUTES: Routes = [
      {path: 'login', component: LoginComponent},
@@ -40,6 +44,7 @@ export const MODULE_COMPONENTS = [
     GroupPostingComponent,
     GroupJoiningComponent,
     CommentUpComponent,
+    StoreAccountsComponent,
 
     // components
     PostFormComponent,
@@ -54,7 +59,10 @@ export const MODULE_COMPONENTS = [
     ScheduleListComponent,
     ScheduleFormComponent,
     JobProgressComponent,
-    GroupFilterComponent
+    GroupFilterComponent,
+    AccountSearchingMethodComponent,
+    AccountFriendsSearchingComponent,
+    StoreAccountsFormComponent
 ];
 
 export const PIPES = [

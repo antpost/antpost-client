@@ -1,12 +1,12 @@
-import {RouteInfo} from './sidebar.metadata';
 import {HomeComponent} from "../../containers/home/home.component";
 import {GroupPostScheduleComponent} from "../../components/group/schedule/groupPostSchedule.component";
-import {GroupPostHistoryComponent} from "../../components/group/schedule/groupPostHistory.component";
 import {JoinGroupFormComponent} from "../../components/group/joinGroupForm/joinGroupForm.component";
 import {PostComponent} from "../../containers/post/post.component";
 import {CommentUpComponent} from '../../containers/comment-up/comment-up.component';
 import {GroupPostingComponent} from '../../containers/group-posting/group-posting.component';
 import {GroupJoiningComponent} from '../../containers/group-joining/group-joining.component';
+import {StoreUsersComponent} from '../../containers/store-users/store-users.component';
+import {StoreAccountsComponent} from '../../containers/store-accounts/store-accounts.component';
 
 
 export const ROUTES: any[] = [
@@ -37,6 +37,14 @@ export const ROUTES: any[] = [
         icon: 'web',
         subroutes: [
             {path: 'post-page', title: 'Đăng bài', icon: 'send', class: '', component: GroupPostScheduleComponent}
+        ]
+    },
+    {
+        path: 'store',
+        title: 'Lưu trữ',
+        icon: 'move_to_inbox',
+        subroutes: [
+            {path: 'store-accounts', title: 'Người dùng Facebook', icon: 'folder_shared', class: '', component: StoreAccountsComponent}
         ]
     },
     {
