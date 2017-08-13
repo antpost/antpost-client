@@ -184,6 +184,12 @@ modal-overlay {
 .modal-content .modal-body + .modal-footer {
   padding-right: 20px;
 }
+.modal-content .modal-body {
+  padding: 15px;
+}
+.modal-footer {
+  padding-bottom: 0px;
+}
 
 .close {
   font-size: 21px;
@@ -575,4 +581,12 @@ modal-overlay {
   margin-bottom: 10px;
   cursor: pointer;
   height: 50px;
+}
+
+.search-form {
+  width: 100%;
+  min-height: 450px;
+  /*border-color: #b7e4fb;
+  border-style: dashed;
+  border-width: 2px;*/
 }

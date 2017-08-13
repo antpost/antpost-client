@@ -1,24 +1,24 @@
 import {Component, Injector, Input, OnInit} from '@angular/core';
-import {AccountSearchingMethod} from '../../../models/enums';
+import {ModalService} from '../../../core/modal/modal.service';
 import {AccountFriendsSearchingComponent} from '../account-friends-searching/account-friends-searching.component';
+import {AccountSearchingMethod} from '../../../models/enums';
 
 @Component({
-    selector: 'account-searching-method',
-    templateUrl: './account-searching-method.component.html',
-    styleUrls: ['./account-searching-method.component.css']
+    selector: 'account-search',
+    templateUrl: './account-search.component.html',
+    styleUrls: ['./account-search.component.css']
 })
-export class AccountSearchingMethodComponent implements OnInit {
+export class AccountSearchComponent implements OnInit {
     public methods: any[];
+    public accounts: any[] = [];
+    public methodType: number = 1;
 
-    @Input()
-    public onClose: Function;
-
-    @Input()
-    public onDismiss: Function;
+    @Input() public onClose: Function;
+    @Input() public onDismiss: Function;
 
     constructor(private injector: Injector) {
-        //this.onClose = this.injector.get('onClose');
-        //this.onDismiss = this.injector.get('onDismiss');
+        this.onClose = this.injector.get('onClose');
+        this.onDismiss = this.injector.get('onDismiss');
 
         this.methods = [
             {
@@ -56,10 +56,6 @@ export class AccountSearchingMethodComponent implements OnInit {
     }
 
     ngOnInit() {
-    }
-
-    public select(method) {
-        this.onClose(method);
     }
 
 }

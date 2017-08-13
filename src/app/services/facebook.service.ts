@@ -7,7 +7,6 @@ import {Post} from '../models/post.model';
 import {ProxyService} from "./proxy.service";
 import {AutomationService} from './automation.service';
 import {FbAccount} from '../models/fbaccount.model';
-import {post} from 'selenium-webdriver/http';
 
 @Injectable()
 export class FacebookService extends ProxyService{
@@ -310,6 +309,47 @@ export class FacebookService extends ProxyService{
             .map((response: Response) => {
                 return response.json() || {};
             });
+    }
+
+    /**
+     * Load friends of accountId
+     * @param {FbAccount} account
+     * @param {string} accountId
+     * @param {number} max
+     * @returns {Observable<FbAccount[]>}
+     */
+    public loadFriend(account: FbAccount, accountId: string, max: number = 5000): Observable<FbAccount[]> {
+        let limit = 200;
+        let count = 0;
+        let reachToLast = false;
+
+        const getApi = (pageSize: number, after: string = '') => {
+            return this.createApi(`/${accountId}/friends`, {
+                limit: pageSize,
+                after: after
+            }, account);
+        };
+
+        return new Observable<FbAccount[]>(observe => {
+            const onNext = (result) => {
+                let posts = result.data.filter(p => p.from.id == account.id);
+                if(posts.length >= limit) {
+                    return Observable.of({
+                        data: posts
+                    });
+                } else {
+                    return result.paging ? this.post(result.paging.next, 'GET') : Observable.of({
+                        data: []
+                    });
+                }
+            };
+
+            let api = getApi(limit);
+
+            let subscription = this.post(api, 'GET');
+
+
+        });
     }
 
     /**

@@ -17,13 +17,15 @@ export class StoreAccountsComponent implements OnInit {
     }
 
     ngOnInit() {
+        setTimeout(() => this.add(), 200);
     }
 
     public add() {
         let dialog = this.modal.open({
             component: StoreAccountsFormComponent,
             inputs: {},
-            title: 'Thêm nhóm tài khoản'
+            title: 'Thêm nhóm tài khoản',
+            size: 'sm'
         } as IModalOptions);
 
         dialog.then((result) => {

@@ -2,6 +2,7 @@ import {Component, Injector, Input, OnInit} from '@angular/core';
 import {IModalOptions} from '../../../core/modal/modalWrapper.component';
 import {AccountSearchingMethodComponent} from '../account-searching-method/account-searching-method.component';
 import {ModalService} from '../../../core/modal/modal.service';
+import {AccountSearchComponent} from '../account-search/account-search.component';
 
 @Component({
     selector: 'store-accounts-form',
@@ -21,26 +22,14 @@ export class StoreAccountsFormComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.openSearchPopup();
     }
 
-    public selectMethod() {
+    public openSearchPopup() {
         let dialog = this.modal.open({
-            component: AccountSearchingMethodComponent,
+            component: AccountSearchComponent,
             inputs: {},
-            title: 'Chọn phương thức tìm kiếm người dùng',
-            size: 'sm'
-        } as IModalOptions);
-
-        dialog.then((result) => {
-            this.openSearchPopup(result);
-        });
-    }
-
-    public openSearchPopup(method: any) {
-        let dialog = this.modal.open({
-            component: method.component,
-            inputs: {},
-            title: method.name
+            title: 'Tìm kiếm tài khoản Facebook'
         } as IModalOptions);
 
         dialog.then((result) => {

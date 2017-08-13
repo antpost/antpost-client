@@ -77,6 +77,9 @@ export function reducer(state: any, action: any) {
     }
 }
 
+/**
+ * Accounts
+ */
 export const getAccountState = (state: State) => state.account;
 export const getAccounts = createSelector(getAccountState, fromAccount.getAccounts);
 export const getDefaultAccount = createSelector(getAccountState, fromAccount.getDefault);
