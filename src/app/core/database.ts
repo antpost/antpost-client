@@ -5,7 +5,7 @@ export class DbService extends Dexie {
     constructor() {
         super('antpost');
 
-        this.version(2).stores({
+        this.version(1).stores({
             fbaccounts: `
                 id,
                 name,
