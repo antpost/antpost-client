@@ -1,0 +1,48 @@
+import { FacebookService } from './facebook.service';
+import { Injectable } from '@angular/core';
+import { AutomationService } from './automation.service';
+import { Http, Jsonp } from '@angular/http';
+import { FbAccount } from '../models/fbaccount.model';
+import { Observable } from 'rxjs/Observable';
+
+@Injectable()
+export class FacebookProfileService extends FacebookService {
+    constructor(http: Http, jsonp: Jsonp, automationService: AutomationService) {
+        super(http, jsonp, automationService);
+    }
+
+    /**
+     * Load friends of accountId
+     * @param {FbAccount} account
+     * @param {string} accountId
+     * @param {number} max
+     * @returns {Observable<FbAccount[]>}
+     */
+    public loadFriend(account: FbAccount, accountId: string, max: number = 5000): Observable<FbAccount[]> {
+        let limit = 200;
+        let count = 0;
+        let reachToLast = false;
+
+        const getApi = (pageSize: number, after: string = '') => {
+            return this.createApi(`/${accountId}/friends`, {
+                limit: pageSize,
+                after: after
+            }, account);
+        };
+
+        return Observable.create(observer => {
+            const onNext = (result) => {
+                return result.next ? this.post(getApi(result.next), 'GET') : Observable.empty();
+            };
+
+            let api = getApi(limit);
+            this.post(api, 'GET')
+                .expand(onNext)
+                .catch(error => observer.error(error))
+                .subscribe((data) => {
+                    observer.next(data);
+                    observer.complete();
+                });
+        });
+    }
+}

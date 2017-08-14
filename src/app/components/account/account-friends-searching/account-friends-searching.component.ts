@@ -3,7 +3,7 @@ import {Observable} from 'rxjs/Observable';
 import {FbAccount} from '../../../models/fbaccount.model';
 import {Store} from '@ngrx/store';
 import * as fromRoot from '../../../reducers/index';
-import {FacebookService} from '../../../services/facebook.service';
+import { FacebookProfileService } from '../../../services/facebook-profile.service';
 
 @Component({
     selector: 'account-friends-searching',
@@ -17,7 +17,7 @@ export class AccountFriendsSearchingComponent implements OnInit {
     public friends: FbAccount[] = [];
 
     constructor(private store: Store<fromRoot.State>,
-                private facebookService: FacebookService) {
+                private facebooProfilekService: FacebookProfileService) {
 
     }
 
@@ -29,10 +29,14 @@ export class AccountFriendsSearchingComponent implements OnInit {
         this.accounts$ = this.store.select(fromRoot.getAccounts);
     }
 
+    /**
+     * Load friends
+     * @param {string} accountId
+     */
     public loadFriends(accountId: string) {
         this.friends = [];
-        this.facebookService.loadFriend(this.defaultAccount, this.accountId).subscribe((friends) => {
-
+        this.facebooProfilekService.loadFriend(this.defaultAccount, this.accountId).subscribe((friends) => {
+            this.friends = this.friends.concat(friends || []);
         });
     }
 }

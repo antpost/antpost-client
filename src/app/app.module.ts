@@ -65,6 +65,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { JoinedGroupEffects } from './effects/joined-group';
 import {AccountEffects} from './effects/account';
 import {GroupSearchEffects} from './effects/group-search';
+import { FacebookProfileService } from './services/facebook-profile.service';
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -164,6 +165,7 @@ type StoreType = {
         PostService,
         SchedulePostService,
         FacebookService,
+        FacebookProfileService,
         AutomationService,
         GroupService,
         AppManager,
