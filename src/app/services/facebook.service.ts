@@ -166,8 +166,8 @@ export class FacebookService extends ProxyService {
      * @param groupId
      * @returns {Observable<any>}
      */
-    public getGroupLocaleAndLocation(groupId: string): Observable<any> {
-        return new Observable(observer => {
+    public getGroupLocaleAndLocation(groupId: string) {
+        /*return new Observable(observer => {
             this.getOwner(groupId).subscribe(result => {
                 if (result.owner) {
                     this.getUserInfo(result.owner.id, {
@@ -182,7 +182,7 @@ export class FacebookService extends ProxyService {
                 }
 
             });
-        });
+        });*/
     }
 
     /**
@@ -205,8 +205,8 @@ export class FacebookService extends ProxyService {
      * @param params
      * @returns {Observable<any>}
      */
-    public getUserInfo(uid: string, params: any) {
-        let api = this.createApi(`/${uid}`, params);
+    public getUserInfo(account: FbAccount, uid: string, params: any) {
+        let api = this.createApi(`/${uid}`, params, account);
         return this.post(api, 'GET');
     }
 

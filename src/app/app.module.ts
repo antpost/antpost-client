@@ -47,25 +47,23 @@ import {UploadModule} from "@progress/kendo-angular-upload";
 import {DropDownsModule} from "@progress/kendo-angular-dropdowns";
 import {DateInputsModule} from '@progress/kendo-angular-dateinputs';
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
-import {NodePostService} from "./services/nodePost.service";
 import {LocalStorageService} from "./services/localStorage.service";
 import {AppManager} from "./core/appManager";
 import {GroupService} from "./services/group.service";
 import {AutomationService} from "./services/automation.service";
 import {FacebookService} from "./services/facebook.service";
-import {SchedulePostService} from "./services/schedulePost.service";
 import {PostService} from "./services/post.service";
 import {FbAccountService} from './services/fbaccount.service';
 import {ScheduleService} from './services/schedule.service';
-import { StoreModule } from '@ngrx/store';
-import { reducer } from './reducers';
-import { RouterStoreModule } from '@ngrx/router-store';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { EffectsModule } from '@ngrx/effects';
-import { JoinedGroupEffects } from './effects/joined-group';
+import {StoreModule} from '@ngrx/store';
+import {reducer} from './reducers';
+import {RouterStoreModule} from '@ngrx/router-store';
+import {StoreDevtoolsModule} from '@ngrx/store-devtools';
+import {EffectsModule} from '@ngrx/effects';
+import {JoinedGroupEffects} from './effects/joined-group';
 import {AccountEffects} from './effects/account';
 import {GroupSearchEffects} from './effects/group-search';
-import { FacebookProfileService } from './services/facebook-profile.service';
+import {FacebookProfileService} from './services/facebook-profile.service';
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -163,14 +161,12 @@ type StoreType = {
         FbAccountService,
         AppRunner,
         PostService,
-        SchedulePostService,
         FacebookService,
         FacebookProfileService,
         AutomationService,
         GroupService,
         AppManager,
         LocalStorageService,
-        NodePostService,
         ScheduleService,
         {provide: LocationStrategy, useClass: HashLocationStrategy},
         {

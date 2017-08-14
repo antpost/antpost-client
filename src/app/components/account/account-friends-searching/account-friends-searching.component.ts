@@ -17,7 +17,7 @@ export class AccountFriendsSearchingComponent implements OnInit {
     public friends: FbAccount[] = [];
 
     constructor(private store: Store<fromRoot.State>,
-                private facebooProfilekService: FacebookProfileService) {
+                private facebookProfilekService: FacebookProfileService) {
 
     }
 
@@ -35,7 +35,7 @@ export class AccountFriendsSearchingComponent implements OnInit {
      */
     public loadFriends(accountId: string) {
         this.friends = [];
-        this.facebooProfilekService.loadFriend(this.defaultAccount, this.accountId).subscribe((friends) => {
+        this.facebookProfilekService.loadFriend(this.defaultAccount, this.accountId).subscribe((friends) => {
             this.friends = this.friends.concat(friends || []);
         });
     }

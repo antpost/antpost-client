@@ -28,6 +28,7 @@ import {AccountSearchingMethodComponent} from './components/account/account-sear
 import {AccountFriendsSearchingComponent} from './components/account/account-friends-searching/account-friends-searching.component';
 import {StoreAccountsFormComponent} from './components/account/store-accounts-form/store-accounts-form.component';
 import {AccountSearchComponent} from './components/account/account-search/account-search.component';
+import {FriendSelectionComponent} from './components/account/friend-selection/friend-selection.component';
 
 export const ROUTES: Routes = [
      {path: 'login', component: LoginComponent},
@@ -64,7 +65,8 @@ export const MODULE_COMPONENTS = [
     AccountSearchingMethodComponent,
     AccountFriendsSearchingComponent,
     StoreAccountsFormComponent,
-    AccountSearchComponent
+    AccountSearchComponent,
+    FriendSelectionComponent
 ];
 
 export const PIPES = [

@@ -17,7 +17,7 @@ export class StoreAccountsComponent implements OnInit {
     }
 
     ngOnInit() {
-        setTimeout(() => this.add(), 200);
+//        setTimeout(() => this.add(), 200);
     }
 
     public add() {

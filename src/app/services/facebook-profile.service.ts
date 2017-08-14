@@ -26,22 +26,24 @@ export class FacebookProfileService extends FacebookService {
         const getApi = (pageSize: number, after: string = '') => {
             return this.createApi(`/${accountId}/friends`, {
                 limit: pageSize,
-                after: after
             }, account);
         };
 
         return Observable.create(observer => {
             const onNext = (result) => {
-                return result.next ? this.post(getApi(result.next), 'GET') : Observable.empty();
+                return result.paging && result.paging.next ? this.post(result.paging.next, 'GET') : Observable.empty();
             };
 
             let api = getApi(limit);
             this.post(api, 'GET')
                 .expand(onNext)
                 .catch(error => observer.error(error))
-                .subscribe((data) => {
-                    observer.next(data);
-                    observer.complete();
+                .subscribe((result: any) => {
+                    if(result.data && result.data.length > 0) {
+                        observer.next(result.data);
+                    } else {
+                        observer.complete();
+                    }
                 });
         });
     }

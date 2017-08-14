@@ -1,12 +1,11 @@
 import Dexie from 'dexie';
-import relationships from './db/relationship';
 
 export class DbService extends Dexie {
 
     constructor() {
-        super('antpost', {addons: [relationships]});
+        super('antpost');
 
-        this.version(1).stores({
+        this.version(2).stores({
             fbaccounts: `
                 id,
                 name,
@@ -27,14 +26,7 @@ export class DbService extends Dexie {
                 uid,
                 scheduleType,
                 active,
-                updatedAt`,
-            schedulePosts: `
-                ++id,
-                postId -> posts.id,
-                status`,
-            nodePosts: `
-                ++id,
-                scheduleId -> schedulePosts.id`
+                updatedAt`
         });
     }
 }

@@ -38,12 +38,12 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.authService.logout();
 
         // load recent users
-        this.recentUsers = await this.fbAccountService.loadRecentUser();
+        /*this.recentUsers = await this.fbAccountService.loadRecentUser();
         this.recentUsers.forEach((user) => {
             this.facebookService.notifications(user).subscribe((data) => {
                 user.unseenCount = data.summary ? data.summary.unseen_count : 0
             });
-        })
+        })*/
     }
 
     public ngOnDestroy() {
@@ -61,7 +61,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
                     let user = this.appManager.currentUser;
 
-                    this.facebookService.getUserInfo(user.id, {fields: 'name'}).subscribe((info) => {
+                    this.facebookService.getUserInfo(user, user.id, {fields: 'name'}).subscribe((info) => {
                         user.name = info.name;
                         this.loadCookie();
                     });
