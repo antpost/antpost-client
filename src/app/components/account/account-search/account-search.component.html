@@ -18,19 +18,17 @@
 			</div>
 		</div>
 		<div class="rows search-form">
-			<account-friends-searching (onSelect)="onAddAccount($event)"></account-friends-searching>
+			<account-friends-searching (onSelect)="onAddAccount($event)" [anyAccount]="true"></account-friends-searching>
 		</div>
 	</div>
 	<div class="col-md-4">
 		<div class="search form-group">
 			<div class="form-inline">
-				<button class="btn btn-success btn-simple btn-sm" (click)="clearAll()"><i class="fa fa-times"></i> Xóa tất cả</button>
+				<button class="btn btn-success btn-simple btn-sm" (click)="clearAll()"><i class="fa fa-times"></i> Xóa tất cả ({{accounts.length}})</button>
 			</div>
 		</div>
-		<kendo-grid [data]="accounts" [height]="450"
-					[pageSize]="50"
-					[pageable]="accounts.length > 50">
-			<kendo-grid-column field="id" title="ID" width="150">
+		<kendo-grid [data]="accounts" [height]="450">
+			<kendo-grid-column field="id" title="ID" width="130">
 			</kendo-grid-column>
 			<kendo-grid-column field="name" title="Tên">
 			</kendo-grid-column>

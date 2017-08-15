@@ -1,7 +1,7 @@
 <div class="row">
 	<div class="col-md-12">
 		<div class="form-horizontal">
-			<div class="form-group">
+			<div class="form-group" *ngIf="!anyAccount">
 				<label class="col-sm-4 control-label">Bạn của tài khoản</label>
 				<div class="col-sm-8">
 					<div class="form-inline">
@@ -14,6 +14,15 @@
 						</kendo-dropdownlist>
 						<button class="btn btn-success btn-sm" (click)="loadFriends(accountId)"><i class="fa fa-download"></i> Tải bạn bè</button>
 						<span>{{friends.length}} bạn</span>
+					</div>
+				</div>
+			</div>
+			<div class="form-group" *ngIf="anyAccount">
+				<div class="col-md-12">
+					<div class="form-inline">
+						<span>https://facebook.com/</span>
+						<input class="form-control" [(ngModel)]="username" placeholder="username">
+						<button class="btn btn-success btn-sm" (click)="loadFriendsFromUsername(username)"><i class="fa fa-download"></i> Tải bạn bè</button>
 					</div>
 				</div>
 			</div>

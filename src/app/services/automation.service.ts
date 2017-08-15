@@ -235,12 +235,15 @@ export class AutomationService extends ProxyService {
             .responseContent(`a[href*="/photo.php?fbid="]`);
 
         const res = await this.simulateAsync(procedure);
-        const element = this.createElement(res.data.content);
-        const href = element.find('a').attr('href');
 
-        const id = href.split('&amp;id=').pop().split('&amp;').shift();
-
-        return id;
+        if(res.data.content) {
+            const element = this.createElement(res.data.content);
+            const href = element.find('a').attr('href');
+            const id = href.split('&id=').pop().split('&').shift();
+            return id;
+        } else {
+            return null;
+        }
     }
 
     /**

@@ -57,4 +57,15 @@ export class FacebookProfileService extends FacebookService {
     public async getUidAsync (account: FbAccount, username: string) {
         return this.automationService.getUidAsync(account, username);
     }
+
+    /**
+     * Get user infomation
+     * @param uid
+     * @param params
+     * @returns {Observable<any>}
+     */
+    public async getUserInfoAsync(account: FbAccount, uid: string, params: any) {
+        let api = this.createApi(`/${uid}`, params, account);
+        return this.postAsync(api, 'GET');
+    }
 }
