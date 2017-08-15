@@ -1,7 +1,8 @@
-import {Component, Injector, Input, OnInit} from '@angular/core';
-import {ModalService} from '../../../core/modal/modal.service';
-import {AccountFriendsSearchingComponent} from '../account-friends-searching/account-friends-searching.component';
-import {AccountSearchingMethod} from '../../../models/enums';
+import { Component, Injector, Input, OnInit } from '@angular/core';
+import { ModalService } from '../../../core/modal/modal.service';
+import { AccountFriendsSearchingComponent } from '../account-friends-searching/account-friends-searching.component';
+import { AccountSearchingMethod } from '../../../models/enums';
+import { FbAccount } from '../../../models/fbaccount.model';
 
 @Component({
     selector: 'account-search',
@@ -58,4 +59,21 @@ export class AccountSearchComponent implements OnInit {
     ngOnInit() {
     }
 
+    public onAddAccount(list: FbAccount[]) {
+        list.forEach(item => {
+            const index = this.accounts.findIndex(acc => acc.id == item.id);
+            if(index < 0) {
+                this.accounts.push(item);
+            }
+        });
+    }
+
+    public clearAll() {
+        this.accounts = [];
+    }
+
+    public removeAccount(account: FbAccount) {
+        let index = this.accounts.findIndex(a => a.id == account.id);
+        this.accounts.splice(index, 1);
+    }
 }

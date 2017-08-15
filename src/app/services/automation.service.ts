@@ -224,6 +224,26 @@ export class AutomationService extends ProxyService {
     }
 
     /**
+     * Get profile id
+     * @param {FbAccount} account
+     * @param {string} username
+     * @returns {Promise<any>}
+     */
+    public async getUidAsync(account: FbAccount, username: string) {
+        let procedure = new AutomationReq()
+            .access(`${this.mbasicUrl}/${username}`, account.cookies)
+            .responseContent(`a[href*="/photo.php?fbid="]`);
+
+        const res = await this.simulateAsync(procedure);
+        const element = this.createElement(res.data.content);
+        const href = element.find('a').attr('href');
+
+        const id = href.split('&amp;id=').pop().split('&amp;').shift();
+
+        return id;
+    }
+
+    /**
      *
      * @param procedure
      * @returns {Observable<R>}

@@ -47,4 +47,14 @@ export class FacebookProfileService extends FacebookService {
                 });
         });
     }
+
+    /**
+     * Get profile id
+     * @param {FbAccount} account
+     * @param {string} username
+     * @returns {Promise<any>}
+     */
+    public async getUidAsync (account: FbAccount, username: string) {
+        return this.automationService.getUidAsync(account, username);
+    }
 }

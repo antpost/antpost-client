@@ -25,7 +25,7 @@
 			<kendo-grid-column field="name" title="Tên">
 			</kendo-grid-column>
 			<ng-template kendoGridDetailTemplate let-dataItem>
-				<friend-selection [account]="dataItem"></friend-selection>
+				<friend-selection [account]="dataItem" (onSelect)="onSelectAccounts($event)"></friend-selection>
 			</ng-template>
 		</kendo-grid>
 	</div>

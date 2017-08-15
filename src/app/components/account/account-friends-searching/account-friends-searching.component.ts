@@ -1,4 +1,4 @@
-import {Component, Injector, Input, OnInit} from '@angular/core';
+import { Component, EventEmitter, Injector, Input, OnInit, Output } from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {FbAccount} from '../../../models/fbaccount.model';
 import {Store} from '@ngrx/store';
@@ -11,6 +11,8 @@ import { FacebookProfileService } from '../../../services/facebook-profile.servi
     styleUrls: ['./account-friends-searching.component.css']
 })
 export class AccountFriendsSearchingComponent implements OnInit {
+    @Output() public onSelect: EventEmitter<FbAccount[]> = new EventEmitter();
+
     public defaultAccount: FbAccount;
     public accounts$: Observable<FbAccount[]>;
     public accountId: string;
@@ -38,5 +40,9 @@ export class AccountFriendsSearchingComponent implements OnInit {
         this.facebookProfilekService.loadFriend(this.defaultAccount, this.accountId).subscribe((friends) => {
             this.friends = this.friends.concat(friends || []);
         });
+    }
+
+    public onSelectAccounts(friends: FbAccount[]) {
+        this.onSelect.emit(this.friends);
     }
 }

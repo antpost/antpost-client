@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {FbAccount} from '../../../models/fbaccount.model';
 import {FacebookProfileService} from '../../../services/facebook-profile.service';
 import {Store} from '@ngrx/store';
@@ -13,6 +13,7 @@ import {GridDataResult, PageChangeEvent} from '@progress/kendo-angular-grid';
 export class FriendSelectionComponent implements OnInit {
 
     @Input() public account: FbAccount;
+    @Output() public onSelect: EventEmitter<FbAccount[]> = new EventEmitter();
     public friends: FbAccount[] = [];
     public skip: number = 0;
     public gridView: GridDataResult;
@@ -36,7 +37,15 @@ export class FriendSelectionComponent implements OnInit {
         });
     }
 
-    protected pageChange(event: PageChangeEvent): void {
+    public pageChange(event: PageChangeEvent): void {
         this.skip = event.skip;
+    }
+
+    public selectAccount(account: FbAccount) {
+        this.onSelect.emit([Object.assign({}, account)]);
+    }
+
+    public selectAll() {
+        this.onSelect.emit(this.gridView.data.map(account => Object.assign({}, account)));
     }
 }
