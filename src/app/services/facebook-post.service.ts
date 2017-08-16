@@ -19,7 +19,7 @@ export class FacebookPostService extends FacebookService {
      * @param {number} interactionType
      * @returns {any}
      */
-    public loadPostInteraction(account: FbAccount, postId: string, interactionType: number) {
+    public loadPostInteraction(account: FbAccount, postId: string, interactionType: number): Observable<any> {
         let limit = 200;
         let interactionNames = ['likes', 'comments', 'shares'];
         let api = this.createApi(`/${postId}/${interactionNames[interactionType]}`, {
@@ -62,6 +62,8 @@ export class FacebookPostService extends FacebookService {
             let uri = new URL(url);
             let searchParams = new URLSearchParams(uri.search);
             return searchParams.get('fbid');
+        } else {
+            return null;
         }
     }
 }

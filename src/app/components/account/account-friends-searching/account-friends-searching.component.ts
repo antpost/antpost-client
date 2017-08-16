@@ -29,7 +29,7 @@ export class AccountFriendsSearchingComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.store.select(fromRoot.getDefaultAccount).subscribe(account => {
+        this.store.select(fromRoot.getDefaultAccount).take(1).subscribe(account => {
             this.accountId = account ? account.id : null;
             this.defaultAccount = account;
         });

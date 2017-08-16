@@ -1,0 +1,16 @@
+<div class="row">
+	<div class="col-md-12">
+		<div class="form-horizontal">
+			<div class="form-group">
+				<div class="col-md-12">
+					<div class="form-inline">
+						<input class="form-control" [(ngModel)]="postUrl" placeholder="username">
+						<button class="btn btn-success btn-sm" (click)="loadAccount(postUrl)"><i class="fa fa-download"></i> Tải</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<account-selection [accounts]="accounts" (onSelect)="onSelectAccounts($event)"></account-selection>
+	</div>
+</div>

@@ -29,6 +29,8 @@ import {AccountFriendsSearchingComponent} from './components/account/account-fri
 import {StoreAccountsFormComponent} from './components/account/store-accounts-form/store-accounts-form.component';
 import {AccountSearchComponent} from './components/account/account-search/account-search.component';
 import {FriendSelectionComponent} from './components/account/friend-selection/friend-selection.component';
+import { AccountSelectionComponent } from './components/account/account-selection/account-selection.component';
+import { PostInteractionComponent } from './components/account/post-interaction/post-interaction.component';
 
 export const ROUTES: Routes = [
      {path: 'login', component: LoginComponent},
@@ -66,7 +68,9 @@ export const MODULE_COMPONENTS = [
     AccountFriendsSearchingComponent,
     StoreAccountsFormComponent,
     AccountSearchComponent,
-    FriendSelectionComponent
+    FriendSelectionComponent,
+    PostInteractionComponent,
+    AccountSelectionComponent
 ];
 
 export const PIPES = [
