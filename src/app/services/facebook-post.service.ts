@@ -19,30 +19,19 @@ export class FacebookPostService extends FacebookService {
      * @param {number} interactionType
      * @returns {any}
      */
-    public loadPostInteraction(account: FbAccount, postId: string, interactionType: number): Observable<any> {
-        let limit = 200;
-        let interactionNames = ['likes', 'comments', 'shares'];
-        let api = this.createApi(`/${postId}/${interactionNames[interactionType]}`, {
-            limit: limit,
-            fields: 'from'
-        }, account);
+    public loadPostLikes(account: FbAccount, postId: string): Observable<any> {
+        let api = this.createApi(`/${postId}/likes`, null, account);
+        return this.pullPaging(api);
+    }
 
-        return Observable.create(observer => {
-            const onNext = (result) => {
-                return result.paging && result.paging.next ? this.post(result.paging.next, 'GET') : Observable.empty();
-            };
+    public loadPostComments(account: FbAccount, postId: string): Observable<any> {
+        let api = this.createApi(`/${postId}/comments`, {fields: 'from'}, account);
+        return this.pullPaging(api).map(data => data.map(item => item.from));
+    }
 
-            this.post(api, 'GET')
-                .expand(onNext)
-                .catch(error => observer.error(error))
-                .subscribe((result: any) => {
-                    if(result.data && result.data.length > 0) {
-                        observer.next(result.data.map(item => item.from));
-                    } else {
-                        observer.complete();
-                    }
-                });
-        });
+    public loadPostShares(account: FbAccount, postId: string): Observable<any> {
+        let api = this.createApi(`/${postId}/sharedposts`, {fields: 'from'}, account);
+        return this.pullPaging(api).map(data => data.map(item => item.from));
     }
 
     /**
@@ -51,13 +40,11 @@ export class FacebookPostService extends FacebookService {
      * @returns {any}
      */
     public getPostIdFromUrl(url: string) {
-        // pattern
-        // https://www.facebook.com/bimvai.net/posts/1593049284039216
-        // https://www.facebook.com/photo.php?fbid=323754421369911&set=p.323754421369911&type=3&theater
+//https://www.facebook.com/bimvai.net/photos/a.951562798187871.1073741828.930105250333626/1595250757152402/?type=3
 
-        if(url.indexOf('post/') > 0) {
-            let index = url.indexOf('post/');
-            return url.substr(index);
+        if(url.indexOf('posts/') > 0) {
+            let index = url.indexOf('posts/');
+            return url.substr(index + 'posts/'.length);
         } else if(url.indexOf('photo.php?') > 0){
             let uri = new URL(url);
             let searchParams = new URLSearchParams(uri.search);

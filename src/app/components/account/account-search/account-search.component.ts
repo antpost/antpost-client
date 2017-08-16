@@ -13,6 +13,7 @@ export class AccountSearchComponent implements OnInit {
     public methods: any[];
     public accounts: any[] = [];
     public methodType: number = 1;
+    public methodTypes = AccountSearchingMethod;
 
     @Input() public onClose: Function;
     @Input() public onDismiss: Function;
@@ -31,7 +32,7 @@ export class AccountSearchComponent implements OnInit {
             {name: 'Bạn của 1 tài khoản bất kỳ', type: AccountSearchingMethod.FriendsOfAccount, color: '#00bcd4'},
             {
                 name: 'Tài khoản tương tác với 1 bài đăng',
-                type: AccountSearchingMethod.FriendsOfAccount,
+                type: AccountSearchingMethod.PostInteraction,
                 color: '#ffa21a',
                 component: AccountFriendsSearchingComponent
             },

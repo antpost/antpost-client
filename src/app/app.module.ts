@@ -64,6 +64,7 @@ import {JoinedGroupEffects} from './effects/joined-group';
 import {AccountEffects} from './effects/account';
 import {GroupSearchEffects} from './effects/group-search';
 import {FacebookProfileService} from './services/facebook-profile.service';
+import {FacebookPostService} from './services/facebook-post.service';
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -163,6 +164,7 @@ type StoreType = {
         PostService,
         FacebookService,
         FacebookProfileService,
+        FacebookPostService,
         AutomationService,
         GroupService,
         AppManager,

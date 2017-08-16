@@ -17,8 +17,8 @@ export class FacebookService extends ProxyService {
     private linkPreviewKey = '593ffa5bc5bb73210806875ddb9745d3d8313e65b81ab';
     private linkPreviewApi = 'http://api.linkpreview.net/';
 
-    constructor(protected http: Http, protected  jsonp: Jsonp, protected automationService: AutomationService) {
-        super();
+    constructor(http: Http, protected  jsonp: Jsonp, protected automationService: AutomationService) {
+        super(http);
     }
 
     /**
@@ -366,26 +366,28 @@ export class FacebookService extends ProxyService {
         });
     }
 
-    /**
-     * Post to local proxy server to get data
-     * @param api
-     * @param method
-     * @param data
-     * @returns {any}
-     */
-    protected post(api: string, method: string, data?: any): Observable<any> {
-        let postData = {api, method, data};
+    protected pullPaging(api: string, pageSize: number = 200): Observable<any> {
+        api += `&limit=${pageSize}`;
 
-        return this.http.post(`${this.host}/post`, postData)
-            .map((response: Response) => {
-                return response.json();
-            }).catch((error: Response) => {
-                return Observable.throw(error.json().error || 'Server error');
-            });
-    }
+        return Observable.create(observer => {
+            const onNext = (result) => {
+                if(!result.paging) {
+                    return Observable.empty();
+                }
+                return result.paging && result.paging.next ? this.pull(result.paging.next) : Observable.of({});
+            };
 
-    protected postAsync(api: string, method: string, data?: any): Promise<any> {
-        return this.post(api, method, data).toPromise();
+            this.pull(api)
+                .expand(onNext)
+                .catch(error => observer.error(error))
+                .subscribe((result: any) => {
+                    if(result.data && result.data.length > 0) {
+                        observer.next(result.data);
+                    } else {
+                        observer.complete();
+                    }
+                });
+        });
     }
 
     /**

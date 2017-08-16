@@ -21,8 +21,8 @@ export class AutomationService extends ProxyService {
     private mbasicUrl: string = 'https://mbasic.facebook.com';
     private mUrl: string = 'https://m.facebook.com';
 
-    constructor(private http: Http, private appManager: AppManager) {
-        super();
+    constructor(http: Http, private appManager: AppManager) {
+        super(http);
     }
 
     /**

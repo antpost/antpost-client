@@ -8,6 +8,7 @@ import { FbAccount } from '../../../models/fbaccount.model';
 })
 export class AccountSelectionComponent implements OnInit {
     @Input() public accounts: FbAccount[];
+    @Input() public width: number = 300;
     @Output() public onSelect: EventEmitter<FbAccount[]> = new EventEmitter();
 
     constructor() {
