@@ -20,8 +20,6 @@ export class FacebookProfileService extends FacebookService {
      */
     public loadFriend(account: FbAccount, accountId: string, max: number = 5000): Observable<FbAccount[]> {
         let limit = 200;
-        let count = 0;
-        let reachToLast = false;
 
         const getApi = (pageSize: number, after: string = '') => {
             return this.createApi(`/${accountId}/friends`, {

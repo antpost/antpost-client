@@ -37,3 +37,9 @@ export enum AccountSearchingMethod {
     FriendsOfFriends = 1,
     FriendsOfAccount = 2
 }
+
+export enum InteractionType {
+    Like = 0,
+    Comment = 1,
+    Share = 2
+}
