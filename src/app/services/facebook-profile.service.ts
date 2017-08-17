@@ -21,29 +21,8 @@ export class FacebookProfileService extends FacebookService {
     public loadFriend(account: FbAccount, accountId: string, max: number = 5000): Observable<FbAccount[]> {
         let limit = 200;
 
-        const getApi = (pageSize: number, after: string = '') => {
-            return this.createApi(`/${accountId}/friends`, {
-                limit: pageSize,
-            }, account);
-        };
-
-        return Observable.create(observer => {
-            const onNext = (result) => {
-                return result.paging && result.paging.next ? this.post(result.paging.next, 'GET') : Observable.empty();
-            };
-
-            let api = getApi(limit);
-            this.post(api, 'GET')
-                .expand(onNext)
-                .catch(error => observer.error(error))
-                .subscribe((result: any) => {
-                    if(result.data && result.data.length > 0) {
-                        observer.next(result.data);
-                    } else {
-                        observer.complete();
-                    }
-                });
-        });
+        let api = this.createApi(`/${accountId}/friends`, null, account);
+        return this.pullPaging(api);
     }
 
     /**

@@ -366,7 +366,7 @@ export class FacebookService extends ProxyService {
         });
     }
 
-    protected pullPaging(api: string, pageSize: number = 200): Observable<any> {
+    protected pullPaging(api: string, pageSize: number = 200, completeFn?: Function): Observable<any> {
         api += `&limit=${pageSize}`;
 
         return Observable.create(observer => {
@@ -381,7 +381,7 @@ export class FacebookService extends ProxyService {
                 .expand(onNext)
                 .catch(error => observer.error(error))
                 .subscribe((result: any) => {
-                    if(result.data && result.data.length > 0) {
+                    if(result.data && result.data.length > 0 && (!completeFn || !completeFn(result.data))) {
                         observer.next(result.data);
                     } else {
                         observer.complete();

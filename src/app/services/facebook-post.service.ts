@@ -53,4 +53,14 @@ export class FacebookPostService extends FacebookService {
             return null;
         }
     }
+
+    loadAccountsInteractToPosts(account: FbAccount, postIds: string[], interactionTypes: number[]) {
+        Observable
+            .range(0, postIds.length)
+            .map(i => postIds[i])
+            .switchMap(postId => {
+                return this.loadPostLikes(account, postId);
+            });
+
+    }
 }
