@@ -54,7 +54,7 @@ export class PostInteractionComponent implements OnInit {
             });
         } else {
             // notify error
-            Toastr.error('Link bài đăng không đúng!')
+            Toastr.error('Link bài đăng không đúng!');
         }
     }
 

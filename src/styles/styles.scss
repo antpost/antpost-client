@@ -586,9 +586,11 @@ modal-overlay {
 .search-form {
   width: 100%;
   min-height: 450px;
-  /*border-color: #b7e4fb;
-  border-style: dashed;
-  border-width: 2px;*/
+  border-top-color: #bfbfbf;
+  border-top-style: double;
+  border-top-width: 1px;
+  padding-top: 10px;
+
 }
 
 .k-grid .k-hierarchy-cell>.k-icon {padding:5px 0}

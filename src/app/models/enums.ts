@@ -36,7 +36,9 @@ export enum ScheduleType {
 export enum AccountSearchingMethod {
     FriendsOfFriends = 1,
     FriendsOfAccount = 2,
-    PostInteraction = 3
+    PostInteraction = 3,
+    PageInteraction = 4,
+    GroupInteraction = 5
 }
 
 export enum InteractionType {

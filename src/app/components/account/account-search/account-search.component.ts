@@ -25,34 +25,27 @@ export class AccountSearchComponent implements OnInit {
         this.methods = [
             {
                 name: 'Bạn của bạn',
-                type: AccountSearchingMethod.FriendsOfFriends,
-                color: '#af2cc5',
-                component: AccountFriendsSearchingComponent
+                type: AccountSearchingMethod.FriendsOfFriends
             },
-            {name: 'Bạn của 1 tài khoản bất kỳ', type: AccountSearchingMethod.FriendsOfAccount, color: '#00bcd4'},
+            {
+                name: 'Bạn của 1 tài khoản bất kỳ',
+                type: AccountSearchingMethod.FriendsOfAccount
+            },
             {
                 name: 'Tài khoản tương tác với 1 bài đăng',
-                type: AccountSearchingMethod.PostInteraction,
-                color: '#ffa21a',
-                component: AccountFriendsSearchingComponent
+                type: AccountSearchingMethod.PostInteraction
             },
             {
                 name: 'Tài khoản tương tác với 1 Fanpage',
-                type: AccountSearchingMethod.FriendsOfAccount,
-                color: '#eb3573',
-                component: AccountFriendsSearchingComponent
+                type: AccountSearchingMethod.PageInteraction
             },
             {
-                name: 'Tài khoản trong 1 nhóm',
-                type: AccountSearchingMethod.FriendsOfAccount,
-                color: '#5cb860',
-                component: AccountFriendsSearchingComponent
+                name: 'Tài khoản tương tác với 1 nhóm',
+                type: AccountSearchingMethod.GroupInteraction
             },
             {
                 name: 'Tài khoản theo mục tiêu',
-                type: AccountSearchingMethod.FriendsOfAccount,
-                color: '#337ab7',
-                component: AccountFriendsSearchingComponent
+                type: AccountSearchingMethod.FriendsOfAccount
             }
         ];
     }

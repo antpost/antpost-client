@@ -31,6 +31,7 @@ import {AccountSearchComponent} from './components/account/account-search/accoun
 import {FriendSelectionComponent} from './components/account/friend-selection/friend-selection.component';
 import { AccountSelectionComponent } from './components/account/account-selection/account-selection.component';
 import { PostInteractionComponent } from './components/account/post-interaction/post-interaction.component';
+import {PageInteractionComponent} from './components/account/page-interaction/page-interaction.component';
 
 export const ROUTES: Routes = [
      {path: 'login', component: LoginComponent},
@@ -70,7 +71,8 @@ export const MODULE_COMPONENTS = [
     AccountSearchComponent,
     FriendSelectionComponent,
     PostInteractionComponent,
-    AccountSelectionComponent
+    AccountSelectionComponent,
+    PageInteractionComponent
 ];
 
 export const PIPES = [

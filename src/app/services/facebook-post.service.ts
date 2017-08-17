@@ -40,8 +40,6 @@ export class FacebookPostService extends FacebookService {
      * @returns {any}
      */
     public getPostIdFromUrl(url: string) {
-//https://www.facebook.com/bimvai.net/photos/a.951562798187871.1073741828.930105250333626/1595250757152402/?type=3
-
         if(url.indexOf('posts/') > 0) {
             let index = url.indexOf('posts/');
             return url.substr(index + 'posts/'.length);
@@ -54,8 +52,15 @@ export class FacebookPostService extends FacebookService {
         }
     }
 
-    loadAccountsInteractToPosts(account: FbAccount, postIds: string[], interactionTypes: number[]) {
-        Observable
+    /**
+     * Load accounts interacting to posts
+     * @param {FbAccount} account
+     * @param {string[]} postIds
+     * @param actions
+     * @returns {any}
+     */
+    public loadAccountsInteractToPosts(account: FbAccount, postIds: string[], actions: any) {
+        return Observable
             .range(0, postIds.length)
             .map(i => postIds[i])
             .switchMap(postId => {

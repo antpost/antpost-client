@@ -369,9 +369,11 @@ export class FacebookService extends ProxyService {
     protected pullPaging(api: string, pageSize: number = 200, completeFn?: Function): Observable<any> {
         api += `&limit=${pageSize}`;
 
+        let alive = true;
+
         return Observable.create(observer => {
             const onNext = (result) => {
-                if(!result.paging) {
+                if(!result.paging || !alive) {
                     return Observable.empty();
                 }
                 return result.paging && result.paging.next ? this.pull(result.paging.next) : Observable.of({});
@@ -379,12 +381,18 @@ export class FacebookService extends ProxyService {
 
             this.pull(api)
                 .expand(onNext)
+                .takeWhile(() => alive)
                 .catch(error => observer.error(error))
                 .subscribe((result: any) => {
-                    if(result.data && result.data.length > 0 && (!completeFn || !completeFn(result.data))) {
+                    if(result.data && result.data.length > 0) {
                         observer.next(result.data);
+                        if(completeFn && completeFn(result.data)) {
+                            observer.complete();
+                            alive = false;
+                        }
                     } else {
                         observer.complete();
+                        alive = false;
                     }
                 });
         });
