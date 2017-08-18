@@ -12,7 +12,7 @@ import { FbAccount } from '../../../models/fbaccount.model';
 export class AccountSearchComponent implements OnInit {
     public methods: any[];
     public accounts: any[] = [];
-    public methodType: number = 1;
+    public methodType: number = 5;
     public methodTypes = AccountSearchingMethod;
 
     @Input() public onClose: Function;

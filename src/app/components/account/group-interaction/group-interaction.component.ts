@@ -7,6 +7,7 @@ import { FacebookPostService } from '../../../services/facebook-post.service';
 import * as fromRoot from '../../../reducers/index';
 import { Toastr } from '../../../core/helpers/toastr';
 import { FacebookGroupService } from '../../../services/facebook-group.service';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
     selector: 'group-interaction',
@@ -18,12 +19,14 @@ export class GroupInteractionComponent implements OnInit {
     public ranges: any[];
     public timeRange: number;
     public like = true; comment = true; share = true;
-    public pageId: string;
+    public action: number = 2;
+    public groupId: string = '192570010815258';
     public antAccount$: Observable<FbAccount>;
     public loadingPost: number = 0;
     public loadingAccount: number = 0;
     public posts: any[];
     public accounts: FbAccount[];
+    private subscription: Subscription;
 
     @Output() public onSelect: EventEmitter<FbAccount[]> = new EventEmitter();
 
@@ -46,11 +49,25 @@ export class GroupInteractionComponent implements OnInit {
         this.timeRange = 1;
     }
 
-    loadAccounts() {
-        if(!this.pageId || !this.pageId.trim()) {
+    startLoading() {
+        if(!this.groupId || !this.groupId.trim()) {
             Toastr.error('Chưa nhập nhóm!');
         }
 
+        if(this.action == 1) {
+            this.loadAccounts(this.groupId);
+        } else {
+            this.loadMembers(this.groupId);
+        }
+    }
+
+    stopLoading() {
+        if(this.subscription) {
+            this.subscription.unsubscribe();
+        }
+    }
+
+    loadAccounts(groupId: string) {
         this.posts = [];
         const ONE_DAY_TIME = 24 * 60 * 60 * 1000;
         const untilDate = new Date(Date.now() - this.timeRange * ONE_DAY_TIME);
@@ -69,10 +86,11 @@ export class GroupInteractionComponent implements OnInit {
 
     loadMembers(groupId: string) {
         this.accounts = [];
+        this.loadingPost = 0;
         this.loadingAccount = 1;
 
         this.antAccount$.take(1).subscribe((antAccount) => {
-            this.facebookGroupService.loadMembers(antAccount, groupId).subscribe(
+            this.subscription = this.facebookGroupService.loadMembers(antAccount, groupId).subscribe(
                 (accounts) => {
                     this.accounts = this.accounts.concat(accounts);
                     this.onSelect.emit(accounts);
