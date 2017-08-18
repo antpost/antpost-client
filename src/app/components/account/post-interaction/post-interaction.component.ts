@@ -16,7 +16,7 @@ export class PostInteractionComponent implements OnInit {
 
     @Output() public onSelect: EventEmitter<FbAccount[]> = new EventEmitter();
     public accounts: FbAccount[] = [];
-    public defaultAccount$: Observable<FbAccount>;
+    public antAccount$: Observable<FbAccount>;
 
     public like = true; comment = true; share = true;
 
@@ -25,7 +25,7 @@ export class PostInteractionComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.defaultAccount$ = this.store.select(fromRoot.getDefaultAccount);
+        this.antAccount$ = this.store.select(fromRoot.getDefaultAccount);
     }
 
     public loadAccount(postUrl: string) {
@@ -35,22 +35,25 @@ export class PostInteractionComponent implements OnInit {
         if (postId) {
             this.accounts = [];
 
-            this.defaultAccount$.take(1).subscribe((defaultAccount) => {
-                let source = Observable.of(1);
+            const actions = {
+                like: this.like,
+                comment: this.comment,
+                share: this.share
+            };
 
-                if(uncheckAll || this.like) {
-                    source = source.flatMap(() => this.loadInterations(defaultAccount, postId, InteractionType.Like));
-                }
-
-                if(uncheckAll || this.comment) {
-                    source = source.flatMap(() => this.loadInterations(defaultAccount, postId, InteractionType.Comment));
-                }
-
-                if(uncheckAll || this.share) {
-                    source = source.flatMap(() => this.loadInterations(defaultAccount, postId, InteractionType.Share));
-                }
-
-                source.subscribe(() => Toastr.success('Tải tài khoản tương tác bài đăng thành công!'));
+            this.antAccount$.take(1).subscribe((antAccount) => {
+                this.facebookPostService.loadAccountsInteractToOnePost(antAccount, postId, actions)
+                    .subscribe(
+                        (data) => {
+                            this.pushToAccounts(data);
+                        },
+                        (error) => {
+                            console.log(error);
+                        },
+                        () => {
+                            Toastr.success('Tải tài khoản tương tác bài đăng thành công!')
+                        }
+                    );
             });
         } else {
             // notify error
@@ -60,28 +63,6 @@ export class PostInteractionComponent implements OnInit {
 
     public onSelectAccounts(acounts: FbAccount[]) {
         this.onSelect.emit(acounts);
-    }
-
-    private loadInterations(account: FbAccount, postId: string, type: number) {
-        return Observable.create(observer => {
-            let subscription = type == InteractionType.Like ?
-                this.facebookPostService.loadPostLikes(account, postId)
-                : type == InteractionType.Comment ? this.facebookPostService.loadPostComments(account, postId)
-                : this.facebookPostService.loadPostShares(account, postId);
-
-            subscription.subscribe(
-                (data) => {
-                    this.pushToAccounts(data);
-                },
-                (error) => {
-                    console.log(error);
-                },
-                () => {
-                    observer.next(true);
-                    observer.complete();
-                }
-            )
-        });
     }
 
     private pushToAccounts(data: FbAccount[]) {

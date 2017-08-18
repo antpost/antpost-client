@@ -32,6 +32,7 @@ import {FriendSelectionComponent} from './components/account/friend-selection/fr
 import { AccountSelectionComponent } from './components/account/account-selection/account-selection.component';
 import { PostInteractionComponent } from './components/account/post-interaction/post-interaction.component';
 import {PageInteractionComponent} from './components/account/page-interaction/page-interaction.component';
+import { GroupInteractionComponent } from './components/account/group-interaction/group-interaction.component';
 
 export const ROUTES: Routes = [
      {path: 'login', component: LoginComponent},
@@ -72,7 +73,8 @@ export const MODULE_COMPONENTS = [
     FriendSelectionComponent,
     PostInteractionComponent,
     AccountSelectionComponent,
-    PageInteractionComponent
+    PageInteractionComponent,
+    GroupInteractionComponent
 ];
 
 export const PIPES = [

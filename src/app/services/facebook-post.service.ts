@@ -5,6 +5,7 @@ import { AutomationService } from './automation.service';
 import { FbAccount } from '../models/fbaccount.model';
 import { InteractionType } from '../models/enums';
 import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
 
 @Injectable()
 export class FacebookPostService extends FacebookService {
@@ -59,13 +60,61 @@ export class FacebookPostService extends FacebookService {
      * @param actions
      * @returns {any}
      */
-    public loadAccountsInteractToPosts(account: FbAccount, postIds: string[], actions: any) {
+    public loadAccountsInteractToPosts(account: FbAccount, postIds: string[], actions: any): Observable<any> {
         return Observable
             .range(0, postIds.length)
-            .map(i => postIds[i])
-            .switchMap(postId => {
-                return this.loadPostLikes(account, postId);
-            });
+            .switchMap(i => this.loadAccountsInteractToOnePost(account, postIds[i], actions));
+        //return this.loadAccountsInteractToOnePost(account, postIds[0], actions);
 
+    }
+
+    public loadAccountsInteractToOnePost(account: FbAccount, postId: string, actions: any): Observable<any> {
+
+        return Observable.create(subject => {
+            const loadInteractions = (account: FbAccount, postId: string, type: number) => {
+                return Observable.create(observer => {
+                    let subscription = type == InteractionType.Like ?
+                        this.loadPostLikes(account, postId)
+                        : type == InteractionType.Comment ? this.loadPostComments(account, postId)
+                            : this.loadPostShares(account, postId);
+
+                    subscription.subscribe(
+                        (data) => {
+                            subject.next(data);
+                        },
+                        (error) => {
+                            console.log(error);
+                            observer.next(false);
+                            observer.complete();
+                        },
+                        () => {
+                            observer.next(true);
+                            observer.complete();
+                        }
+                    )
+                });
+            }
+
+            let source = Observable.of(1);
+
+            const uncheckAll = !actions.like && !actions.comment && !actions.share;
+
+            if(uncheckAll || actions.like) {
+                source = source.flatMap(() => loadInteractions(account, postId, InteractionType.Like));
+            }
+
+            if(uncheckAll || actions.comment) {
+                source = source.flatMap(() => loadInteractions(account, postId, InteractionType.Comment));
+            }
+
+            if(uncheckAll || actions.share) {
+                source = source.flatMap(() => loadInteractions(account, postId, InteractionType.Share));
+            }
+
+            source.subscribe(() => {
+                subject.complete();
+                console.log('complete load account for post ' + postId);
+            });
+        });
     }
 }

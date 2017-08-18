@@ -1,18 +1,20 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import {FacebookPageService} from '../../../services/facebook-page.service';
-import {Store} from '@ngrx/store';
+import { Observable } from 'rxjs/Observable';
+import { FacebookPageService } from '../../../services/facebook-page.service';
+import { Store } from '@ngrx/store';
+import { FbAccount } from '../../../models/fbaccount.model';
+import { FacebookPostService } from '../../../services/facebook-post.service';
 import * as fromRoot from '../../../reducers/index';
-import {Observable} from 'rxjs/Observable';
-import {FbAccount} from '../../../models/fbaccount.model';
-import {Toastr} from '../../../core/helpers/toastr';
-import {FacebookPostService} from '../../../services/facebook-post.service';
+import { Toastr } from '../../../core/helpers/toastr';
+import { FacebookGroupService } from '../../../services/facebook-group.service';
 
 @Component({
-    selector: 'page-interaction',
-    templateUrl: './page-interaction.component.html',
-    styleUrls: ['./page-interaction.component.css']
+    selector: 'group-interaction',
+    templateUrl: './group-interaction.component.html',
+    styleUrls: ['./group-interaction.component.css']
 })
-export class PageInteractionComponent implements OnInit {
+export class GroupInteractionComponent implements OnInit {
+
     public ranges: any[];
     public timeRange: number;
     public like = true; comment = true; share = true;
@@ -26,7 +28,7 @@ export class PageInteractionComponent implements OnInit {
     @Output() public onSelect: EventEmitter<FbAccount[]> = new EventEmitter();
 
     constructor(private store: Store<fromRoot.State>,
-                private facebookPageService: FacebookPageService,
+                private facebookGroupService: FacebookGroupService,
                 private facebookPostService: FacebookPostService) {
     }
 
@@ -46,7 +48,7 @@ export class PageInteractionComponent implements OnInit {
 
     loadAccounts() {
         if(!this.pageId || !this.pageId.trim()) {
-            Toastr.error('Chưa nhập Fanpage!');
+            Toastr.error('Chưa nhập nhóm!');
         }
 
         this.posts = [];
@@ -57,10 +59,29 @@ export class PageInteractionComponent implements OnInit {
         this.loadingAccount = 0;
 
         this.antAccount$.take(1).subscribe((antAccount) => {
-            this.facebookPageService.loadPosts(antAccount, this.pageId, untilDate).subscribe(
+            /*this.facebookGroupService.loadPosts(antAccount, this.pageId, untilDate).subscribe(
                 (posts) => this.posts = this.posts.concat(posts),
                 () => {},
                 () => {this.loadInterations()}
+            )*/
+        });
+    }
+
+    loadMembers(groupId: string) {
+        this.accounts = [];
+        this.loadingAccount = 1;
+
+        this.antAccount$.take(1).subscribe((antAccount) => {
+            this.facebookGroupService.loadMembers(antAccount, groupId).subscribe(
+                (accounts) => {
+                    this.accounts = this.accounts.concat(accounts);
+                    this.onSelect.emit(accounts);
+                },
+                () => {},
+                () => {
+                    Toastr.success('Tải thành viên nhóm thành công!');
+                    this.loadingAccount = 2;
+                }
             )
         });
     }
@@ -85,10 +106,11 @@ export class PageInteractionComponent implements OnInit {
                 },
                 () => {},
                 () => {
-                    Toastr.success('Tải tài khoản tương tác fanpage thành công!');
+                    Toastr.success('Tải tài khoản tương tác nhóm thành công!');
                     this.loadingAccount = 2;
                 }
             )
         });
     }
+
 }
