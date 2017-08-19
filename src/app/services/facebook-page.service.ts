@@ -40,6 +40,7 @@ export class FacebookPageService extends FacebookService {
 
         const filterFn = (data) => data.filter(item => new Date(item.created_time).getTime() >= until.getTime());
 
-        return this.pullPaging(api, 200, completeFn).map(filterFn);
+        //return this.pullPaging(api, 200, completeFn).map(filterFn);
+        return this.pullPaging(api, 200).map(filterFn);
     }
 }

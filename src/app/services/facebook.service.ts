@@ -6,6 +6,7 @@ import { Post } from '../models/post.model';
 import { ProxyService } from "./proxy.service";
 import { AutomationService } from './automation.service';
 import { FbAccount } from '../models/fbaccount.model';
+import { LoadingState } from '../models/enums';
 
 @Injectable()
 export class FacebookService extends ProxyService {
@@ -366,7 +367,7 @@ export class FacebookService extends ProxyService {
         });
     }
 
-    protected pullPaging(api: string, pageSize: number = 200, completeFn?: Function): Observable<any> {
+    protected pullPaging1(api: string, pageSize: number = 200, completeFn?: Function): Observable<any> {
         api += `&limit=${pageSize}`;
 
         let alive = true;
@@ -390,6 +391,42 @@ export class FacebookService extends ProxyService {
                             observer.complete();
                             alive = false;
                         }
+                    } else {
+                        observer.complete();
+                        alive = false;
+                    }
+                });
+        });
+    }
+
+    protected pullPaging(api: string, pageSize: number = 200, state$: Observable<number> = Observable.of(LoadingState.Loading)): Observable<any> {
+        api += `&limit=${pageSize}`;
+
+        let alive = true;
+
+        state$.subscribe((state) => alive = !(state == LoadingState.Cancelled || state == LoadingState.Completed))
+
+        return Observable.create(observer => {
+            const onNext = (result) => {
+                if(!result.paging || !alive) {
+                    //observer.complete();
+                    return Observable.empty();
+                }
+
+                return result.paging && result.paging.next ? this.pull(result.paging.next) : Observable.of({});
+            };
+
+            this.pull(api)
+                .expand(onNext)
+                .takeWhile(() => alive)
+                .catch(error => observer.error(error))
+                .subscribe((result: any) => {
+                    if(result.data && result.data.length > 0) {
+                        observer.next(result.data);
+                        /*if(completeFn && completeFn(result.data)) {
+                            observer.complete();
+                            alive = false;
+                        }*/
                     } else {
                         observer.complete();
                         alive = false;

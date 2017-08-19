@@ -60,8 +60,9 @@
 				<div class="col-sm-offset-4 col-sm-8">
 					<div *ngIf="loadingPost == 1" class="text-primary">Đang tải bài đăng: {{posts.length}} ...</div>
 					<div *ngIf="loadingPost == 2" class="text-primary">Kết thúc tải bài đăng: {{posts.length}}.</div>
-					<div *ngIf="loadingAccount == 1" class="text-primary">Đang tải tài khoản: {{accounts.length}} ...</div>
-					<div *ngIf="loadingAccount == 2" class="text-primary">Kết thúc tải tài khoản: {{accounts.length}}.</div>
+					<div *ngIf="(loadingAccount$ | async) == 1" class="text-primary">Đang tải tài khoản: {{accounts.length}} ...</div>
+					<div *ngIf="(loadingAccount$ | async) == 2" class="text-primary">Kết thúc tải tài khoản: {{accounts.length}}.</div>
+					<div *ngIf="(loadingAccount$ | async) == 3" class="text-primary">Đã hủy!</div>
 				</div>
 			</div>
 		</div>

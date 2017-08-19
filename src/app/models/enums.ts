@@ -46,3 +46,10 @@ export enum InteractionType {
     Comment = 1,
     Share = 2
 }
+
+export enum LoadingState {
+    None = 0,
+    Loading = 1,
+    Completed = 2,
+    Cancelled = 3
+}

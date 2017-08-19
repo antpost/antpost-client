@@ -40,6 +40,7 @@ import { combineReducers } from '@ngrx/store';
 import * as fromJoinedGroups from './joined-group';
 import * as fromAccount from './account';
 import * as fromGroupSearch from './group-search';
+import * as fromAccountSearch from './account-search.reducer';
 
 
 /**
@@ -50,6 +51,7 @@ export interface State {
     account: fromAccount.State;
     joinedGroups: fromJoinedGroups.State;
     groupSearch: fromGroupSearch.State;
+    accountSearch: fromAccountSearch.State
 }
 
 
@@ -63,7 +65,8 @@ export interface State {
 const reducers = {
     joinedGroups: fromJoinedGroups.reducer,
     account: fromAccount.reducer,
-    groupSearch: fromGroupSearch.reducer
+    groupSearch: fromGroupSearch.reducer,
+    accountSearch: fromAccountSearch.reducer
 };
 
 const developmentReducer: ActionReducer<State> = compose(storeFreeze, combineReducers)(reducers);
@@ -96,3 +99,8 @@ export const getJoinedGroups = (uid: string) => {
 export const getGroupSearchState = (state: State) => state.groupSearch;
 export const getGroupSearchQuery = createSelector(getGroupSearchState, fromGroupSearch.getQuery);
 export const getGroupSearchResult = createSelector(getGroupSearchState, fromGroupSearch.getGroups);
+
+
+export const getAccountSearchState = (state: State) => state.accountSearch;
+export const getSearchGroupMembersState = createSelector(getAccountSearchState, fromAccountSearch.getSearchGroupMembersState);
+export const getFoundAccounts = createSelector(getAccountSearchState, fromAccountSearch.getFoundAccounts);

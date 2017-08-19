@@ -67,6 +67,7 @@ import {FacebookProfileService} from './services/facebook-profile.service';
 import {FacebookPostService} from './services/facebook-post.service';
 import { FacebookPageService } from './services/facebook-page.service';
 import { FacebookGroupService } from './services/facebook-group.service';
+import { AccountSearchEffects } from './effects/account-search.effect';
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -150,7 +151,8 @@ type StoreType = {
          */
         EffectsModule.run(JoinedGroupEffects),
         EffectsModule.run(AccountEffects),
-        EffectsModule.run(GroupSearchEffects)
+        EffectsModule.run(GroupSearchEffects),
+        EffectsModule.run(AccountSearchEffects),
 
         /**
          * `provideDB` sets up @ngrx/db with the provided schema and makes the Database

@@ -3,6 +3,9 @@ import { ModalService } from '../../../core/modal/modal.service';
 import { AccountFriendsSearchingComponent } from '../account-friends-searching/account-friends-searching.component';
 import { AccountSearchingMethod } from '../../../models/enums';
 import { FbAccount } from '../../../models/fbaccount.model';
+import { Store } from '@ngrx/store';
+import * as fromRoot from '../../../reducers/index';
+import * as accountSearchAction from '../../../actions/account-search.action';
 
 @Component({
     selector: 'account-search',
@@ -18,9 +21,11 @@ export class AccountSearchComponent implements OnInit {
     @Input() public onClose: Function;
     @Input() public onDismiss: Function;
 
-    constructor(private injector: Injector) {
+    constructor(private injector: Injector, private store: Store<fromRoot.State>) {
         this.onClose = this.injector.get('onClose');
         this.onDismiss = this.injector.get('onDismiss');
+
+        this.store.dispatch(new accountSearchAction.SearchInitAction());
 
         this.methods = [
             {
