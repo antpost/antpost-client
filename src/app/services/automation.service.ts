@@ -121,9 +121,13 @@ export class AutomationService extends ProxyService {
 
                     let linkElementLength = element.find('a[href*="/join"]').length;
 
+                    const groupIdLink: string = element.find('a[href*="/groups/"]').attr('href');
+                    const id = groupIdLink ? groupIdLink.match(/groups\/(.*?)\?/)[1] : null;
+
                     observer.next({
                         members,
-                        requested: linkElementLength ? false : true
+                        requested: linkElementLength ? false : true,
+                        groupId: id
                     });
                     observer.complete();
                 } else {

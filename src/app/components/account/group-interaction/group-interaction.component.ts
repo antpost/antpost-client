@@ -21,7 +21,7 @@ export class GroupInteractionComponent implements OnInit, OnDestroy {
     public timeRange: number;
     public like = true; comment = true; share = true;
     public action: number = 1;
-    public groupId: string = '720086518171901';
+    public groupId: string;
     public antAccount$: Observable<FbAccount>;
     public loadingPost: number = 0;
 
@@ -66,16 +66,26 @@ export class GroupInteractionComponent implements OnInit, OnDestroy {
         this.stopLoading();
     }
 
-    startLoading() {
+    async startLoading () {
         if(!this.groupId || !this.groupId.trim()) {
             Toastr.error('Chưa nhập nhóm!');
         }
 
-        if(this.action == 1) {
-            this.loadAccounts(this.groupId);
-        } else {
-            this.loadMembers(this.groupId);
-        }
+        this.antAccount$.take(1).subscribe(async (antAccount) => {
+            let id = await this.facebookGroupService.getGroupId(antAccount, this.groupId);
+            if(!id) {
+                Toastr.error('Nhóm không hợp lệ!');
+                return;
+            }
+
+            this.store.dispatch(new accountSearchAction.SearchResetAction());
+
+            if(this.action == 1) {
+                this.loadAccounts(id);
+            } else {
+                this.loadMembers(id);
+            }
+        });
     }
 
     stopLoading() {

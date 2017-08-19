@@ -12,6 +12,11 @@ export class FacebookGroupService extends FacebookService {
         super(http, jsonp, automationService);
     }
 
+    public async getGroupId(account: FbAccount, groupName: string) {
+        const info = await this.automationService.viewGroupInfo(account, groupName);
+        return info ? info.groupId : null;
+    }
+
     public loadMembers(account: FbAccount, groupId: string, state$: Observable<number>) {
         let api = this.createApi(`/${groupId}/members`, null, account);
         return this.pullPaging(api, 200, null, state$);

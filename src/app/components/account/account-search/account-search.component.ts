@@ -15,7 +15,7 @@ import * as accountSearchAction from '../../../actions/account-search.action';
 export class AccountSearchComponent implements OnInit {
     public methods: any[];
     public accounts: any[] = [];
-    public methodType: number = 4;
+    public methodType: number = 1;
     public methodTypes = AccountSearchingMethod;
 
     @Input() public onClose: Function;

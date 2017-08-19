@@ -52,7 +52,8 @@
 			</div>
 			<div class="form-group">
 				<div class="col-sm-offset-4 col-sm-8">
-					<button class="btn btn-success btn-sm" (click)="loadAccounts()"><i class="fa fa-download"></i> Tải tương tác</button>
+					<button class="btn btn-success btn-sm" (click)="loadAccounts()"><i class="fa fa-download"></i> Tải tài khoản</button>
+					<button class="btn btn-sm" (click)="stopLoading()" *ngIf="(loadingAccount$ | async) == 1"><i class="fa fa-close"></i> Dừng lại</button>
 				</div>
 			</div>
 			<div class="form-group">

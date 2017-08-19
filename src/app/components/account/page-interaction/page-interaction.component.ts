@@ -18,7 +18,7 @@ export class PageInteractionComponent implements OnInit, OnDestroy {
     public ranges: any[];
     public timeRange: number;
     public like = true; comment = true; share = true;
-    public pageId: string = 'meyeucon.24h';
+    public pageId: string;
     public antAccount$: Observable<FbAccount>;
     public loadingPost: number = 0;
     public loadingAccount$: Observable<number>;
@@ -72,6 +72,8 @@ export class PageInteractionComponent implements OnInit, OnDestroy {
             Toastr.error('Chưa nhập Fanpage!');
         }
 
+        this.store.dispatch(new accountSearchAction.SearchResetAction());
+
         this.posts = [];
         const ONE_DAY_TIME = 24 * 60 * 60 * 1000;
         const untilDate = new Date(Date.now() - this.timeRange * ONE_DAY_TIME);
@@ -98,7 +100,6 @@ export class PageInteractionComponent implements OnInit, OnDestroy {
             share: this.share
         };
 
-        this.store.dispatch(new accountSearchAction.SearchResetAction());
         this.store.dispatch(new accountSearchAction.SearchInteractionAction({
             postIds: this.posts.map(p => p.id),
             actions
