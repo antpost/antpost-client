@@ -22,25 +22,4 @@ export class FacebookPageService extends FacebookService {
         let api = this.createApi(pageId, null, account);
         return this.pullAsync(api);
     }
-
-    public loadPosts(account: FbAccount, pageId: string, until?: Date, max?: number): Observable<any> {
-        let api = this.createApi(`/${pageId}/feed`, {fields: 'created_time'}, account);
-
-        const completeFn = (data) => {
-            if(until) {
-                // find post has time created < until
-                const post = data.find(item => new Date(item.created_time).getTime() < until.getTime());
-                if(post) {
-                    return true;
-                }
-            }
-
-            return false;
-        };
-
-        const filterFn = (data) => data.filter(item => new Date(item.created_time).getTime() >= until.getTime());
-
-        //return this.pullPaging(api, 200, completeFn).map(filterFn);
-        return this.pullPaging(api, 200).map(filterFn);
-    }
 }

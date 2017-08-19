@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import {FacebookPageService} from '../../../services/facebook-page.service';
 import {Store} from '@ngrx/store';
 import * as fromRoot from '../../../reducers/index';
@@ -6,22 +6,24 @@ import {Observable} from 'rxjs/Observable';
 import {FbAccount} from '../../../models/fbaccount.model';
 import {Toastr} from '../../../core/helpers/toastr';
 import {FacebookPostService} from '../../../services/facebook-post.service';
+import { LoadingState } from '../../../models/enums';
+import * as accountSearchAction from '../../../actions/account-search.action';
 
 @Component({
     selector: 'page-interaction',
     templateUrl: './page-interaction.component.html',
     styleUrls: ['./page-interaction.component.css']
 })
-export class PageInteractionComponent implements OnInit {
+export class PageInteractionComponent implements OnInit, OnDestroy {
     public ranges: any[];
     public timeRange: number;
     public like = true; comment = true; share = true;
-    public pageId: string;
+    public pageId: string = 'meyeucon.24h';
     public antAccount$: Observable<FbAccount>;
     public loadingPost: number = 0;
-    public loadingAccount: number = 0;
+    public loadingAccount$: Observable<number>;
     public posts: any[];
-    public accounts: FbAccount[];
+    public accounts: FbAccount[] = [];
 
     @Output() public onSelect: EventEmitter<FbAccount[]> = new EventEmitter();
 
@@ -32,6 +34,18 @@ export class PageInteractionComponent implements OnInit {
 
     ngOnInit() {
         this.antAccount$ = this.store.select(fromRoot.getDefaultAccount);
+
+        this.loadingAccount$ = Observable.of(LoadingState.None);
+        this.loadingAccount$.subscribe(state => {
+            if(state == LoadingState.Completed) {
+                Toastr.success('Tải tài khoản tương tác fanpage thành công!');
+            }
+        });
+
+        this.store.select(fromRoot.getFoundAccounts).subscribe(accounts => {
+            this.accounts = this.accounts.concat(accounts);
+            this.onSelect.emit(accounts);
+        });
 
         this.ranges = [
             {text: '1 ngày trở lại', value: 1},
@@ -44,6 +58,15 @@ export class PageInteractionComponent implements OnInit {
         this.timeRange = 1;
     }
 
+    ngOnDestroy() {
+        this.stopLoading();
+    }
+
+    stopLoading() {
+        this.store.dispatch(new accountSearchAction.SearchGroupMembersCancelledAction());
+        this.store.dispatch(new accountSearchAction.SearchInteractionCancelledAction());
+    }
+
     loadAccounts() {
         if(!this.pageId || !this.pageId.trim()) {
             Toastr.error('Chưa nhập Fanpage!');
@@ -54,7 +77,7 @@ export class PageInteractionComponent implements OnInit {
         const untilDate = new Date(Date.now() - this.timeRange * ONE_DAY_TIME);
 
         this.loadingPost = 1;
-        this.loadingAccount = 0;
+        this.loadingAccount$ = this.store.select(fromRoot.getSearchInteractionState);
 
         this.antAccount$.take(1).subscribe((antAccount) => {
             this.facebookPageService.loadPosts(antAccount, this.pageId, untilDate).subscribe(
@@ -67,9 +90,7 @@ export class PageInteractionComponent implements OnInit {
 
     loadInterations() {
         this.loadingPost = 2;
-        console.log('start loading interactions');
         this.accounts = [];
-        this.loadingAccount = 1;
 
         const actions = {
             like: this.like,
@@ -77,18 +98,10 @@ export class PageInteractionComponent implements OnInit {
             share: this.share
         };
 
-        this.antAccount$.take(1).subscribe((antAccount) => {
-            this.facebookPostService.loadAccountsInteractToPosts(antAccount, this.posts.map(p => p.id), actions).subscribe(
-                (accounts) => {
-                    this.accounts = this.accounts.concat(accounts);
-                    this.onSelect.emit(accounts);
-                },
-                () => {},
-                () => {
-                    Toastr.success('Tải tài khoản tương tác fanpage thành công!');
-                    this.loadingAccount = 2;
-                }
-            )
-        });
+        this.store.dispatch(new accountSearchAction.SearchResetAction());
+        this.store.dispatch(new accountSearchAction.SearchInteractionAction({
+            postIds: this.posts.map(p => p.id),
+            actions
+        }));
     }
 }

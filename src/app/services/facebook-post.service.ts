@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Http, Jsonp } from '@angular/http';
 import { AutomationService } from './automation.service';
 import { FbAccount } from '../models/fbaccount.model';
-import { InteractionType } from '../models/enums';
+import { InteractionType, LoadingState } from '../models/enums';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 
@@ -20,19 +20,19 @@ export class FacebookPostService extends FacebookService {
      * @param {number} interactionType
      * @returns {any}
      */
-    public loadPostLikes(account: FbAccount, postId: string): Observable<any> {
+    public loadPostLikes(account: FbAccount, postId: string, state$: Observable<number>): Observable<any> {
         let api = this.createApi(`/${postId}/likes`, null, account);
-        return this.pullPaging(api);
+        return this.pullPaging(api, 200, null, state$);
     }
 
-    public loadPostComments(account: FbAccount, postId: string): Observable<any> {
+    public loadPostComments(account: FbAccount, postId: string, state$: Observable<number>): Observable<any> {
         let api = this.createApi(`/${postId}/comments`, {fields: 'from'}, account);
-        return this.pullPaging(api).map(data => data.map(item => item.from));
+        return this.pullPaging(api, 200, null, state$).map(data => data.map(item => item.from));
     }
 
-    public loadPostShares(account: FbAccount, postId: string): Observable<any> {
+    public loadPostShares(account: FbAccount, postId: string, state$: Observable<number>): Observable<any> {
         let api = this.createApi(`/${postId}/sharedposts`, {fields: 'from'}, account);
-        return this.pullPaging(api).map(data => data.map(item => item.from));
+        return this.pullPaging(api, 200, null, state$).map(data => data.map(item => item.from));
     }
 
     /**
@@ -60,23 +60,21 @@ export class FacebookPostService extends FacebookService {
      * @param actions
      * @returns {any}
      */
-    public loadAccountsInteractToPosts(account: FbAccount, postIds: string[], actions: any): Observable<any> {
+    public loadAccountsInteractToPosts(account: FbAccount, postIds: string[], actions: any, state$?: Observable<number>): Observable<any> {
         return Observable
             .range(0, postIds.length)
-            .switchMap(i => this.loadAccountsInteractToOnePost(account, postIds[i], actions));
-        //return this.loadAccountsInteractToOnePost(account, postIds[0], actions);
-
+            .switchMap(i => this.loadAccountsInteractToOnePost(account, postIds[i], actions, state$));
     }
 
-    public loadAccountsInteractToOnePost(account: FbAccount, postId: string, actions: any): Observable<any> {
+    public loadAccountsInteractToOnePost(account: FbAccount, postId: string, actions: any, state$?: Observable<number>): Observable<any> {
 
         return Observable.create(subject => {
             const loadInteractions = (account: FbAccount, postId: string, type: number) => {
                 return Observable.create(observer => {
                     let subscription = type == InteractionType.Like ?
-                        this.loadPostLikes(account, postId)
-                        : type == InteractionType.Comment ? this.loadPostComments(account, postId)
-                            : this.loadPostShares(account, postId);
+                        this.loadPostLikes(account, postId, state$)
+                        : type == InteractionType.Comment ? this.loadPostComments(account, postId, state$)
+                            : this.loadPostShares(account, postId, state$);
 
                     subscription.subscribe(
                         (data) => {

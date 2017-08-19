@@ -7,6 +7,7 @@ import { of } from 'rxjs/observable/of';
 import {FbAccountService} from '../services/fbaccount.service';
 import { FacebookGroupService } from '../services/facebook-group.service';
 import * as fromRoot from '../reducers/index';
+import { FacebookPostService } from '../services/facebook-post.service';
 
 @Injectable()
 export class AccountSearchEffects {
@@ -28,9 +29,29 @@ export class AccountSearchEffects {
             });
         });
 
+    @Effect()
+    loadGroupInteraction$: Observable<Action> = this.actions$
+        .ofType(accountSeachAction.SEARCH_INTERACTION)
+        .map(toPayload)
+        .withLatestFrom(this.store$.select(fromRoot.getDefaultAccount))
+        .switchMap(([payload, antAccount]) => {
+            return new Observable<Action>(observer => {
+                this.facebookPostService.loadAccountsInteractToPosts(antAccount, payload.postIds, payload.actions,
+                        this.store$.select(fromRoot.getSearchInteractionState))
+                    .subscribe(
+                    (accounts) => {
+                        observer.next(new accountSeachAction.SearchPageCompleteAction(accounts))
+                    },
+                    () => {},
+                    () => {
+                        observer.next(new accountSeachAction.SearchCompleteAction());
+                    });
+            });
+        });
+
     constructor(private actions$: Actions,
                 private store$: Store<fromRoot.State>,
-                private fbAccountService: FbAccountService,
-                private facebookGroupService: FacebookGroupService) {
+                private facebookGroupService: FacebookGroupService,
+                private facebookPostService: FacebookPostService) {
     }
 }

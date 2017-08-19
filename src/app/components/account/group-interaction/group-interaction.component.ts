@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 import { FbAccount } from '../../../models/fbaccount.model';
@@ -8,22 +8,22 @@ import { Toastr } from '../../../core/helpers/toastr';
 import { FacebookGroupService } from '../../../services/facebook-group.service';
 import { Subscription } from 'rxjs/Subscription';
 import * as accountSearchAction from '../../../actions/account-search.action';
+import { LoadingState } from '../../../models/enums';
 
 @Component({
     selector: 'group-interaction',
     templateUrl: './group-interaction.component.html',
     styleUrls: ['./group-interaction.component.css']
 })
-export class GroupInteractionComponent implements OnInit {
+export class GroupInteractionComponent implements OnInit, OnDestroy {
 
     public ranges: any[];
     public timeRange: number;
     public like = true; comment = true; share = true;
-    public action: number = 2;
-    public groupId: string = '192570010815258';
+    public action: number = 1;
+    public groupId: string = '720086518171901';
     public antAccount$: Observable<FbAccount>;
     public loadingPost: number = 0;
-    public loadingAccount: number = 0;
 
     public loadingAccount$: Observable<number>;
 
@@ -42,9 +42,14 @@ export class GroupInteractionComponent implements OnInit {
         this.antAccount$ = this.store.select(fromRoot.getDefaultAccount);
         this.store.select(fromRoot.getFoundAccounts).subscribe(accounts => {
             this.accounts = this.accounts.concat(accounts);
-            this.onSelect.emit(accounts)
+            this.onSelect.emit(accounts);
         });
-        this.loadingAccount$ = this.store.select(fromRoot.getSearchGroupMembersState);
+        this.loadingAccount$ = Observable.of(LoadingState.None);
+        this.loadingAccount$.subscribe(state => {
+            if(state == LoadingState.Completed) {
+                Toastr.success('Tải tài khoản tương tác nhóm thành công!');
+            }
+        });
 
         this.ranges = [
             {text: '1 ngày trở lại', value: 1},
@@ -55,6 +60,10 @@ export class GroupInteractionComponent implements OnInit {
         ];
 
         this.timeRange = 1;
+    }
+
+    ngOnDestroy() {
+        this.stopLoading();
     }
 
     startLoading() {
@@ -71,6 +80,7 @@ export class GroupInteractionComponent implements OnInit {
 
     stopLoading() {
         this.store.dispatch(new accountSearchAction.SearchGroupMembersCancelledAction());
+        this.store.dispatch(new accountSearchAction.SearchInteractionCancelledAction());
     }
 
     loadAccounts(groupId: string) {
@@ -79,18 +89,19 @@ export class GroupInteractionComponent implements OnInit {
         const untilDate = new Date(Date.now() - this.timeRange * ONE_DAY_TIME);
 
         this.loadingPost = 1;
-        this.loadingAccount = 0;
+        this.loadingAccount$ = this.store.select(fromRoot.getSearchInteractionState);
 
         this.antAccount$.take(1).subscribe((antAccount) => {
-            /*this.facebookGroupService.loadPosts(antAccount, this.pageId, untilDate).subscribe(
+            this.facebookGroupService.loadPosts(antAccount, groupId, untilDate).subscribe(
                 (posts) => this.posts = this.posts.concat(posts),
                 () => {},
                 () => {this.loadInterations()}
-            )*/
+            )
         });
     }
 
     loadMembers(groupId: string) {
+        this.loadingAccount$ = this.store.select(fromRoot.getSearchGroupMembersState);
         this.accounts = [];
         this.store.dispatch(new accountSearchAction.SearchResetAction());
         this.store.dispatch(new accountSearchAction.SearchGroupMembersAction(groupId));
@@ -98,9 +109,7 @@ export class GroupInteractionComponent implements OnInit {
 
     loadInterations() {
         this.loadingPost = 2;
-        console.log('start loading interactions');
         this.accounts = [];
-        this.loadingAccount = 1;
 
         const actions = {
             like: this.like,
@@ -108,19 +117,11 @@ export class GroupInteractionComponent implements OnInit {
             share: this.share
         };
 
-        this.antAccount$.take(1).subscribe((antAccount) => {
-            this.facebookPostService.loadAccountsInteractToPosts(antAccount, this.posts.map(p => p.id), actions).subscribe(
-                (accounts) => {
-                    this.accounts = this.accounts.concat(accounts);
-                    this.onSelect.emit(accounts);
-                },
-                () => {},
-                () => {
-                    Toastr.success('Tải tài khoản tương tác nhóm thành công!');
-                    this.loadingAccount = 2;
-                }
-            )
-        });
+        this.store.dispatch(new accountSearchAction.SearchResetAction());
+        this.store.dispatch(new accountSearchAction.SearchInteractionAction({
+            postIds: this.posts.map(p => p.id),
+            actions
+        }));
     }
 
 }

@@ -4,6 +4,8 @@ import { FbAccount } from '../models/fbaccount.model';
 export const SEARCH_INIT = '[ACCOUNT-SEARCH] Init';
 export const SEARCH_GROUP_MEMBERS = '[ACCOUNT-SEARCH] Search Group Members';
 export const SEARCH_GROUP_MEMBERS_CANCELLED = '[ACCOUNT-SEARCH] Search Group Members Cancelled';
+export const SEARCH_INTERACTION = '[ACCOUNT-SEARCH] Search Interaction';
+export const SEARCH_INTERACTION_CANCELLED = '[ACCOUNT-SEARCH] Search Interaction Cancelled';
 export const SEARCH_PAGE_COMPLETE = '[ACCOUNT-SEARCH] Search Accounts / Page Complete';
 export const SEARCH_RESET = '[ACCOUNT-SEARCH] Search Reset';
 export const SEARCH_COMPLETE = '[ACCOUNT-SEARCH] Search Complete';
@@ -15,18 +17,25 @@ export class SearchInitAction implements Action {
     }
 }
 
+/* Search In Group */
 export class SearchGroupMembersAction implements Action {
     readonly type = SEARCH_GROUP_MEMBERS;
-
-    constructor(public payload: string) {
-    }
+    constructor(public payload: string) {}
 }
 
 export class SearchGroupMembersCancelledAction implements Action {
     readonly type = SEARCH_GROUP_MEMBERS_CANCELLED;
+    constructor(public payload?: any) {}
+}
 
-    constructor(public payload?: any) {
-    }
+export class SearchInteractionAction implements Action {
+    readonly type = SEARCH_INTERACTION;
+    constructor(public payload?: any) {}
+}
+
+export class SearchInteractionCancelledAction implements Action {
+    readonly type = SEARCH_INTERACTION_CANCELLED;
+    constructor(public payload?: any) {}
 }
 
 export class SearchPageCompleteAction implements Action {
@@ -55,5 +64,7 @@ export type Actions
     | SearchResetAction
     | SearchCompleteAction
     | SearchGroupMembersCancelledAction
+    | SearchInteractionAction
+    | SearchInteractionCancelledAction
     | SearchGroupMembersAction
     | SearchPageCompleteAction;

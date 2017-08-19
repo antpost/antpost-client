@@ -4,11 +4,13 @@ import { LoadingState } from '../models/enums';
 
 export interface State {
     searchGroupMembersState: number,
+    searchInteraction: number,
     accounts: FbAccount[]
 }
 
 export const initialState: State = {
     searchGroupMembersState: LoadingState.None,
+    searchInteraction: LoadingState.None,
     accounts: []
 };
 
@@ -31,6 +33,14 @@ export function reducer(state: State = initialState, action: accountSearchAction
             newState.searchGroupMembersState = LoadingState.Cancelled;
             return newState;
 
+        case accountSearchAction.SEARCH_INTERACTION:
+            newState.searchInteraction = LoadingState.Loading;
+            return newState;
+
+        case accountSearchAction.SEARCH_INTERACTION_CANCELLED:
+            newState.searchInteraction = LoadingState.Cancelled;
+            return newState;
+
         case accountSearchAction.SEARCH_PAGE_COMPLETE:
             newState.accounts = [...action.payload];
             return newState;
@@ -38,6 +48,7 @@ export function reducer(state: State = initialState, action: accountSearchAction
         case accountSearchAction.SEARCH_COMPLETE:
             return {
                 searchGroupMembersState: LoadingState.Completed,
+                searchInteraction: LoadingState.Completed,
                 accounts: []
             };
 
@@ -47,4 +58,5 @@ export function reducer(state: State = initialState, action: accountSearchAction
 };
 
 export const getSearchGroupMembersState = (state: State) => state.searchGroupMembersState;
+export const getSearchInteractionState = (state: State) => state.searchInteraction;
 export const getFoundAccounts = (state: State) => state.accounts;

@@ -103,4 +103,5 @@ export const getGroupSearchResult = createSelector(getGroupSearchState, fromGrou
 
 export const getAccountSearchState = (state: State) => state.accountSearch;
 export const getSearchGroupMembersState = createSelector(getAccountSearchState, fromAccountSearch.getSearchGroupMembersState);
+export const getSearchInteractionState = createSelector(getAccountSearchState, fromAccountSearch.getSearchInteractionState);
 export const getFoundAccounts = createSelector(getAccountSearchState, fromAccountSearch.getFoundAccounts);

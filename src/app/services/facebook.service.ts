@@ -367,39 +367,35 @@ export class FacebookService extends ProxyService {
         });
     }
 
-    protected pullPaging1(api: string, pageSize: number = 200, completeFn?: Function): Observable<any> {
-        api += `&limit=${pageSize}`;
+    /**
+     * Load posts from group, page or profile
+     * @param {FbAccount} account
+     * @param {string} nodeId
+     * @param {Date} until
+     * @param {number} max
+     * @returns {Observable<any>}
+     */
+    public loadPosts(account: FbAccount, nodeId: string, until?: Date, max?: number): Observable<any> {
+        let api = this.createApi(`/${nodeId}/feed`, {fields: 'created_time'}, account);
 
-        let alive = true;
-
-        return Observable.create(observer => {
-            const onNext = (result) => {
-                if(!result.paging || !alive) {
-                    return Observable.empty();
+        const completeFn = (data) => {
+            if(until) {
+                // find post has time created < until
+                const post = data.find(item => new Date(item.created_time).getTime() < until.getTime());
+                if(post) {
+                    return true;
                 }
-                return result.paging && result.paging.next ? this.pull(result.paging.next) : Observable.of({});
-            };
+            }
 
-            this.pull(api)
-                .expand(onNext)
-                .takeWhile(() => alive)
-                .catch(error => observer.error(error))
-                .subscribe((result: any) => {
-                    if(result.data && result.data.length > 0) {
-                        observer.next(result.data);
-                        if(completeFn && completeFn(result.data)) {
-                            observer.complete();
-                            alive = false;
-                        }
-                    } else {
-                        observer.complete();
-                        alive = false;
-                    }
-                });
-        });
+            return false;
+        };
+
+        const filterFn = (data) => data.filter(item => new Date(item.created_time).getTime() >= until.getTime());
+
+        return this.pullPaging(api, 200, completeFn).map(filterFn);
     }
 
-    protected pullPaging(api: string, pageSize: number = 200, state$: Observable<number> = Observable.of(LoadingState.Loading)): Observable<any> {
+    protected pullPaging(api: string, pageSize: number = 200, completeFn?: Function, state$: Observable<number> = Observable.of(LoadingState.Loading)): Observable<any> {
         api += `&limit=${pageSize}`;
 
         let alive = true;
@@ -423,10 +419,10 @@ export class FacebookService extends ProxyService {
                 .subscribe((result: any) => {
                     if(result.data && result.data.length > 0) {
                         observer.next(result.data);
-                        /*if(completeFn && completeFn(result.data)) {
+                        if(completeFn && completeFn(result.data)) {
                             observer.complete();
                             alive = false;
-                        }*/
+                        }
                     } else {
                         observer.complete();
                         alive = false;

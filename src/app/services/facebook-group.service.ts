@@ -14,6 +14,6 @@ export class FacebookGroupService extends FacebookService {
 
     public loadMembers(account: FbAccount, groupId: string, state$: Observable<number>) {
         let api = this.createApi(`/${groupId}/members`, null, account);
-        return this.pullPaging(api, 200, state$);
+        return this.pullPaging(api, 200, null, state$);
     }
 }
