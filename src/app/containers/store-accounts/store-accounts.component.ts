@@ -24,7 +24,7 @@ export class StoreAccountsComponent implements OnInit {
         let dialog = this.modal.open({
             component: StoreAccountsFormComponent,
             inputs: {},
-            title: 'Thêm nhóm tài khoản',
+            title: 'Thêm nhóm tài khoản mục tiêu',
             size: 'sm'
         } as IModalOptions);
 

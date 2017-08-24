@@ -44,7 +44,7 @@ export const ROUTES: any[] = [
         title: 'Lưu trữ',
         icon: 'move_to_inbox',
         subroutes: [
-            {path: 'store-accounts', title: 'Tài khoản Facebook', icon: 'folder_shared', class: '', component: StoreAccountsComponent}
+            {path: 'store-accounts', title: 'Tài khoản mục tiêu', icon: 'folder_shared', class: '', component: StoreAccountsComponent}
         ]
     },
     {
