@@ -2,15 +2,15 @@
 	<div class="col-md-12">
 		<div class="form-horizontal">
 			<div class="form-group">
-				<label class="col-sm-3 control-label">Tên nhóm tài khoản mục tiêu</label>
+				<label class="col-sm-3 control-label">Tên nhóm mục tiêu</label>
 				<div class="col-sm-9">
-					<input class="form-control">
+					<input class="form-control" [(ngModel)]="targetGroup.name">
 				</div>
 			</div>
 			<div class="form-group">
 				<label class="col-sm-3 control-label">Mô tả</label>
 				<div class="col-sm-9">
-					<input class="form-control">
+					<input class="form-control" [(ngModel)]="targetGroup.description">
 				</div>
 			</div>
 		</div>

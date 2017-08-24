@@ -26,7 +26,22 @@ export class DbService extends Dexie {
                 uid,
                 scheduleType,
                 active,
-                updatedAt`
+                updatedAt`,
+            targetGroups: `
+                ++id`,
+            targetAccounts: `
+                ++id,
+                accountId,
+                groupId`
         });
+
+        if (!this.isOpen()) {
+            this.open().then((a) => {
+                console.log('Dexie Open IDb Successed');
+            })
+                .catch((err) => {
+                    console.log('Dexie Open IDb Failed: ' + err);
+                });
+        }
     }
 }

@@ -22,8 +22,8 @@ export class BaseService<U, T> {
         return await this.db.table<U, T>(this.tableName).update(key, changes);
     }
 
-    public async all(): Promise<Array<U>> {
-        return await this.db.table<U, T>(this.tableName).toArray();
+    public getAll(): Dexie.Collection<U, T> {
+        return this.db.table<U, T>(this.tableName).toCollection();
     }
 
     public async list(options: any): Promise<Array<U>> {
@@ -67,5 +67,35 @@ export class BaseService<U, T> {
 
     public filter(filter: (entity: U) => boolean): Dexie.Collection<U, T> {
         return this.db.table<U, T>(this.tableName).filter(filter);
+    }
+
+    /**
+     * @desc: Add item of current model
+     * @param: {entity<T>} entity need added
+     * @returns: {Promise<T>} Promise with added entity
+     */
+    public async addAsync(entity: U): Promise<T> {
+        return await this.db.table(this.tableName).add(entity);
+    }
+
+    /**
+     * @desc: Update item of current model
+     * @param: {entity<T>} entity need update
+     * @returns: {Promise<T>} Promise with updated entity
+     */
+    public async updateAsync(entity: U): Dexie.Promise<T> {
+        return await this.db.table(this.tableName).put(entity);
+    }
+
+    public async bulkAdd(entities: U[]) {
+        return await this.db.table(this.tableName).bulkAdd(entities);
+    }
+
+    public async bulkPut(entities: U[]) {
+        return await this.db.table(this.tableName).bulkPut(entities);
+    }
+
+    public async bulkDelete(keys: any[]) {
+        return await this.db.table(this.tableName).bulkDelete(keys);
     }
 }

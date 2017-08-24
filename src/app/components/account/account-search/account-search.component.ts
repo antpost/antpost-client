@@ -75,4 +75,8 @@ export class AccountSearchComponent implements OnInit {
         let index = this.accounts.findIndex(a => a.id == account.id);
         this.accounts.splice(index, 1);
     }
+
+    public save() {
+        this.onClose(this.accounts);
+    }
 }

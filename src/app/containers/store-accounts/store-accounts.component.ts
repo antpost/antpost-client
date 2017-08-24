@@ -3,6 +3,8 @@ import {AccountSearchingMethodComponent} from '../../components/account/account-
 import {ModalService} from '../../core/modal/modal.service';
 import {IModalOptions} from '../../core/modal/modalWrapper.component';
 import {StoreAccountsFormComponent} from '../../components/account/store-accounts-form/store-accounts-form.component';
+import {TargetGroup} from '../../models/target-group.model';
+import {TargetGroupService} from '../../services/target-group.service';
 
 @Component({
     selector: 'store-accounts',
@@ -12,18 +14,21 @@ import {StoreAccountsFormComponent} from '../../components/account/store-account
 export class StoreAccountsComponent implements OnInit {
     public groups: any[] = [];
 
-    constructor(private modal: ModalService) {
+    constructor(private modal: ModalService,
+                private targetGroupService: TargetGroupService) {
 
     }
 
-    ngOnInit() {
-//        setTimeout(() => this.add(), 200);
+    async ngOnInit() {
+        this.groups = await this.targetGroupService.getAll().reverse().sortBy('createdAt');
     }
 
     public add() {
         let dialog = this.modal.open({
             component: StoreAccountsFormComponent,
-            inputs: {},
+            inputs: {
+                targetGroup: new TargetGroup()
+            },
             title: 'Thêm nhóm tài khoản mục tiêu',
             size: 'sm'
         } as IModalOptions);
