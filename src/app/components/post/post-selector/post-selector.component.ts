@@ -33,7 +33,7 @@ export class PostSelectorComponent implements OnInit {
     }
 
     public async read() {
-        this.posts = await this.postService.all();
+        this.posts = await this.postService.getAll().toArray();
     }
 
     public select(post: Post) {

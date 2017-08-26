@@ -30,7 +30,7 @@ export class PostComponent implements OnInit {
     }
 
     public async read() {
-        this.posts = await this.postService.all();
+        this.posts = await this.postService.getAll().toArray();
     }
 
     public add() {
