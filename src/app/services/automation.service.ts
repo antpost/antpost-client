@@ -21,8 +21,8 @@ export class AutomationService extends ProxyService {
     private mbasicUrl: string = 'https://mbasic.facebook.com';
     private mUrl: string = 'https://m.facebook.com';
 
-    constructor(private http: Http, private appManager: AppManager) {
-        super();
+    constructor(http: Http, private appManager: AppManager) {
+        super(http);
     }
 
     /**
@@ -121,9 +121,13 @@ export class AutomationService extends ProxyService {
 
                     let linkElementLength = element.find('a[href*="/join"]').length;
 
+                    const groupIdLink: string = element.find('a[href*="/groups/"]').attr('href');
+                    const id = groupIdLink ? groupIdLink.match(/groups\/(.*?)\?/)[1] : null;
+
                     observer.next({
                         members,
-                        requested: linkElementLength ? false : true
+                        requested: linkElementLength ? false : true,
+                        groupId: id
                     });
                     observer.complete();
                 } else {
@@ -221,6 +225,29 @@ export class AutomationService extends ProxyService {
             return true;
         }
 
+    }
+
+    /**
+     * Get profile id
+     * @param {FbAccount} account
+     * @param {string} username
+     * @returns {Promise<any>}
+     */
+    public async getUidAsync(account: FbAccount, username: string) {
+        let procedure = new AutomationReq()
+            .access(`${this.mbasicUrl}/${username}`, account.cookies)
+            .responseContent(`a[href*="/photo.php?fbid="]`);
+
+        const res = await this.simulateAsync(procedure);
+
+        if(res.data.content) {
+            const element = this.createElement(res.data.content);
+            const href = element.find('a').attr('href');
+            const id = href.split('&id=').pop().split('&').shift();
+            return id;
+        } else {
+            return null;
+        }
     }
 
     /**

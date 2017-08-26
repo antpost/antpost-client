@@ -1,0 +1,16 @@
+<div class="clearfix">
+	<button class="btn btn-success btn-simple btn-sm pull-right" (click)="selectAll()"><i class="fa fa-sign-in"></i> Chọn tất cả </button>
+</div>
+<kendo-grid [data]="accounts"
+			[height]="width">
+	<kendo-grid-column field="id" title="ID" width="150">
+	</kendo-grid-column>
+	<kendo-grid-column field="name" title="Tên">
+	</kendo-grid-column>
+	<kendo-grid-column field="checked" title="" width="25">
+		<ng-template kendoGridCellTemplate let-dataItem>
+			<a class="text-primary" (click)="selectAccount(dataItem)"><i class="fa fa-sign-in"
+																		 aria-hidden="true"></i></a>
+		</ng-template>
+	</kendo-grid-column>
+</kendo-grid>

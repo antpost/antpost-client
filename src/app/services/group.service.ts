@@ -8,10 +8,4 @@ export class GroupService extends BaseService<Group, string> {
     constructor(db: DbService) {
         super(db, 'groups');
     }
-
-    public async getJoinedGroups(): Promise<Array<Group>> {
-        return await this.table.where({
-            administrator: 0
-        }).toArray();
-    }
 }

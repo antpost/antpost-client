@@ -1,10 +1,9 @@
 import Dexie from 'dexie';
-import relationships from './db/relationship';
 
 export class DbService extends Dexie {
 
     constructor() {
-        super('antpost', {addons: [relationships]});
+        super('antpost');
 
         this.version(1).stores({
             fbaccounts: `
@@ -28,13 +27,21 @@ export class DbService extends Dexie {
                 scheduleType,
                 active,
                 updatedAt`,
-            schedulePosts: `
+            targetGroups: `
+                ++id`,
+            targetAccounts: `
                 ++id,
-                postId -> posts.id,
-                status`,
-            nodePosts: `
-                ++id,
-                scheduleId -> schedulePosts.id`
+                accountId,
+                groupId`
         });
+
+        if (!this.isOpen()) {
+            this.open().then((a) => {
+                console.log('Dexie Open IDb Successed');
+            })
+                .catch((err) => {
+                    console.log('Dexie Open IDb Failed: ' + err);
+                });
+        }
     }
 }

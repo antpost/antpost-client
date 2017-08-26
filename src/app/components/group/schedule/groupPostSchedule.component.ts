@@ -7,11 +7,9 @@ import {ModalService} from '../../../core/modal/modal.service';
 import {PostSelectorComponent} from '../../post/post-selector/post-selector.component';
 import {Post} from '../../../models/post.model';
 import {Toastr} from '../../../core/helpers/toastr';
-import {Group} from '../../../models/group.model';
 import {JoinedGroupComponent} from '../joinedGroup/joinedGroup.component';
 import {SchedulePost} from '../../../models/schedulePost.model';
 import {JobStatus, ScheduleType} from "../../../models/enums";
-import {SchedulePostService} from "../../../services/schedulePost.service";
 import {JobQueue} from "../../../core/jobs/jobQueue";
 import {JobFactory} from "../../../core/jobs/jobFactory";
 import {ScheduleJob} from "../../../core/jobs/scheduleJob";
@@ -40,7 +38,6 @@ export class GroupPostScheduleComponent implements OnInit {
     public percent: number = 0;
 
     constructor(private postService: PostService,
-                private schedulePostService: SchedulePostService,
                 private modal: ModalService,
                 private jobQueue: JobQueue) {
         this.schedule.status = JobStatus.Opened;
@@ -83,7 +80,7 @@ export class GroupPostScheduleComponent implements OnInit {
         this.schedule.nodes = groups.map(group => group.id).join(',');
         this.schedule.createdAt = new Date();
 
-        let id = await this.schedulePostService.add(this.schedule);
+        //let id = await this.schedulePostService.add(this.schedule);
 
         this.schedule.post = this.post;
         this.schedule.groups = groups;

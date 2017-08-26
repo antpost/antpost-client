@@ -1,0 +1,50 @@
+<div class="row">
+	<div class="col-md-8">
+		<div class="form-horizontal">
+			<div class="form-group">
+				<label class="col-sm-4 control-label">Phương thức tìm kiếm</label>
+				<div class="col-sm-8">
+					<div class="input-group mb0">
+						<kendo-dropdownlist
+							[data]="methods"
+							[textField]="'name'"
+							[valueField]="'type'"
+							[valuePrimitive]="true"
+							[(ngModel)]="methodType"
+							class="form-control">
+						</kendo-dropdownlist>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="rows search-form">
+			<account-friends-searching (onSelect)="onAddAccount($event)" [anyAccount]="false" *ngIf="methodType == methodTypes.FriendsOfFriends"></account-friends-searching>
+			<account-friends-searching (onSelect)="onAddAccount($event)" [anyAccount]="true" *ngIf="methodType == methodTypes.FriendsOfAccount"></account-friends-searching>
+			<post-interaction (onSelect)="onAddAccount($event)" *ngIf="methodType == methodTypes.PostInteraction"></post-interaction>
+			<page-interaction (onSelect)="onAddAccount($event)" *ngIf="methodType == methodTypes.PageInteraction"></page-interaction>
+			<group-interaction (onSelect)="onAddAccount($event)" *ngIf="methodType == methodTypes.GroupInteraction"></group-interaction>
+		</div>
+	</div>
+	<div class="col-md-4">
+		<div class="search form-group">
+			<div class="form-inline">
+				<button class="btn btn-success btn-simple btn-sm" (click)="clearAll()"><i class="fa fa-times"></i> Xóa tất cả ({{accounts.length}})</button>
+			</div>
+		</div>
+		<kendo-grid [data]="accounts" [height]="450">
+			<kendo-grid-column field="id" title="ID" width="130">
+			</kendo-grid-column>
+			<kendo-grid-column field="name" title="Tên">
+			</kendo-grid-column>
+			<kendo-grid-column title="" [width]="40">
+				<ng-template kendoGridCellTemplate let-dataItem>
+					<a class="text-danger" (click)="removeAccount(dataItem)"><i class="fa fa-close"></i></a>
+				</ng-template>
+			</kendo-grid-column>
+		</kendo-grid>
+	</div>
+</div>
+<div class="modal-footer">
+	<button class="btn btn-primary btn-sm" (click)="save()"><i class="fa fa-thumbs-o-up"></i> Xong</button>
+	<button class="btn btn-sm" (click)="onDismiss()"><i class="fa fa-window-close-o"></i> Hủy bỏ</button>
+</div>

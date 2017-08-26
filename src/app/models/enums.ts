@@ -32,3 +32,24 @@ export enum ScheduleType {
     JoinGroup = 2,
     Comment = 3
 }
+
+export enum AccountSearchingMethod {
+    FriendsOfFriends = 1,
+    FriendsOfAccount = 2,
+    PostInteraction = 3,
+    PageInteraction = 4,
+    GroupInteraction = 5
+}
+
+export enum InteractionType {
+    Like = 0,
+    Comment = 1,
+    Share = 2
+}
+
+export enum LoadingState {
+    None = 0,
+    Loading = 1,
+    Completed = 2,
+    Cancelled = 3
+}

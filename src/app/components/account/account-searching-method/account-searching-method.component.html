@@ -1,0 +1,7 @@
+<div class="row">
+	<div *ngFor="let item of methods; let i = index;" class="col-md-4" (click)="select(item)">
+		<div class="searching-method" [ngStyle]="{'background-color': item.color}">
+			{{item.name}}
+		</div>
+	</div>
+</div>

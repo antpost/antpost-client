@@ -1,16 +1,15 @@
-import {Injectable} from '@angular/core';
-import {Md5} from 'ts-md5/dist/md5';
-import {Observable} from 'rxjs';
-import {Http, Response, Jsonp} from '@angular/http';
-import {AppManager} from '../core/appManager';
-import {Post} from '../models/post.model';
-import {ProxyService} from "./proxy.service";
-import {AutomationService} from './automation.service';
-import {FbAccount} from '../models/fbaccount.model';
-import {post} from 'selenium-webdriver/http';
+import { Injectable } from '@angular/core';
+import { Md5 } from 'ts-md5/dist/md5';
+import { Observable } from 'rxjs';
+import { Http, Response, Jsonp } from '@angular/http';
+import { Post } from '../models/post.model';
+import { ProxyService } from "./proxy.service";
+import { AutomationService } from './automation.service';
+import { FbAccount } from '../models/fbaccount.model';
+import { LoadingState } from '../models/enums';
 
 @Injectable()
-export class FacebookService extends ProxyService{
+export class FacebookService extends ProxyService {
     private apikey = '882a8490361da98702bf97a021ddc14d';
     private secretkey = '62f8ce9f74b12f84c123cc23437a4a32';
     private graphApi = 'https://graph.facebook.com';
@@ -19,8 +18,8 @@ export class FacebookService extends ProxyService{
     private linkPreviewKey = '593ffa5bc5bb73210806875ddb9745d3d8313e65b81ab';
     private linkPreviewApi = 'http://api.linkpreview.net/';
 
-    constructor(private http: Http, private jsonp: Jsonp, private appManager: AppManager, private automationService: AutomationService) {
-        super();
+    constructor(http: Http, protected  jsonp: Jsonp, protected automationService: AutomationService) {
+        super(http);
     }
 
     /**
@@ -57,7 +56,7 @@ export class FacebookService extends ProxyService{
 
             // simulate login facebook
             this.automationService.login(username, password).subscribe((res) => {
-                if(res.status == 0) {
+                if (res.status == 0) {
                     observer.next(res.data.cookies);
                     observer.complete();
                 }
@@ -168,10 +167,10 @@ export class FacebookService extends ProxyService{
      * @param groupId
      * @returns {Observable<any>}
      */
-    public getGroupLocaleAndLocation(groupId: string): Observable<any> {
-        return new Observable(observer => {
+    public getGroupLocaleAndLocation(groupId: string) {
+        /*return new Observable(observer => {
             this.getOwner(groupId).subscribe(result => {
-                if(result.owner) {
+                if (result.owner) {
                     this.getUserInfo(result.owner.id, {
                         fields: 'location,locale'
                     }).subscribe(user => {
@@ -184,7 +183,7 @@ export class FacebookService extends ProxyService{
                 }
 
             });
-        });
+        });*/
     }
 
     /**
@@ -207,8 +206,8 @@ export class FacebookService extends ProxyService{
      * @param params
      * @returns {Observable<any>}
      */
-    public getUserInfo(uid: string, params: any) {
-        let api = this.createApi(`/${uid}`, params);
+    public getUserInfo(account: FbAccount, uid: string, params: any) {
+        let api = this.createApi(`/${uid}`, params, account);
         return this.post(api, 'GET');
     }
 
@@ -239,7 +238,7 @@ export class FacebookService extends ProxyService{
 
         const onNext = (result) => {
             let posts = result.data.filter(p => p.from.id == account.id);
-            if(posts.length >= limit) {
+            if (posts.length >= limit) {
                 return Observable.of({
                     data: posts
                 });
@@ -257,7 +256,7 @@ export class FacebookService extends ProxyService{
             let api = getApi(size);
             let subscription = this.post(api, 'GET');
 
-            for(let i = 1; i <= repeat; i ++) {
+            for (let i = 1; i <= repeat; i++) {
                 subscription = subscription.flatMap(onNext);
             }
 
@@ -279,7 +278,7 @@ export class FacebookService extends ProxyService{
      * @param replyOnTop
      */
     public async comment(account: FbAccount, post: any, message: string, like: boolean, replyOnTop: boolean): Promise<any> {
-        if(like) {
+        if (like) {
             await this.like(account, post.id);
         }
         return await this.automationService.comment(account, post, message, like, replyOnTop)
@@ -318,13 +317,13 @@ export class FacebookService extends ProxyService{
      * @param params
      * @returns {string}
      */
-    private createApi(url: string, params?: any, account?: FbAccount) {
+    protected createApi(url: string, params?: any, account?: FbAccount) {
         let query = params ? Object.keys(params)
             .map(k => encodeURI(k) + '=' + encodeURI(params[k]))
             .join('&') : '';
 
-        let api = `${this.graphApi}${url}?access_token=${account ? account.token : this.appManager.currentUser.token}`;
-        if(query) {
+        let api = `${this.graphApi}${url}?access_token=${account.token}`;
+        if (query) {
             api += '&' + query;
         }
 
@@ -336,7 +335,7 @@ export class FacebookService extends ProxyService{
      * @returns {string}
      */
     private getAcessToken() {
-        return this.appManager.currentUser.token;
+        return null;
     }
 
     private createSig(data: any) {
@@ -369,25 +368,67 @@ export class FacebookService extends ProxyService{
     }
 
     /**
-     * Post to local proxy server to get data
-     * @param api
-     * @param method
-     * @param data
-     * @returns {any}
+     * Load posts from group, page or profile
+     * @param {FbAccount} account
+     * @param {string} nodeId
+     * @param {Date} until
+     * @param {number} max
+     * @returns {Observable<any>}
      */
-    private post(api: string, method: string, data?: any): Observable<any> {
-        let postData = {api, method, data};
+    public loadPosts(account: FbAccount, nodeId: string, until?: Date, max?: number): Observable<any> {
+        let api = this.createApi(`/${nodeId}/feed`, {fields: 'created_time'}, account);
 
-        return this.http.post(`${this.host}/post`, postData)
-            .map((response: Response) => {
-                return response.json();
-            }).catch((error: Response) => {
-                return Observable.throw(error.json().error || 'Server error');
-            });
+        const completeFn = (data) => {
+            if(until) {
+                // find post has time created < until
+                const post = data.find(item => new Date(item.created_time).getTime() < until.getTime());
+                if(post) {
+                    return true;
+                }
+            }
+
+            return false;
+        };
+
+        const filterFn = (data) => data.filter(item => new Date(item.created_time).getTime() >= until.getTime());
+
+        return this.pullPaging(api, 200, completeFn).map(filterFn);
     }
 
-    private postAsync(api: string, method: string, data?: any): Promise<any> {
-        return this.post(api, method, data).toPromise();
+    protected pullPaging(api: string, pageSize: number = 200, completeFn?: Function, state$: Observable<number> = Observable.of(LoadingState.Loading)): Observable<any> {
+        api += `&limit=${pageSize}`;
+
+        let alive = true;
+
+        state$.subscribe((state) => alive = !(state == LoadingState.Cancelled || state == LoadingState.Completed))
+
+        return Observable.create(observer => {
+            const onNext = (result) => {
+                if(!result.paging || !alive) {
+                    //observer.complete();
+                    return Observable.empty();
+                }
+
+                return result.paging && result.paging.next ? this.pull(result.paging.next) : Observable.of({});
+            };
+
+            this.pull(api)
+                .expand(onNext)
+                .takeWhile(() => alive)
+                .catch(error => observer.error(error))
+                .subscribe((result: any) => {
+                    if(result.data && result.data.length > 0) {
+                        observer.next(result.data);
+                        if(completeFn && completeFn(result.data)) {
+                            observer.complete();
+                            alive = false;
+                        }
+                    } else {
+                        observer.complete();
+                        alive = false;
+                    }
+                });
+        });
     }
 
     /**
@@ -395,7 +436,7 @@ export class FacebookService extends ProxyService{
      * @param params
      * @returns {Observable<any>}
      */
-    private searchGraph(account: FbAccount, params: any): Promise<any> {
+    protected searchGraph(account: FbAccount, params: any): Promise<any> {
         let api = this.createApi('/search', params, account);
         return this.postAsync(api, 'GET', null);
     }

@@ -145,6 +145,14 @@ nav {
   margin: 0 0;
 }
 
+modal-overlay {
+  position: fixed !important;
+  top: 0px;
+  left: 0px;
+  bottom: 0px;
+  right: 0px;
+  z-index: 1500 !important;
+}
 .modal .modal-dialog {
   margin-top: 30px;
 }
@@ -155,6 +163,9 @@ nav {
 
 .modal-lg {
   width: 1000px;
+}
+.modal-sm {
+  width: 650px;
 }
 
 .modal-content .modal-header {
@@ -172,6 +183,12 @@ nav {
 
 .modal-content .modal-body + .modal-footer {
   padding-right: 20px;
+}
+.modal-content .modal-body {
+  padding: 15px;
+}
+.modal-footer {
+  padding-bottom: 0px;
 }
 
 .close {
@@ -549,3 +566,31 @@ nav {
   text-align: left;
   font-weight: bold;
 }
+
+.action-groups {
+  width: 100%;
+  float: left;
+  margin-bottom: 10px;
+}
+
+.searching-method {
+  color: #fff;
+  font-size: 12px;
+  text-transform: uppercase;
+  padding: 5px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  height: 50px;
+}
+
+.search-form {
+  width: 100%;
+  min-height: 450px;
+  border-top-color: #bfbfbf;
+  border-top-style: double;
+  border-top-width: 1px;
+  padding-top: 10px;
+
+}
+
+.k-grid .k-hierarchy-cell>.k-icon {padding:5px 0}

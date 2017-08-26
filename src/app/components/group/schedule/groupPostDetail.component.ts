@@ -2,9 +2,7 @@ import {
     Component,
     OnInit, ViewEncapsulation, Input
 } from '@angular/core';
-import {SchedulePostService} from '../../../services/schedulePost.service';
 import {SchedulePost} from '../../../models/schedulePost.model';
-import {Group} from '../../../models/group.model';
 
 @Component({
     selector: 'group-post-detail',
@@ -40,7 +38,7 @@ export class GroupPostDetailComponent implements OnInit {
 
     public list: any;
 
-    constructor(private schedulePostService: SchedulePostService) {
+    constructor() {
 
     }
 

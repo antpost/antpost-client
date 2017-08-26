@@ -1,0 +1,41 @@
+<div class="row">
+	<div class="col-md-12">
+		<div class="form-horizontal">
+			<div class="form-group" *ngIf="!anyAccount">
+				<label class="col-sm-4 control-label">Bạn của tài khoản</label>
+				<div class="col-sm-8">
+					<div class="form-inline">
+						<kendo-dropdownlist
+							[data]="accounts$ | async"
+							[textField]="'name'"
+							[valueField]="'id'"
+							[valuePrimitive]="true"
+							[(ngModel)]="accountId">
+						</kendo-dropdownlist>
+						<button class="btn btn-success btn-sm" (click)="loadFriends(accountId)"><i class="fa fa-download"></i> Tải bạn bè</button>
+						<span>{{friends.length}} bạn</span>
+					</div>
+				</div>
+			</div>
+			<div class="form-group" *ngIf="anyAccount">
+				<div class="col-md-12">
+					<div class="form-inline">
+						<span>https://facebook.com/</span>
+						<input class="form-control" [(ngModel)]="username" placeholder="username">
+						<button class="btn btn-success btn-sm" (click)="loadFriendsFromUsername(username)"><i class="fa fa-download"></i> Tải bạn bè</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<kendo-grid [data]="friends" [height]="410">
+			<kendo-grid-column field="id" title="ID" width="150">
+			</kendo-grid-column>
+			<kendo-grid-column field="name" title="Tên">
+			</kendo-grid-column>
+			<ng-template kendoGridDetailTemplate let-dataItem>
+				<friend-selection [account]="dataItem" (onSelect)="onSelectAccounts($event)"></friend-selection>
+			</ng-template>
+		</kendo-grid>
+	</div>
+</div>

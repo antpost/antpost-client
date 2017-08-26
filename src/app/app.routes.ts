@@ -23,6 +23,16 @@ import {GroupPostingComponent} from './containers/group-posting/group-posting.co
 import {GroupJoiningComponent} from './containers/group-joining/group-joining.component';
 import {GroupFilterComponent} from './components/group/group-filter/group-filter.component';
 import {GroupPrivacyPipe} from './pipes/group-privacy.pipe';
+import {StoreAccountsComponent} from './containers/store-accounts/store-accounts.component';
+import {AccountSearchingMethodComponent} from './components/account/account-searching-method/account-searching-method.component';
+import {AccountFriendsSearchingComponent} from './components/account/account-friends-searching/account-friends-searching.component';
+import {StoreAccountsFormComponent} from './components/account/store-accounts-form/store-accounts-form.component';
+import {AccountSearchComponent} from './components/account/account-search/account-search.component';
+import {FriendSelectionComponent} from './components/account/friend-selection/friend-selection.component';
+import { AccountSelectionComponent } from './components/account/account-selection/account-selection.component';
+import { PostInteractionComponent } from './components/account/post-interaction/post-interaction.component';
+import {PageInteractionComponent} from './components/account/page-interaction/page-interaction.component';
+import { GroupInteractionComponent } from './components/account/group-interaction/group-interaction.component';
 
 export const ROUTES: Routes = [
      {path: 'login', component: LoginComponent},
@@ -40,6 +50,7 @@ export const MODULE_COMPONENTS = [
     GroupPostingComponent,
     GroupJoiningComponent,
     CommentUpComponent,
+    StoreAccountsComponent,
 
     // components
     PostFormComponent,
@@ -54,7 +65,16 @@ export const MODULE_COMPONENTS = [
     ScheduleListComponent,
     ScheduleFormComponent,
     JobProgressComponent,
-    GroupFilterComponent
+    GroupFilterComponent,
+    AccountSearchingMethodComponent,
+    AccountFriendsSearchingComponent,
+    StoreAccountsFormComponent,
+    AccountSearchComponent,
+    FriendSelectionComponent,
+    PostInteractionComponent,
+    AccountSelectionComponent,
+    PageInteractionComponent,
+    GroupInteractionComponent
 ];
 
 export const PIPES = [

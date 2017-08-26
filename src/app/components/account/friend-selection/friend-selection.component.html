@@ -1,0 +1,19 @@
+<div>Danh sách bạn của <span class="account-name">{{account.name}} ({{gridView.data.length}})</span>
+	<button class="btn btn-success btn-simple btn-sm" (click)="selectAll()"><i class="fa fa-sign-in"></i> Chọn tất cả
+	</button>
+</div>
+<kendo-grid [data]="gridView.data"
+			[height]="300"
+			[skip]="skip"
+			(pageChange)="pageChange($event)">
+	<kendo-grid-column field="id" title="ID" width="150">
+	</kendo-grid-column>
+	<kendo-grid-column field="name" title="Tên">
+	</kendo-grid-column>
+	<kendo-grid-column field="checked" title="" width="25">
+		<ng-template kendoGridCellTemplate let-dataItem>
+			<a class="text-primary" (click)="selectAccount(dataItem)"><i class="fa fa-sign-in"
+																		 aria-hidden="true"></i></a>
+		</ng-template>
+	</kendo-grid-column>
+</kendo-grid>

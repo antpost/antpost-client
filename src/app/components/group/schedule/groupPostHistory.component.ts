@@ -2,7 +2,6 @@ import {
     Component,
     OnInit, ViewEncapsulation
 } from '@angular/core';
-import {SchedulePostService} from '../../../services/schedulePost.service';
 import {SchedulePost} from '../../../models/schedulePost.model';
 
 @Component({
@@ -16,11 +15,11 @@ export class GroupPostHistoryComponent implements OnInit {
 
     public schedules: Array<SchedulePost>;
 
-    constructor(private schedulePostService: SchedulePostService) {
+    constructor() {
 
     }
 
     public async ngOnInit() {
-        this.schedules = await this.schedulePostService.all();
+        //this.schedules = await this.schedulePostService.all();
     }
 }
