@@ -278,4 +278,15 @@ export class AutomationService extends ProxyService {
         element.html(content);
         return element;
     }
+
+    public asyn uploadImage(account: FbAccount, post: any, message: string, like: boolean, replyOnTop: boolean) {
+        // get home page mbasic
+        // https://mbasic.facebook.com/groups/257702558042509
+
+        let procedure = new AutomationReq().access(`${this.mbasicUrl}/${postId}`, account.cookies);
+        // get link post photo
+        // upload photo
+        // upload content
+        return true;
+    }
 }

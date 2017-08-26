@@ -8,7 +8,7 @@ import {PostType} from '../../../models/enums';
 import {NotificationsService} from 'angular2-notifications/dist';
 import {Toastr} from '../../../core/helpers/toastr';
 import {FacebookService} from '../../../services/facebook.service';
-import {FileRestrictions, SuccessEvent, FileInfo} from '@progress/kendo-angular-upload';
+import {FileRestrictions, SelectEvent, SuccessEvent, ClearEvent, RemoveEvent, FileInfo} from '@progress/kendo-angular-upload';
 
 @Component({
     selector: 'post-form',
@@ -79,13 +79,39 @@ export class PostFormComponent implements OnInit {
                 return {
                     name: image
                 };
-            })
+            });
         }
+    }
+
+    public selectEventHandler(e: SelectEvent) {
+        e.files.forEach((file) => {
+            console.log('file selected: ' + file.name);
+
+            if(!file.validationErrors) {
+                let reader = new FileReader();
+                // reader.onload = function (ev) {
+                //     let image = {
+                //         src: ev.target.result,
+                //         uid: file.uid
+                //     };
+                // };
+                reader.readAsDataURL(file.rawFile);
+            }
+        })
     }
 
     public successEventHandler(e: SuccessEvent) {
         if(e.operation == 'upload') {
-            this.post.images = e.files.map(f => f.name);
+            var t = e.files.map((f) => {
+                return f.name;
+            });
+            this.post.images.push(t[0]);
+        }
+    }
+
+    public completeEventHandler(e: SuccessEvent) {
+        if(e.operation == 'upload') {
+            console.log(this.post.images);
         }
     }
 
