@@ -74,6 +74,9 @@ export class GroupPostingEngine extends BaseEngine implements IScheduleEngine {
                 case PostType.Sale:
                     promise = this.facebookService.publishPost(this.account, this.post, group.id);
                     break;
+                case PostType.Image:
+                    promise = this.facebookService.publishPost(this.account, this.post, group.id);
+                    break;
             }
 
             promise.then(async (result) => {

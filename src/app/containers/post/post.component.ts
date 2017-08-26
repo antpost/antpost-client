@@ -22,7 +22,7 @@ export class PostComponent implements OnInit {
     public posts: Post[];
 
     constructor(private postService: PostService, private modal: ModalService) {
-
+        console.log("here");
     }
 
     public ngOnInit() {

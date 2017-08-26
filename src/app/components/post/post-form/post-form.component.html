@@ -40,14 +40,15 @@
 					<label class="control-label">Mô tả </label>
 					<textarea name="message" rows="3" cols="50" class="form-control" [(ngModel)]="post.message" placeholder="Awesome!"></textarea>
 				</div>
-				<div class="form-group" *ngIf="post.type == postType.Sale">
+				<div class="form-group" *ngIf="post.type == postType.Sale || post.type === postType.Image">
 					<label class="control-label">Hình ảnh </label>
 					<kendo-upload
 						[saveUrl]="uploadSaveUrl"
 						[removeUrl]="uploadRemoveUrl"
-						[multiple]="false"
+						[multiple]="true"
 						[restrictions]="restrictions"
 						(success)="successEventHandler($event)"
+						(complete)="completeEventHandler($event)"
 						[(ngModel)]="images">
 					</kendo-upload>
 				</div>

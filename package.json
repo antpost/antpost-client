@@ -71,7 +71,7 @@
     "create-installer-win": "node electron/installers/windows/createinstaller.js"
   },
   "dependencies": {
-    "@angular/animations": "^4.1.3",
+    "@angular/animations": "4.1.3",
     "@angular/common": "~4.0.3",
     "@angular/compiler": "~4.0.3",
     "@angular/core": "~4.0.3",
