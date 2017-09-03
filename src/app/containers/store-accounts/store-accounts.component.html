@@ -19,6 +19,12 @@
 					</kendo-grid-column>
 					<kendo-grid-column field="count" title="Số tài khoản" width="80">
 					</kendo-grid-column>
+					<kendo-grid-column title="" [width]="80">
+						<ng-template kendoGridCellTemplate let-dataItem>
+							<a class="text-success" (click)="edit(dataItem)"><i class="fa fa-edit"></i></a>
+							<a class="text-danger" (click)="remove(dataItem)"><i class="fa fa-close"></i></a>
+						</ng-template>
+					</kendo-grid-column>
 				</kendo-grid>
 			</div>
 		</div>

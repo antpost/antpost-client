@@ -279,7 +279,7 @@ export class AutomationService extends ProxyService {
         return element;
     }
 
-    public asyn uploadImage(account: FbAccount, post: any, message: string, like: boolean, replyOnTop: boolean) {
+    /*public asyn uploadImage(account: FbAccount, post: any, message: string, like: boolean, replyOnTop: boolean) {
         // get home page mbasic
         // https://mbasic.facebook.com/groups/257702558042509
 
@@ -288,5 +288,5 @@ export class AutomationService extends ProxyService {
         // upload photo
         // upload content
         return true;
-    }
+    }*/
 }

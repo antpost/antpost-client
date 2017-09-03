@@ -96,4 +96,8 @@ export class StoreAccountsFormComponent implements OnInit {
         Toastr.success('Lưu nhóm thành công.');
         this.onClose(this.targetGroup);
     }
+
+    public cancel() {
+        this.onDismiss();
+    }
 }

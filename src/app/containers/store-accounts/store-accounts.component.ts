@@ -5,6 +5,7 @@ import {IModalOptions} from '../../core/modal/modalWrapper.component';
 import {StoreAccountsFormComponent} from '../../components/account/store-accounts-form/store-accounts-form.component';
 import {TargetGroup} from '../../models/target-group.model';
 import {TargetGroupService} from '../../services/target-group.service';
+import {TargetAccountService} from '../../services/target-account.service';
 
 @Component({
     selector: 'store-accounts',
@@ -15,12 +16,13 @@ export class StoreAccountsComponent implements OnInit {
     public groups: any[] = [];
 
     constructor(private modal: ModalService,
-                private targetGroupService: TargetGroupService) {
+                private targetGroupService: TargetGroupService,
+                private targetAccountService: TargetAccountService) {
 
     }
 
     async ngOnInit() {
-        this.groups = await this.targetGroupService.getAll().reverse().sortBy('createdAt');
+        this.reload();
     }
 
     public add() {
@@ -34,7 +36,44 @@ export class StoreAccountsComponent implements OnInit {
         } as IModalOptions);
 
         dialog.then((result) => {
-
+            this.reload();
         });
+    }
+
+    public edit(dataItem) {
+        let dialog = this.modal.open({
+            component: StoreAccountsFormComponent,
+            inputs: {
+                targetGroup: Object.assign({}, dataItem)
+            },
+            title: 'Sửa nhóm tài khoản mục tiêu',
+            size: 'sm'
+        } as IModalOptions);
+
+        dialog.then((result) => {
+            this.reload();
+        });
+    }
+
+    public remove(dataItem) {
+        this.modal.confirm({
+            title: 'Bạn có chắc chắn xóa?',
+            text: "Dữ liệu đã xóa không thể phục hồi!",
+        }).then(() => {
+            this.targetGroupService.delete(dataItem.id).then(async () => {
+                this.targetAccountService.deleteByTargetGroup(dataItem.id).then(async () => {
+                    this.modal.alert({
+                        title: 'Đã xóa!',
+                        text: 'Nhóm đã được xóa thành công.'
+                    });
+
+                    this.reload();
+                });
+            });
+        });
+    }
+
+    private async reload() {
+        this.groups = await this.targetGroupService.getAll().reverse().sortBy('createdAt');
     }
 }

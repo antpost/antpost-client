@@ -10,4 +10,7 @@ export class TargetAccountService extends BaseService<TargetAccount, number>{
         super(db, 'targetAccounts');
     }
 
+    public async deleteByTargetGroup(targetGroupId: number) {
+        this.table.where('groupId').equals(targetGroupId).delete();
+    }
 }
