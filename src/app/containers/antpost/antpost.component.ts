@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {CommentUpComponent} from '../comment-up/comment-up.component';
+import * as fromRoot from '../../reducers/index';
+import {Store} from '@ngrx/store';
+import * as account from '../../actions/account';
 
 @Component({
     selector: 'antpost',
@@ -9,6 +11,10 @@ import {CommentUpComponent} from '../comment-up/comment-up.component';
 export class AntPostComponent implements OnInit {
 
     public tabs: any[] = [];
+
+    constructor(private store: Store<fromRoot.State>) {
+        this.store.dispatch(new account.LoadAction());
+    }
 
     public ngOnInit() {
 

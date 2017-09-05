@@ -36,6 +36,8 @@ import { GroupInteractionComponent } from './components/account/group-interactio
 import {UnfriendComponent} from './containers/unfriend/unfriend.component';
 import {MakeFriendComponent} from './containers/make-friend/make-friend.component';
 import {TargetGroupSelectionComponent} from './components/account/target-group-selection/target-group-selection.component';
+import {AccountManagementComponent} from './containers/account-management/account-management.component';
+import {AccountFormComponent} from './components/account/account-form/account-form.component';
 
 export const ROUTES: Routes = [
      {path: 'login', component: LoginComponent},
@@ -56,6 +58,7 @@ export const MODULE_COMPONENTS = [
     StoreAccountsComponent,
     MakeFriendComponent,
     UnfriendComponent,
+    AccountManagementComponent,
 
     // components
     PostFormComponent,
@@ -80,7 +83,8 @@ export const MODULE_COMPONENTS = [
     AccountSelectionComponent,
     PageInteractionComponent,
     GroupInteractionComponent,
-    TargetGroupSelectionComponent
+    TargetGroupSelectionComponent,
+    AccountFormComponent
 ];
 
 export const PIPES = [

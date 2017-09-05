@@ -53,6 +53,14 @@ export class LoginComponent implements OnInit, OnDestroy {
          $('html').removeClass('login');*/
     }
 
+    public login() {
+        localStorage.setItem('currentUser', JSON.stringify({
+            username: this.model.username,
+            password: this.model.password
+        }));
+        this.router.navigate(['/']);
+    }
+
     public loginFb() {
         this.authService.loginfb(this.model.username, this.model.password)
             .subscribe((result) => {

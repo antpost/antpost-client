@@ -9,6 +9,7 @@ import {StoreUsersComponent} from '../../containers/store-users/store-users.comp
 import {StoreAccountsComponent} from '../../containers/store-accounts/store-accounts.component';
 import {MakeFriendComponent} from '../../containers/make-friend/make-friend.component';
 import {UnfriendComponent} from '../../containers/unfriend/unfriend.component';
+import {AccountManagementComponent} from '../../containers/account-management/account-management.component';
 
 
 export const ROUTES: any[] = [
@@ -53,7 +54,8 @@ export const ROUTES: any[] = [
     {
         path: 'account',
         title: 'Quản lý tài khoản',
-        icon: 'recent_actors'
+        icon: 'recent_actors',
+        component: AccountManagementComponent
     },
     {path: 'post', title: 'Bài đăng mẫu', icon: 'content_paste', class: '', component: PostComponent},
     {path: 'logout', title: 'Thoát', icon: 'logout', class: ''}

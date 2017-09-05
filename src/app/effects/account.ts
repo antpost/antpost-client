@@ -17,7 +17,7 @@ export class AccountEffects {
         .ofType(account.LOAD)
         .startWith(new account.LoadAction())
         .switchMap(async () => {
-            let accounts = await this.fbAccountService.loadRecentUser()
+            let accounts = await this.fbAccountService.getAll().toArray();
             return new account.LoadCompleteAction(accounts);
         });
 

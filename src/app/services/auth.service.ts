@@ -50,13 +50,14 @@ export class AuthService implements CanActivate {
                     this.token = token;
 
                     let user = {username, token, id: resData.uid} as FbAccount;
-                    this.appManager.currentUser = user;
+                    //this.appManager.currentUser = user;
                     // store username and jwt token in local storage to keep user logged in between page refreshes
-                    localStorage.setItem('currentUser', JSON.stringify(user));
+                    //localStorage.setItem('currentUser', JSON.stringify(user));
 
                     // return true to indicate successful login
                     return {
-                        status: true
+                        status: true,
+                        user: user
                     };
                 }
 
