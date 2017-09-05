@@ -251,6 +251,21 @@ export class AutomationService extends ProxyService {
     }
 
     /**
+     * Add friend
+     * @param {FbAccount} account
+     * @param {string} destAccountId
+     * @returns {Promise<any>}
+     */
+    public async addFriend(account: FbAccount, uid: string) {
+        let procedure = new AutomationReq()
+            .access(`${this.mbasicUrl}/${uid}`, account.cookies)
+            .click('a[href*="profile_add_friend.php"]');
+
+        const json = await this.simulateAsync(procedure);
+        return json;
+    }
+
+    /**
      *
      * @param procedure
      * @returns {Observable<R>}

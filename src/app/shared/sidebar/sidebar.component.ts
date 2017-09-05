@@ -25,7 +25,7 @@ export class SidebarComponent implements OnInit {
         this.goTo('comment-up');
         this.goTo('post-group');
         this.goTo('join-group');
-        this.goTo('store-accounts');
+        this.goTo('make-friend');
     }
 
     public goTo(path: string) {

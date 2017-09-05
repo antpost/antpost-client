@@ -70,6 +70,7 @@ import { FacebookGroupService } from './services/facebook-group.service';
 import { AccountSearchEffects } from './effects/account-search.effect';
 import {TargetGroupService} from './services/target-group.service';
 import {TargetAccountService} from './services/target-account.service';
+import {AddedAccountService} from './services/added-account.service';
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -168,6 +169,7 @@ type StoreType = {
         FbAccountService,
         TargetGroupService,
         TargetAccountService,
+        AddedAccountService,
         AppRunner,
         PostService,
         FacebookService,

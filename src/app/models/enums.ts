@@ -30,7 +30,8 @@ export enum ScheduleAction {
 export enum ScheduleType {
     PostGroup = 1,
     JoinGroup = 2,
-    Comment = 3
+    Comment = 3,
+    MakeFriend = 4
 }
 
 export enum AccountSearchingMethod {

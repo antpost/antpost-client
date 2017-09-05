@@ -1,0 +1,86 @@
+<div class="row" overlayTarget="make-friend">
+	<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+		<div class="ant-card big-card">
+			<div class="body pt0">
+				<div class="row clearfix">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mb0">
+						<div class="form-group">
+							<span class="account-switch">Tài khoản: <span
+								class="account-name">{{selectedAccount?.name}}</span> <a><i class="fa fa-pencil-square-o"
+																							aria-hidden="true"></i></a></span>
+						</div>
+						<div class="form-group">
+							<label class="control-label">Nhóm mục tiêu: </label>
+							<span class="text-danger"><strong>{{targetGroup?.name}}</strong> </span>
+							<button class="btn btn-success btn-xs btn-simple" (click)="selectGroups()">
+								<i class="fa fa-user-plus"></i> Chọn nhóm
+							</button>
+						</div>
+						<div class="form-horizontal">
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Giới tính</label>
+								<div class="col-sm-9">
+									<div class="input-group mb0">
+										<kendo-dropdownlist
+											[defaultItem]="{text:'--Tất cả--', value: null}"
+											[data]="genderList"
+											[textField]="'text'"
+											[valueField]="'value'"
+											[valuePrimitive]="true"
+											[(ngModel)]="meta.sex"
+											class="form-control">
+										</kendo-dropdownlist>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Số bạn từ</label>
+								<div class="col-sm-9">
+									<input type="number" class="form-control" min="1" [(ngModel)]="meta.friendCount" placeholder="Không kiểm tra số bạn">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Bài đăng mới nhất</label>
+								<div class="col-sm-9">
+									<div class="input-group mb0">
+										<kendo-dropdownlist
+											[defaultItem]="{text:'--Không kiểm tra bài đăng--', value: null}"
+											[data]="postOptionList"
+											[textField]="'text'"
+											[valueField]="'value'"
+											[valuePrimitive]="true"
+											[(ngModel)]="meta.checkPost"
+											class="form-control">
+										</kendo-dropdownlist>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-offset-3 col-sm-9">
+									<button class="btn btn-primary btn-sm" (click)="startJob('Kết bạn tự động')"><i
+										class="fa fa-user-plus" aria-hidden="true"></i> Kết bạn ngay
+									</button>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+		<div class="ant-card big-card">
+			<div class="body pt0">
+				<div class="row clearfix">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mb0">
+						<schedule-form [meta]="meta"
+									   [account]="selectedAccount"
+									   [type]="scheduleType"
+									   (onUpdate)="onUpdateSchedule($event)"></schedule-form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

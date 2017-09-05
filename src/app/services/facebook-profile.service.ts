@@ -45,4 +45,15 @@ export class FacebookProfileService extends FacebookService {
         let api = this.createApi(`/${uid}`, params, account);
         return this.postAsync(api, 'GET');
     }
+
+    public async checkIsFriend(account: FbAccount, uid: string) {
+        let api = this.createApi(`/me/friends/${uid}`, null, account);
+
+        const json = await this.pullAsync(api);
+        return json.data && json.data.length > 0;
+    }
+
+    public async addFriend(account: FbAccount, uid: string) {
+        return await this.automationService.addFriend(account, uid);
+    }
 }

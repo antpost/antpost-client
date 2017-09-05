@@ -1,0 +1,26 @@
+<div>
+	<kendo-grid [data]="groups" [height]="410">
+		<kendo-grid-column field="name" title="Nhóm tài khoản mục tiêu" width="180">
+		</kendo-grid-column>
+		<kendo-grid-column field="description" title="Mô tả" width="200">
+		</kendo-grid-column>
+		<kendo-grid-column field="createdAt" title="Ngày tạo" width="100">
+			<ng-template kendoGridCellTemplate let-dataItem>
+				{{dataItem.createdAt | date: 'yMd' }}
+			</ng-template>
+		</kendo-grid-column>
+		<kendo-grid-column field="count" title="Số tài khoản" width="80">
+		</kendo-grid-column>
+		<kendo-grid-column title="" [width]="80">
+			<ng-template kendoGridCellTemplate let-dataItem>
+				<a class="text-success" (click)="select(dataItem)"><i class="fa fa-hand-pointer-o"></i></a>
+			</ng-template>
+		</kendo-grid-column>
+	</kendo-grid>
+</div>
+<!--
+<div class="modal-footer">
+	<button class="btn btn-primary btn-sm" (click)="save()"><i class="fa fa-thumbs-o-up"></i> Chọn</button>
+	<button class="btn btn-sm" (click)="cancel()"><i class="fa fa-window-close-o"></i> Hủy bỏ</button>
+</div>
+-->

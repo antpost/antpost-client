@@ -7,6 +7,8 @@ import {GroupPostingComponent} from '../../containers/group-posting/group-postin
 import {GroupJoiningComponent} from '../../containers/group-joining/group-joining.component';
 import {StoreUsersComponent} from '../../containers/store-users/store-users.component';
 import {StoreAccountsComponent} from '../../containers/store-accounts/store-accounts.component';
+import {MakeFriendComponent} from '../../containers/make-friend/make-friend.component';
+import {UnfriendComponent} from '../../containers/unfriend/unfriend.component';
 
 
 export const ROUTES: any[] = [
@@ -28,7 +30,8 @@ export const ROUTES: any[] = [
         title: 'Nuôi Nick',
         icon: 'person_pin',
         subroutes: [
-            {path: 'post-feed', title: 'Đăng bài', icon: 'send', class: '', component: GroupPostScheduleComponent}
+            {path: 'make-friend', title: 'Kết bạn tự động', icon: 'add_circle_outline', class: '', component: MakeFriendComponent},
+            {path: 'unfriend', title: 'Hủy kết bạn tự động', icon: 'block', class: '', component: UnfriendComponent}
         ]
     },
     {

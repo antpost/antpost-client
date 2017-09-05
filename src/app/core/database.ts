@@ -32,7 +32,11 @@ export class DbService extends Dexie {
             targetAccounts: `
                 ++id,
                 accountId,
-                groupId`
+                groupId`,
+            addedAccounts: `
+                ++id,
+                uid,
+                accountId`
         });
 
         if (!this.isOpen()) {

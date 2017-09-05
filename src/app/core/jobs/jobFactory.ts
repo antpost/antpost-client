@@ -5,6 +5,7 @@ import {IJob} from "./iJob";
 import {GroupPostingEngine} from '../engine/groupPostingEngine';
 import {CommentEngine} from '../engine/commentEngine';
 import {GroupJoiningEngine} from '../engine/groupJoiningEngine';
+import {MakingFriendEngine} from '../engine/makingFriendEngine';
 
 export class JobFactory {
 
@@ -18,7 +19,8 @@ export class JobFactory {
         let types = {
             PostGroup: GroupPostingEngine,
             JoinGroup: GroupJoiningEngine,
-            Comment: CommentEngine
+            Comment: CommentEngine,
+            MakeFriend: MakingFriendEngine
         };
 
         let key = ScheduleType[type];
