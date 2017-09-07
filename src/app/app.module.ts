@@ -28,6 +28,8 @@ import {AuthService} from './services/auth.service';
 
 import '../styles/styles.scss';
 import '../styles/headings.css';
+import '@progress/kendo-ui';
+
 import {AntPostModule} from './components/antpost.module';
 import {AntPostComponent} from './containers/antpost/antpost.component';
 import {SidebarModule} from './shared/sidebar/sidebar.module';
