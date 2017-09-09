@@ -43,7 +43,7 @@ export class FacebookProfileService extends FacebookService {
      */
     public async getUserInfoAsync(account: FbAccount, uid: string, params: any) {
         let api = this.createApi(`/${uid}`, params, account);
-        return this.postAsync(api, 'GET');
+        return this.pullAsync(api);
     }
 
     public async checkIsFriend(account: FbAccount, uid: string) {
@@ -55,5 +55,29 @@ export class FacebookProfileService extends FacebookService {
 
     public async addFriend(account: FbAccount, uid: string) {
         return await this.automationService.addFriend(account, uid);
+    }
+
+    /**
+     * Get total friends of an account
+     * @param {FbAccount} account
+     * @param {string} uid
+     * @returns {Promise<number>}
+     */
+    public async countFriend(account: FbAccount, uid: string) {
+        let api = this.createApi(`/v2.10/${uid}/friends`, {limit: 0}, account);
+        const json = await this.pullAsync(api);
+        return json.summary ? json.summary.total_count : 0;
+    }
+
+    /**
+     * Load last posts of an account
+     * @param {FbAccount} account
+     * @param {string} uid
+     * @returns {Promise<void>}
+     */
+    public async loadFeed(account: FbAccount, uid: string, limit: number) {
+        let api = this.createApi(`/${uid}/feed`, {fields: 'created_time', limit: limit}, account);
+        const json = await this.pullAsync(api);
+        return json.data;
     }
 }

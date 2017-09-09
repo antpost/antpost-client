@@ -27,9 +27,41 @@
 											[textField]="'text'"
 											[valueField]="'value'"
 											[valuePrimitive]="true"
-											[(ngModel)]="meta.sex"
+											[(ngModel)]="meta.gender"
 											class="form-control">
 										</kendo-dropdownlist>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Độ tuổi</label>
+								<div class="col-sm-9">
+									<div class="input-group mb0">
+										<kendo-dropdownlist
+											[defaultItem]="{text:'--Tất cả--', value: null}"
+											[data]="ageRangeList"
+											[textField]="'text'"
+											[valueField]="'value'"
+											[valuePrimitive]="true"
+											[(ngModel)]="meta.age"
+											class="form-control">
+										</kendo-dropdownlist>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Tình trạng mối quan hệ</label>
+								<div class="col-sm-9">
+									<div class="input-group mb0">
+										<kendo-multiselect
+											[placeholder]="'Tất cả'"
+											[data]="relationshipStatusList"
+											[textField]="'text'"
+											[valueField]="'value'"
+											[valuePrimitive]="true"
+											[(ngModel)]="meta.relationships"
+											class="form-control">
+										</kendo-multiselect>
 									</div>
 								</div>
 							</div>
@@ -49,7 +81,7 @@
 											[textField]="'text'"
 											[valueField]="'value'"
 											[valuePrimitive]="true"
-											[(ngModel)]="meta.checkPost"
+											[(ngModel)]="meta.lastPostTime"
 											class="form-control">
 										</kendo-dropdownlist>
 									</div>

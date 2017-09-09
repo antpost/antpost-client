@@ -54,3 +54,30 @@ export enum LoadingState {
     Completed = 2,
     Cancelled = 3
 }
+
+export enum AgeRange {
+    Under15 = 1,
+    From15To24 = 2,
+    From25To34 = 3,
+    From35To44 = 4,
+    Above45 = 5
+}
+
+export enum GenderType {
+    Male = 1,
+    Female = 2
+}
+
+export enum RelationshipStatus {
+    Single = 1,
+    InARelationship = 2,
+    InAnOpenRelationship = 3,
+    Married = 4,
+    Engaged = 5,
+    Complicated = 6,
+    Widowed = 7,
+    Separated = 8,
+    Divorced = 9,
+    InACivilUnion = 10,
+    InADomesticPartnership = 11
+}
